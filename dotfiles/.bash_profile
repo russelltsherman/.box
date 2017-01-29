@@ -1,4 +1,4 @@
 ##############################################################################
-# Import the shell-agnostic (Bash or Zsh) environment config
+# .profile is loaded by bash already .. no need to do that here
 ##############################################################################
-source ~/.profile
+# source ~/.profile
