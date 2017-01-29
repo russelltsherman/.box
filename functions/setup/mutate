@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box mutate"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "BOXBOT!"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    die "Mutate is linux only.. check out Alfred for OS X"
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    #########################################################
+    action "Installing Mutate"
+      sudo $pm install -y \
+        qt5-qmake \
+        qt5-default \
+        libgtk2.0-dev \
+        libqt5x11extras5-dev \
+        libboost-regex-dev
+
+      git clone https://github.com/qdore/Mutate.git
+      cd Mutate/src
+      qmake
+      make
+      sudo make install
+      cd ..
+      sudo cp info/mutate.png /usr/share/icons
+      sudo cp info/Mutate.desktop /usr/share/applications
+      mkdir -p ~/.config/Mutate
+      cp -R config/* ~/.config/Mutate
+      chmod -R a+x ~/.config/Mutate/scripts
+      chmod -R a+w ~/.config/Mutate
+      sed -i "s|{home}|$HOME|g" ~/.config/Mutate/config.ini
+      cd ..
+      rm -rf Mutate
+    ok
+
+    action "Adding Mutate to autostart"
+      mkdir -p ~/.config/autostart
+      cp /usr/share/applications/Mutate.desktop ~/.config/autostart/mutate.desktop
+    ok
+
+    action "Change default keybinding for mutate to Alt+Space"
+      sed -i -- 's/HotKey=Ctrl+D/HotKey=Alt+Space/g' ~/.config/Mutate/config.ini
+    ok
+
+    # action "Remove keybinding for google translate"
+    #   sed -i -- 's/HotKey=Ctrl+T/HotKey=/g' ~/.config/Mutate/config.ini
+    # ok
+}
+
+# _cmd_mutate() {
+# }
+
+cmd_mutate() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_mutate "$@"
