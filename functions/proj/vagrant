@@ -24,8 +24,7 @@ main() {
   ok
 
   action "Initialize EDITORCONFIG"
-    touch $project_name/.editorconfig
-    echo "$EDITORCONFIG" > $project_name/.editorconfig
+    cp $BOXROOTDIR/lib/editorconfig_template > $project_name/.editorconfig
   ok
 
 }

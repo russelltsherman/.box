@@ -28,13 +28,11 @@ main() {
   action "Initialize GIT"
     ( cd $project_name && git init )
     gibo ruby > $project_name/.gitignore
-    touch $project_name/.gitattributes
-    echo "$GITATTRIBUTES" > $project_name/.gitattributes
+    cp $BOXROOTDIR/lib/gitattributes_template > $project_name/.gitattributes
   ok
 
   action "Initialize EDITORCONFIG"
-    touch $project_name/.editorconfig
-    echo "$EDITORCONFIG" > $project_name/.editorconfig
+    cp $BOXROOTDIR/lib/editorconfig_template > $project_name/.editorconfig
   ok
 
 }
