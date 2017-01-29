@@ -35,6 +35,7 @@ __command_valid() {
       # file defines a funtion called cmd_$(basename $1)
       echo 'TRUE'
     fi
+    unset -f $1 >/dev/null 2>&1
   fi
 }
 
@@ -67,6 +68,7 @@ __available_arguments() {
     if typeset -f _cmd_$(basename $command_path) > /dev/null; then
       _cmd_$(basename $command_path)
     fi
+    unset -f _cmd_$(basename $command_path) >/dev/null 2>&1
   fi
 }
 
