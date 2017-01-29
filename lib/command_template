@@ -8,24 +8,13 @@ usage() {
 }
 
 main() {
-  banner
-  get_platform
 
-  if [ "$NS_PLATFORM" == "darwin" ]; then
-    if [[ $1 != "--skip-gui" ]]; then
-    fi
-  fi
-
-  if [ "$NS_PLATFORM" == "linux" ]; then
-    if [[ $1 != "--skip-gui" ]]; then
-    fi
-  fi
 }
 
-_cmd_COMMANDNAME() {
-  _values 'Params' \
-    --skip-gui"[Skip installing the GUI applications]"
-}
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_COMMANDNAME() {
+# }
 
 cmd_COMMANDNAME() {
   if [ "$#" -lt 1 ]; then # called with no parameters
