@@ -73,7 +73,7 @@ fi
 ################################################################################
 # xCode
 ################################################################################
-xcode_tools=$(xcode-select --install) 2>&1 > /dev/null
+xcode_tools=$(xcode-select --install 2>&1 > /dev/null)
 if [[ $? != 0 ]]; then
   bot "Looks like Xcode cli tools are already installed"
 else
@@ -164,7 +164,6 @@ for file in .*; do
   if [[ -e ~/$file ]]; then
     mkdir -p ~/.dotfiles_backup/$now
     mv ~/$file ~/.dotfiles_backup/$now/$file
-    echo "backup saved as ~/.dotfiles_backup/$now/$file"
   fi
 
   # symlink might still exist
@@ -172,6 +171,7 @@ for file in .*; do
 
   # create the link
   ln -s $BOXROOTDIR/dotfiles/$file ~/$file
+  ok
 done
 
 popd > /dev/null 2>&1
