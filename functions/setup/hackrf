@@ -86,6 +86,7 @@ main() {
     make
     sudo make install
     ok
+  fi
 
    # when run in a virtualbox VM
    # gnuradio companion fails to render visual elements in WX GUI FFT Sink

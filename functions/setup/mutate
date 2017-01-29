@@ -55,6 +55,7 @@ main() {
     # action "Remove keybinding for google translate"
     #   sed -i -- 's/HotKey=Ctrl+T/HotKey=/g' ~/.config/Mutate/config.ini
     # ok
+  fi
 }
 
 # _cmd_mutate() {
