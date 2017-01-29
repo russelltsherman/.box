@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# Description  :
+# Usage        : box example command
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       :
+# Source       :
+
+usage() {
+  echo "usage: box example deeper deepest deepester command"
+  echo
+}
+
+main() {
+  echo "Example deeper deepest deepester command $@"
+  echo
+}
+
+_cmd_command3() {
+  _alternative \
+    'args:custom args:(seven eight nine)' \
+    'files:filenames:_files'
+}
+
+cmd_command3() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_command3 "$@"

@@ -1,0 +1,97 @@
+#compdef box
+
+# look at the words array and create a command path string
+# the first entry in the words array is our primary command entrypoint and ignored
+# to be included in the command path a regular file must include a valid function
+__command_path() {
+  command_path=$BOXFUNCDIR
+  for w in $words; do
+    # ignore the first entry in the words array
+    if [ $words[1] != "$w" ]; then
+      # $command_path/$w must exist in the path
+      if [ -e $command_path/$w ]; then
+        # to become part of the command path $w must:
+        if [ -d $command_path/$w ]; then
+          # if $w is a directory
+          command_path=""$command_path/$w
+        fi
+        if [ -f $command_path/$w ]; then
+          # if $w is a regular file
+          if [[ $(__command_valid $command_path/$w) == 'TRUE' ]]; then
+            # file defines valid command function
+            command_path=""$command_path/$w
+          fi
+        fi
+      fi
+    fi
+  done
+}
+
+# look into file and see if it defines a functions names _cmd_$(basename $1)
+__command_valid() {
+  if [ -f $1 ]; then
+    source $1
+    if typeset -f cmd_$(basename $1) > /dev/null; then
+      # file defines a funtion called cmd_$(basename $1)
+      echo 'TRUE'
+    fi
+  fi
+}
+
+# look into existing plugin directories for _$plugin file
+# if file exists call it's _$plugin_option function to get autocomplete entry
+__available_commands() {
+  local -a options
+  local systems_options
+
+  for f in $command_path/*; do
+    if [ -d $f ]; then # if $f is a directory
+      systems_options="$systems_options$(basename $f)@"
+    fi
+    if [ -f $f ]; then # if $f is a regular file
+      if [[ $(__command_valid $command_path/$(basename $f)) == 'TRUE' ]]; then
+        systems_options="$systems_options$(basename $f)@"
+      fi
+    fi
+  done
+
+  IFS='@' read -A options <<< $systems_options
+  _values 'Commands' $options
+}
+
+# source the command file and call it's underscore main function
+# to display arguments autocompletion menu
+__available_arguments() {
+  if [ -f $command_path ]; then
+    source $command_path
+    if typeset -f _cmd_$(basename $command_path) > /dev/null; then
+      _cmd_$(basename $command_path)
+    fi
+  fi
+}
+
+_box() {
+  local curcontext="$curcontext" state line
+  typeset -A opt_args
+
+  _arguments \
+    '1: :->command'\
+    '*: :->subcommand'
+
+  __command_path
+
+  case $state in
+    command)
+      __available_commands
+    ;;
+    subcommand)
+      if [ -d $command_path ]; then
+        __available_commands
+      else
+        __available_arguments
+      fi
+    ;;
+  esac
+}
+
+_box "$@"

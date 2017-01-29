@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+version() {
+	echo "box"
+	echo
+}
+
+usage() {
+	echo "usage: box <system> <subcommand>"
+	echo
+}
+
+_command_path() {
+	command_path=$BOXFUNCDIR
+	arguments=()
+
+	for w in "$@"; do
+		# ignore the first entry in the words array
+		if [ ! $words[1] == "$w" ]; then
+			# $command_path/$w must exist in the path
+			if [ -e $command_path/$w ]; then
+				# to become part of the command path $w must:
+				if [ -d $command_path/$w ]; then
+					# if $w is a directory
+					command_path=""$command_path/$w
+				fi
+				if [ -f $command_path/$w ]; then
+					# if $w is a regular file
+					command_path=""$command_path/$w
+				fi
+			else
+				arguments+=($w)
+			fi
+		fi
+	done
+}
+
+main() {
+	if [ "$#" -lt 1 ]; then
+		usage; exit 1
+	fi
+
+	_command_path "$@"
+
+	case $1 in
+		"-h"|"--help")
+			usage; exit 0
+			;;
+		"-v"|"--version")
+			version; exit 0
+			;;
+	esac
+
+	if [ ! -e $command_path ]; then
+		usage; exit 1
+	fi
+
+	if [ -f $command_path ]; then
+		source $command_path
+	else
+		usage; exit 1
+	fi
+
+	if [ -n "$(type -t cmd_$(basename $command_path))" ] && [ "$(type -t cmd_$(basename $command_path))" == function ]; then
+		cmd_$(basename $command_path) "${arguments[*]}"
+	else
+		usage; exit 1
+	fi
+}
+
+main "$@"

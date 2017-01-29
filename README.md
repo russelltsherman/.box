@@ -1,10 +1,10 @@
-# dot box
-
 # ¯\\_(ツ)_/¯ Warning / Liability
 > Warning:
 The creator of this repo is not responsible if your machine ends up in a state you are not happy with.
 If you are concerned, look at the code to review everything this will do to your machine :)
 
+
+# dot box
 
 repo goals:
 
@@ -39,7 +39,3 @@ $ $HOME/.box/install.sh
 2. Bugs with the setup should be put as GitHub issues.
 3. Mehs should be > /dev/null
 4. Praise should be directed to ![@BurnerDev](https://img.shields.io/twitter/follow/BurnerDev.svg?style=social&label=@BurnerDev)
-
-
-## known issues
-- if no valid subcommands exist in a directory autocomplete returns an error _values:compvalues:10: not enough arguments
