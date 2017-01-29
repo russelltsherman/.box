@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box ruby"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Installing Ruby Development tools"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+  	require_brew openssl
+  	require_brew graphviz
+  	require_brew imagemagick
+  	require_brew qt
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+  	sudo apt-get install -y curl
+  	sudo apt-get install -y openssl
+  	sudo apt-get install -y graphviz
+  	sudo apt-get install -y imagemagick
+  	sudo apt-get install -y qt-sdk
+  fi
+
+  running "Check for RVM Installation"
+  if [ ! $(command -v rvm) == "" ]; then
+    echo -e "\n=> RVM Installed"
+  else
+    echo -e "\n=> Install RVM"
+  	gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+    curl -sSL https://get.rvm.io | bash -s stable --ruby
+  	# echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
+  fi
+  ok
+
+  # tell gem to skip generation of rdocs
+  profile_write "gem: --no-ri --no-rdoc" "$HOME/.gemrc"
+}
+
+# _cmd_ruby() {
+# }
+
+cmd_ruby() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_ruby "$@"
