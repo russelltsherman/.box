@@ -1,0 +1,7 @@
+
+#!/usr/bin/env bash
+[ -d ~/.gitshots ] || mkdir -p ~/.gitshots
+
+FILE="~/.gitshots/$(date +%Y-%m-%d-%H%M%S).$(basename `pwd`).jpg"
+
+imagesnap -q -w 3 $FILE &
