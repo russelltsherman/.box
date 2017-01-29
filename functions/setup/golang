@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box golang"
+  echo
+}
+
+main() {
+  banner
+
+  get_platform
+
+  bot "Installing Golang"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    require_brew hg
+    require_brew go
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+  	sudo apt-get install -y golang
+  fi
+
+  # In just a few minutes, go should be all installed.
+   # Next you'll need to setup your $GOPATH
+  mkdir "$HOME/go"
+  export GOPATH="$HOME/go"
+
+  # Next you'll need to add $GOPATH to your $HOME/.bash_profile ... using your favorite text editor edit $HOME/.bash_profile ...
+  profile_write "export GOPATH=\$HOME/go" $HOME/.profile
+  profile_write "export PATH=\$PATH:\$GOPATH/bin" $HOME/.profile
+
+  # install the go tour code
+  go get code.google.com/p/go-tour/gotour
+  profile_write "alias gotour=\$GOPATH/bin/gotour" $HOME/.profile
+
+  # this is kinda messy.. a single gopath for all your golang projects might not be optimal
+  # check out autoenv for per-directory configuration
+
+  function write_gotest() {
+      cat >$GOPATH/bin/gotest.go <<EOL
+  package main
+  import(
+      "fmt"
+  )
+  func main() {
+    fmt.Println("##################################################################")
+    fmt.Println("                         Hello World!")
+    fmt.Println("##################################################################")
+    fmt.Println("!")
+    fmt.Println("!")
+    fmt.Println("! if you're seeing this message it means your go installation was successful")
+    fmt.Println("!")
+    fmt.Println("! take a tour of go by issuing the command ")
+    fmt.Println("! $ gotour")
+  }
+EOL
+  }
+  write_gotest
+
+  # test go install
+  go run $GOPATH/bin/gotest.go
+
+}
+
+_cmd_golang() {
+  _values 'Params' \
+    --skip-gui"[Skip installing the GUI applications]"
+}
+
+cmd_golang() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_golang "$@"
