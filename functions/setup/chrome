@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box chrome"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "BOXBOT!"
+  running "Installing Google Chrome"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    require_cask chrome
+  fi
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+    sudo apt-get update
+    sudo apt-cache search chrome
+    sudo apt-get install google-chrome-stable
+  fi
+  ok
+}
+
+# _cmd_chrome() {
+# }
+
+cmd_chrome() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_chrome "$@"
