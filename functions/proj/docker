@@ -22,16 +22,19 @@ main() {
     # create gitignore
     gibo docker > $project_name/.gitignore
 
+    # create README.md
+    touch $project_name/README.md
+    echo "# $project_name" > $project_name/README.md
     # create dockerignore
     touch $project_name/.dockerignore
     echo '.git' > $project_name/.dockerignore
     echo '.dockerignore' > $project_name/.dockerignore
-
     # create dockerfile
     touch $project_name/Dockerfile
-
     # create docker-compose.yml
     touch $project_name/docker-compose.yml
+    # create a .docker_env
+    touch $project_name/.docker_env
   ok
 
 }
