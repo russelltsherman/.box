@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# Description  : Initialize .box
+# Usage        : box new [command]
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       :
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box new [commandpath]"
+  echo
+}
+
+main() {
+  # echo "$@"
+  banner
+  get_platform
+  bot "Creating New Box Command"
+
+  command_file="$BOXROOTDIR/$1"
+
+  if [ -s "$command_file" ]
+  then
+    die "$command_file EXISTS"
+  else
+    action "create $command_file"
+    sed "s/COMMANDNAME/`basename $command_file`/" $BOXROOTDIR/lib/command_template > $command_file
+    chmod a+x $command_file
+    ok
+  fi
+}
+
+_cmd_new() {
+  _alternative "command:Command Path:_files"
+}
+
+cmd_new() {
+  if [ "$#" -lt 1 ]; then
+    # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -eq 1 ]; then
+    # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_new "$@"
