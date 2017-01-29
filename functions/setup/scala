@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box scala"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Installing Scala Development tools"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+  	# install JDK
+  	java -version
+
+  	require_brew scala
+  	# install scala build tool
+  	require_brew sbt
+
+  	# optional
+  	echo 'SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:PermSize=256M -XX:MaxPermSize=512M -Xmx2G"' >> ~/.sbtconfig
+
+    # eclipse scala-ide
+    if [[ $1 != "--skip-gui" ]]; then
+      require_cask 'scala-ide'
+    fi
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+  	# install JDK
+  	sudo apt-get install -y openjdk-7-jdk
+
+  	# install scala
+  	sudo apt-get install -y scala
+
+  	# install scala build tool
+  	# install scala build tool
+    sudo_write "deb http://dl.bintray.com/sbt/debian /" /etc/apt/sources.list.d/sbt.list
+  	sudo apt-get update
+  	sudo apt-get install -y sbt
+
+  	# download and install eclipse scala-ide
+  	# http://scala-ide.org/
+    if [[ $1 != "--skip-gui" ]]; then
+      die "no UIAPP defined for linux"
+    fi
+  fi
+}
+
+_cmd_scala() {
+  _values 'Params' \
+    --skip-gui"[Skip installing the GUI applications]"
+}
+
+cmd_scala() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_scala "$@"
