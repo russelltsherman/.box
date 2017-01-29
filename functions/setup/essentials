@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
 usage() {
   echo "usage: box setup essentials"
   echo
