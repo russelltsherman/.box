@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box ruby [project_name] [python_version]"
+  echo
+}
+
+main() {
+  banner
+  local project_name=$1
+  local version=$2
+
+  ###########################################################
+  action "create project directory"
+    mkdir -p $project_name
+  ok
+
+  ###########################################################
+  action "initialize"
+    echo $version > $project_name/.ruby-version
+    echo $project_name > $project_name/.ruby-gemset
+    # create Gemfile
+    ( cd $project_name && bundle init )
+  ok
+
+  action "Initialize GIT"
+    ( cd $project_name && git init )
+    gibo ruby > $project_name/.gitignore
+    touch $project_name/.gitattributes
+    echo "$GITATTRIBUTES" > $project_name/.gitattributes
+  ok
+
+  action "Initialize EDITORCONFIG"
+    touch $project_name/.editorconfig
+    echo "$EDITORCONFIG" > $project_name/.editorconfig
+  ok
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_ruby() {
+# }
+
+cmd_ruby() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_ruby "$@"

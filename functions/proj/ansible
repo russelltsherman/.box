@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box ansible [project_name]"
+  echo
+}
+
+main() {
+  # banner
+  local project_name=$1
+
+  ###########################################################
+  bot "Cloning Ansible Project Skeleton"
+  git clone https://github.com/bertvv/ansible-skeleton.git $project_name
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_ansible() {
+# }
+
+cmd_ansible() {
+  if [ $# -eq 0 ] ; then
+    usage; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_ansible "$@"

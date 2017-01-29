@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box node [project_name] [node_version]"
+  echo
+}
+
+main() {
+  banner
+  local project_name=$1
+  local version=$2
+
+  ###########################################################
+  action "create project directory"
+    mkdir -p $project_name
+  ok
+
+  ###########################################################
+  action "initialize"
+    touch $project_name/.env
+    echo "nvm use $version
+  export OLDPATH=\$PATH
+  export PATH=\`pwd\`/node_modules/.bin:\$PATH
+  " > $project_name/.env
+
+    touch $project_name/.out
+    echo "
+  nvm use system
+  export PATH=\$OLDPATH
+  " > $project_name/.out
+  ok
+
+  action "Initialize NPM"
+    ( cd $project_name && npm init )
+  ok
+
+  action "Initialize GIT"
+    ( cd $project_name && git init )
+    gibo node > $project_name/.gitignore
+    echo
+    touch $project_name/.gitattributes
+    echo "$GITATTRIBUTES" > $project_name/.gitattributes
+  ok
+
+  action "Initialize EDITORCONFIG"
+    touch $project_name/.editorconfig
+    echo "$EDITORCONFIG" > $project_name/.editorconfig
+  ok
+
+  action "create README and TODO"
+    echo "## $project_name" > $project_name/README.md
+    echo "## $project_name" > $project_name/TODO.md
+  ok
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_node() {
+#   _alternative "node_version:NodeJS Version:(4.7.2 5.12.0 6.9.4 7.2.0)"
+# }
+
+cmd_node() {
+  if [ "$#" -lt 2 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -eq 2 ]; then # called with 2 parameters
+    main "$@"; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_node "$@"
