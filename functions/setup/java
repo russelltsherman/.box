@@ -20,8 +20,8 @@ main() {
     brew tap jenv/jenv
     require_brew jenv
 
-    profile_write "export PATH=\$HOME/.jenv/bin:\$PATH" $CODERONIN_DOTFILE
-    profile_write 'if which jenv > /dev/null; then eval "$(jenv init -)"; fi' $CODERONIN_DOTFILE
+    profile_write "export PATH=\$HOME/.jenv/bin:\$PATH" $HOME/.profile
+    profile_write 'if which jenv > /dev/null; then eval "$(jenv init -)"; fi' $HOME/.profile
     ok
 
     action "install Java"
@@ -33,8 +33,8 @@ main() {
     action "Install Java Version Manager"
     git clone https://github.com/gcuisinier/jenv.git ~/.jenv
 
-    profile_write "export PATH=\$HOME/.jenv/bin:\$PATH" $CODERONIN_DOTFILE
-    profile_write 'if which jenv > /dev/null; then eval "$(jenv init -)"; fi' $CODERONIN_DOTFILE
+    profile_write "export PATH=\$HOME/.jenv/bin:\$PATH" $HOME/.profile
+    profile_write 'if which jenv > /dev/null; then eval "$(jenv init -)"; fi' $HOME/.profile
 
     action "install oracle java jdk"
     sudo apt-get purge openjdk*

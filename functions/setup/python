@@ -17,15 +17,15 @@ main() {
     require_brew pyenv
 
     action "add pyenv init"
-    profile_write 'eval "$(pyenv init -)"' $CODERONIN_DOTFILE
+    profile_write 'eval "$(pyenv init -)"' $HOME/.profile
 
     action "check out virtualenv plugin"
     require_brew pyenv-virtualenv
 
     action "add virtualenv init"
-    profile_write 'eval "$(pyenv virtualenv-init -)"' $CODERONIN_DOTFILE
+    profile_write 'eval "$(pyenv virtualenv-init -)"' $HOME/.profile
 
-    source $CODERONIN_DOTFILE
+    source $HOME/.profile
 
   	# try pycharm IDE
     if [[ $1 != "--skip-gui" ]]; then
@@ -48,15 +48,15 @@ main() {
     git_clone_or_update https://github.com/yyuu/pyenv.git ~/.pyenv
 
     action "add pyenv init"
-    profile_write "export PYENV_ROOT=\$HOME/.pyenv" $CODERONIN_DOTFILE
-    profile_write "export PATH=\$PYENV_ROOT/bin:\$PATH" $CODERONIN_DOTFILE
-    profile_write 'eval "$(pyenv init -)"' $CODERONIN_DOTFILE
+    profile_write "export PYENV_ROOT=\$HOME/.pyenv" $HOME/.profile
+    profile_write "export PATH=\$PYENV_ROOT/bin:\$PATH" $HOME/.profile
+    profile_write 'eval "$(pyenv init -)"' $HOME/.profile
 
     action "check out virtualenv plugin"
     git_clone_or_update https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 
     action "add virtualenv init"
-    profile_write 'eval "$(pyenv virtualenv-init -)"' $CODERONIN_DOTFILE
+    profile_write 'eval "$(pyenv virtualenv-init -)"' $HOME/.profile
 
     if [[ $1 != "--skip-gui" ]]; then
       action "install pycharm-ce"
