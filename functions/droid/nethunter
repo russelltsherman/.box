@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box nethunter"
+  echo
+}
+
+main() {
+  banner
+
+  bot "Install Kali NetHunter"
+
+  bot "Choose which version to install"
+    echo "1. Nexus 7 2012 - Android 4.4"
+    echo "2. Nexus 7 2012 - Android 5.1"
+    echo "3. Nexus 7 2013 - Android 4.4"
+    echo "4. Nexus 7 2013 - Android 5.1"
+    echo "Select then press enter"
+    read device
+
+    # Nexus 7 KitKat (2012)
+    if [ $device = 1 ] ; then
+      image='kali_linux_nethunter_2.0_nakasi_kitkat.zip'
+      sha1_sum='dd65af6a2f170be62bcb2fa4de6bc9ad1fffa152'
+    fi
+    # Nexus 7 Lollipop (2012)
+    if [ $device = 2 ] ; then
+      image='kali_linux_nethunter_2.0_nakasi_lollipop.zip'
+      sha1_sum='63fa6ef2fc0cf4d77f04b96af28859f7ca7419f9'
+    fi
+    # Nexus 7 KitKat (2013)
+    if [ $device = 3 ] ; then
+      image='kali_linux_nethunter_2.0_razor_kitkat.zip'
+      sha1_sum='ddb22503339f77e921ab6b4451660c662fe3c9a8'
+    fi
+    # Nexus 7 Lollipop (2013)
+    if [ $device = 4 ] ; then
+      image='kali_linux_nethunter_2.0_razor_lollipop.zip'
+      sha1_sum='3f8104e6a1ed3d44af3c159dedfc77008d334f39'
+    fi
+
+    get_platform
+    if [ "$NS_PLATFORM" == "darwin" ]; then
+      sha_cmd='shasum'
+    else
+      sha_cmd='sha1sum'
+    fi
+
+  bot "Download NetHunter"
+    running "http://images.kali.org/$image"
+    wget -nc http://images.kali.org/$image --directory-prefix $_DROID_ROOT/share/
+
+  bot "Checking Download Integrity"
+    downloaded=`$sha_cmd $_DROID_ROOT/share/$image | awk '{ print $1 }'`
+    warn "expected: $sha1_sum"
+    warn "     got: $downloaded"
+
+  bot "Pushing $image to device"
+    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/$image /sdcard/
+    $_DROID_ROOT/bin/adb reboot bootloader
+    sleep 7
+
+  bot "Boot to recovery and load Kali NetHunter"
+    echo "Use the volume keys to highlight Recovery Mode,"
+    echo "Use the power button to select it."
+    echo " "
+    echo "Once in recovery, select install > choose zip from sdcard > 0/"
+    echo "Choose $image, then select yes"
+    echo "Once it finishes go back and reboot"
+    echo " "
+    sleep 5
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_nethunter() {
+# }
+
+cmd_nethunter() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_nethunter "$@"

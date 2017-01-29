@@ -1,2 +1,6 @@
 
+
 .gh_api_token
+
+# ignore the share dir
+share/*

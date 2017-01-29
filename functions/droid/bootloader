@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box bootloader"
+  echo
+}
+
+main() {
+  banner
+
+  bot "Place your device in FASTBOOT MODE!"
+  warn "Power off your device"
+  warn "Power on device while holding volume down"
+  read -p "Press enter to continue"
+
+  bot "Tell me what you want to do with the Bootloader"
+  echo "1. Unlock"
+  echo "2. Lock"
+  echo "Select then press enter"
+  read selection
+
+  selection=${selection:-None}
+  if [ $selection = 'None' ] ; then
+    die
+  fi
+
+  if [ $selection = 1 ] ; then
+    action "Unlocking Bootloader"
+    $_DROID_ROOT/bin/fastboot oem unlock
+    ok
+  fi
+
+  if [ $selection = 2 ] ; then
+    action "Locking Bootloader"
+    $_DROID_ROOT/bin/fastboot oem lock
+    ok
+  fi
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_bootloader() {
+# }
+
+cmd_bootloader() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_bootloader "$@"

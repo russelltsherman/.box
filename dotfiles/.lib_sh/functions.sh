@@ -158,6 +158,34 @@ EOF
 mv "$3.bak" "$3"
 }
 
+function select_droid {
+  bot "Which Device"
+    echo "1. Nexus 7 2012 WiFi only (grouper)"
+    echo "2. Nexus 7 2013 Wifi only (flo)"
+    echo "3. Nexus 7 2013 LTE only (deb)"
+    echo "Select then press enter"
+    read device
+
+    if [ $device = 1 ] ; then
+      product='grouper'
+      suzip='UPDATE-SuperSU-v1.45.zip'
+      clockwork='recovery-clockwork-touch-6.0.4.3-grouper.img'
+      teamwin='twrp-3.0.2-0-grouper.img'
+    fi
+    if [ $device = 2 ] ; then
+      product='flo'
+      suzip='SuperSU-root-BETA-v2.67.zip'
+      clockwork='recovery-clockwork-touch-6.0.4.7-flo.img'
+      teamwin='twrp-3.0.2-0-flo.img'
+    fi
+    if [ $device = 3 ] ; then
+      product='deb'
+      suzip='SuperSU-root-BETA-v2.67.zip'
+      clockwork='recovery-clockwork-touch-6.0.4.8-deb.img'
+      teamwin='twrp-3.0.2-0-deb.img'
+    fi
+}
+
 function symlinkifne {
   running "$1"
 

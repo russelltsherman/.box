@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box timurs"
+  echo
+}
+
+main() {
+  banner
+
+  bot "Sideload Timurs Kernel files"
+
+  bot "To which OS Version are you installing"
+    echo "1. Android 4.4 (krt16s)"
+    echo "2. Android 5.1.1 (lmy47)"
+    echo "3. Android 6.0.1 (mob30j)"
+    echo "Select then press enter"
+    read version
+
+    if [ $version = 1 ] ; then
+      services='timur-services-N7-2-511e-v3-2015-10-06.zip'
+      usbhost='timur-usbhost-flo511-v3-R7-2015-10-12.zip'
+    fi
+    if [ $version = 2 ] ; then
+      services='timur-services-N7-2-444-v2-2014-06-20.zip'
+      usbhost='timur-usbhost-flo444-v2-russellsherman-2015-02-02.zip'
+    fi
+    if [ $version = 3 ] ; then
+      services='timur-services-N7-2-601-MOB30J-v4-2016-05-11.zip'
+      usbhost='timur-usbhost-flo601-v4-beta3-russellsherman-2016-06-22.zip'
+    fi
+
+    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/TimursKernel/$services /sdcard/
+    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/TimursKernel/$usbhost /sdcard/
+    $_DROID_ROOT/bin/adb reboot bootloader
+    sleep 7
+
+  bot "Boot to recovery and Install Timurs Kernel"
+    echo "Use the volume keys to highlight Recovery Mode,"
+    echo "Use the power button to select it."
+    echo " "
+    echo "Once in recovery, select install > choose zip from sdcard > 0/"
+    echo "Add $services, and $usbhost then select yes"
+    echo "Once it finishes go back and reboot"
+    echo " "
+    sleep 5
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_timurs() {
+# }
+
+cmd_timurs() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_timurs "$@"

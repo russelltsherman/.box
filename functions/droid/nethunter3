@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box nethunter3"
+  echo
+}
+
+main() {
+  banner
+
+  bot "Install Kali NetHunter"
+
+  bot "Choose which version to install"
+    echo "1. Nexus 7 2012 - Android 5.1"
+    echo "2. Nexus 7 2013 - Android 5.1"
+    echo "3. Nexus 7 2013 - Android 6.1"
+    echo "Select then press enter"
+    read device
+
+    # Nexus 7 Lollipop (2012)
+    if [ $device = 1 ] ; then
+      image='nethunter-grouper-lollipop-3.0.zip'
+      sha1_sum='2342059e2de1d75065741743aa1072c39cdbf58a'
+    fi
+    # Nexus 7 Lollipop (2013)
+    if [ $device = 2 ] ; then
+      image='nethunter-flo-lollipop-3.0.zip'
+      sha1_sum='5ca299a5778cd5bc906852cd693c81ef6d0db120'
+    fi
+    # Nexus 7 Marshmallow (2013)
+    if [ $device = 3 ] ; then
+      image='nethunter-flo-marshmallow-3.0.zip'
+      sha1_sum='eb29d810d5f5024faebe3ad39868d56c90f19a87'
+    fi
+
+
+    get_platform
+    if [ "$NS_PLATFORM" == "darwin" ]; then
+      sha_cmd='shasum'
+    else
+      sha_cmd='sha1sum'
+    fi
+
+  bot "Download NetHunter"
+    running "http://images.offensive-security.com/nethunter-release/$image"
+    wget -nc http://images.offensive-security.com/nethunter-release/$image --directory-prefix $_DROID_ROOT/share/
+
+  bot "Checking Download Integrity"
+    downloaded=`$sha_cmd $_DROID_ROOT/share/$image | awk '{ print $1 }'`
+    warn "expected: $sha1_sum"
+    warn "     got: $downloaded"
+
+  bot "Pushing $image to device"
+    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/$image /sdcard/
+    $_DROID_ROOT/bin/adb reboot bootloader
+    sleep 7
+
+  bot "Boot to recovery and load Kali NetHunter"
+    echo "Use the volume keys to highlight Recovery Mode,"
+    echo "Use the power button to select it."
+    echo " "
+    echo "Once in recovery, select install > choose zip from sdcard > 0/"
+    echo "Choose $image, then select yes"
+    echo "Once it finishes go back and reboot"
+    echo " "
+    sleep 5
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_nethunter3() {
+# }
+
+cmd_nethunter3() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_nethunter3 "$@"

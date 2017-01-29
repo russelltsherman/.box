@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box root"
+  echo
+}
+
+main() {
+  banner
+
+  bot "Place your device in FASTBOOT MODE!"
+  warn "Power off your device"
+  warn "Power on device while holding volume down"
+  read -p "Press enter to continue"
+
+  select_droid
+
+  action "Unlocking Bootloader"
+    $_DROID_ROOT/bin/fastboot oem unlock
+    $_DROID_ROOT/bin/fastboot reboot
+    ok
+
+
+  bot "Enable USB Debugging"
+    echo "You now have an unlocked bootloader!"
+    echo "Press the power button to start the device"
+    echo "Let your device boot up, complete the setup"
+    echo "Turn USB debugging on. "
+    echo "Settings > Developer Options > USB Debugging"
+    echo "If you don't have Developer options use this guide: http://goo.gl/wu0cN"
+    echo "Connect the USB cable"
+    warn "IMPORTANT: After turning on USB debugging allow access to USB debugging requests!"
+    read -p "Press enter to continue"
+
+
+  bot "Pushing UPDATE-SuperSU-v2.46.zip"
+    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/$suzip /sdcard/
+    $_DROID_ROOT/bin/adb reboot bootloader
+    sleep 7
+
+
+  bot "Installing Recovery Tool"
+    echo "1. ClockWorkMod https://www.clockworkmod.com/rommanager"
+    echo "2. TeamWinRecovery https://twrp.me/devices/"
+    echo "Select then press enter"
+    read recovery
+
+    if [ $recovery = 1 ] ; then
+      $_DROID_ROOT/bin/fastboot flash recovery $_DROID_ROOT/share/$clockwork
+    fi
+    if [ $recovery = 2 ] ; then
+      $_DROID_ROOT/bin/fastboot flash recovery $_DROID_ROOT/share/$teamwin
+    fi
+
+
+  bot "Boot to recovery and load Super SU"
+    echo "Use the volume keys to highlight Recovery Mode,"
+    echo "Use the power button to select it."
+    echo " "
+    echo "Once in recovery, select install > choose zip from sdcard > 0/"
+    echo "Choose $suzip, then select yes"
+    echo "Once it finishes go back and reboot"
+    echo " "
+    sleep 5
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_root() {
+# }
+
+cmd_root() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_root "$@"
