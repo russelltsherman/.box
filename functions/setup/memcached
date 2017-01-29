@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box memcached"
+  echo
+}
+
+main() {
+  banner
+
+  get_platform
+
+  bot "Installing MemcacheD"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    require_brew memcached
+
+    running "setting memcached to start automatically"
+      # To have launchd start memcached at login:
+      ln -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
+      # Then to load memcached now:
+      launchctl load ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
+    ok
+
+    running "installing memcache-top"
+      require_brew memcache-top
+    ok
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    running "installing memcached"
+      sudo apt-get install memcached
+    ok
+
+    running "setting memcached to start automatically"
+      sudo update-rc.d memcached defaults
+      sudo service memcached start
+    ok
+
+    # To verify if Memcached is install and functioning, run the commands below to view its stats.
+    # echo "stats settings" | nc localhost 11211
+    # watch "echo stats | nc 127.0.0.1 11211"
+  fi
+}
+
+# _cmd_memcached() {
+#   _values 'Params' \
+#     --skip-gui"[Skip installing the GUI applications]"
+# }
+
+cmd_memcached() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_memcached "$@"
