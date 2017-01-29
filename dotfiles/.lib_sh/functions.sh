@@ -326,3 +326,60 @@ function tre(){
 function weather() {
   curl wttr.in/$1
 }
+
+EDITORCONFIG='# EditorConfig is awesome: http://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# Matches multiple files with brace expansion notation
+# Set default charset
+[*.{js,py}]
+charset = utf-8
+
+# 4 space indentation
+[*.py]
+indent_style = space
+indent_size = 4
+
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = tab
+
+# Indentation override for all JS under lib directory
+[lib/**.js]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either package.json or .travis.yml
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
+'
+
+GITATTRIBUTES='# Automatically normalize line endings for all text-based files
+# http://git-scm.com/docs/gitattributes#_end_of_line_conversion
+* text=auto
+
+# For the following file types, normalize line endings to LF on
+# checkin and prevent conversion to CRLF when they are checked out
+# (this is required in order to prevent newline related issues like,
+# for example, after the build script is run)
+.*      text eol=lf
+*.css   text eol=lf
+*.html  text eol=lf
+*.jade  text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.less  text eol=lf
+*.scss  text eol=lf
+*.md    text eol=lf
+*.sh    text eol=lf
+*.txt   text eol=lf
+*.xml   text eol=lf
+'
