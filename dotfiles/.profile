@@ -21,5 +21,6 @@ export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
 type thefuck &>/dev/null && eval "$(thefuck --alias)" || # echo "thefuck() not found."
 
 # load iterm2 shell integration if present
-shell_integration_file="$HOME/.iterm2_shell_integration.`basename $SHELL`"
-[ -s $shell_integration_file ] && source $shell_integration_file
+if [ -f $HOME/.iterm2_shell_integration.$(basename $SHELL) ];then
+  source $HOME/.iterm2_shell_integration.$(basename $SHELL)
+fi
