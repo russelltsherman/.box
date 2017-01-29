@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box pibox usb-data"
+  echo
+}
+
+main() {
+  banner
+  bot "Provisioning USB external drive"
+
+  action "showing attached usb devices"
+  lsusb
+  # Bus 001 Device 004: ID 1058:0830 Western Digital Technologies, Inc.
+  ok
+
+  action "listing availible disks"
+  sudo fdisk -l
+  # should be /dev/sda
+  ok
+
+  echo "enter the path to the drive you wish to destroy ( most likely /dev/sda )"
+  read DISK
+
+  # to create the partitions programatically (rather than manually)
+  # we're going to simulate the manual input to fdisk
+  # The sed script strips off all the comments so that we can
+  # document what we're doing in-line with the actual commands
+  # Note that a blank line (commented as "defualt" will send a empty
+  # line terminated with a newline to take the fdisk default.
+  # sed -e 's/\t\([\+0-9a-zA-Z]*\)[ \t].*/\1/' << EOF
+  #   o # clear the in memory partition table
+  #   n # new partition
+  #   p # primary partition
+  #   1 # partition number 1
+  #     # default - start at beginning of disk
+  #     # default - use entire disk
+  #   w # write the partition table
+  #   q # and we're done
+  # EOF
+
+  sudo fdisk ${DISK} <<EOF
+  o
+  n
+  p
+  1
+  w
+EOF
+
+  action 'Formatting the partition'
+  sudo mkfs.ext4 -L DATA ${DISK}1
+  ok
+
+  action 'Make directory for the mount'
+  sudo mkdir /mnt/data
+  ok
+
+  # if line exists do noting
+  mountline='LABEL=DATA  /mnt/data  ext4  defaults 0 2'
+  if ! grep -q "$mountline" "/etc/fstab"; then
+    action 'adding entry to fstab for auto mount'
+    echo mountline | sudo tee --append /etc/fstab
+    ok
+  fi
+
+  action 'mounting drive'
+  sudo mount -a
+  ok
+
+  action 'set mount directory permissions'
+  sudo chmod 1777 /mnt/data
+  ok
+
+  # edit /boot/cmdline.txt and set a delay to allow external drive to be present before attempting to mount
+  # if exists do noting
+  if ! grep -q "rootdelay=5" "/boot/cmdline.txt"; then
+    action 'set root delay to allow drive to spin up before mounting root filesystem'
+    sudo sed -i.bck '$s/$/ rootdelay=5/' /boot/cmdline.txt
+    ok
+  fi
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_usb-data() {
+# }
+
+cmd_usb-data() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_usb-data "$@"

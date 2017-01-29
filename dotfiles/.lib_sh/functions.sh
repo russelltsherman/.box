@@ -124,6 +124,40 @@ function sudo_write {
   ok
 }
 
+function file_writeln {
+  # try to ensure we don't create duplicate entries in the .coderonin file
+  touch $1
+  action "ensure that $2 exists in $1"
+  if ! grep -q "$2" "$1"; then
+    echo writing
+    echo "$2" >> "$1"
+  fi
+  ok
+}
+
+# I help write config vars on raspberry pi
+function set_config_var() {
+  lua - "$1" "$2" "$3" <<EOF > "$3.bak"
+local key=assert(arg[1])
+local value=assert(arg[2])
+local fn=assert(arg[3])
+local file=assert(io.open(fn))
+local made_change=false
+for line in file:lines() do
+  if line:match("^#?%s*"..key.."=.*$") then
+    line=key.."="..value
+    made_change=true
+  end
+  print(line)
+end
+
+if not made_change then
+  print(key.."="..value)
+end
+EOF
+mv "$3.bak" "$3"
+}
+
 function symlinkifne {
   running "$1"
 

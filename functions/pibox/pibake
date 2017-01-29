@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box pibox pibake"
+  echo
+}
+
+main() {
+  # Set $1 as image path
+  DISTRO="$1"
+
+  # Check image path is set else exit
+  if [ -z "$DISTRO" ]; then
+      line
+      error "ERROR: No image path supplied"
+      line
+      die
+  fi
+
+  # Selected disk
+  _udisk=""
+
+  function promptDisk() {
+      # ================================================
+      # Check connected disks and save paths to array
+      # ================================================
+
+      # Counter
+      i=0
+
+      line
+
+      # Loop over df -lh
+      while read disk; do
+          # Print with local mount only and add counter to select disk
+          if [ "$i" -gt 0 ]; then
+              echo "$i) $disk"
+              # Asign first work (path) to array with corresponding counter
+              _mount[i]=$( echo $disk | awk '{print $1;}')
+          else
+              info "   $disk"
+          fi
+          # Increment counter
+          ((i++))
+      done <<< "$(df -h)"
+      line
+
+      _opts=''
+      for i in "${!_mount[@]}"; do
+          [ -z "$_opts" ] && _opts="${_opts}${i}" || _opts="${_opts}, ${i}"
+      done
+
+      # Ask user to select mounted disk
+      echo "Select the disk to use by enetering the disk number."
+      warn "*** MAKE SURE YOU SELECT THE CORRECT DISK ***"
+      warn "*** Refer to the Readme if uncertain ***"
+      echo -n -e "\nUse disk [ $_opts ] #"
+      read ans
+
+      # Set selected disk
+      _udisk=${_mount[$ans]}
+
+      # Test if valid disk selected
+      if [ -z "$_udisk" ]; then
+        banner
+        error " ======= Invalid selection ======= "
+        promptDisk
+      fi
+  }
+
+  # Run prompt
+  banner
+  promptDisk
+
+
+  # ===========================================================
+  # Past this point a valid disk has been selected, so proceed.
+  # ===========================================================
+  banner
+
+  # Format disk name to raw format
+  _rawdisk=$( echo $_udisk | awk 'sub("..$", "")' | sed 's/disk/rdisk/')
+
+  # Unmount Disk
+  action "Unmounting Disk"
+  diskutil unmount $_udisk
+  ok
+
+  action "Writing image"
+  pv ${DISTRO} | sudo dd bs=1m of=${_rawdisk}
+
+  # Eject disk
+  action "Ejecting Disk"
+  diskutil eject ${_rawdisk}
+  ok
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_pibake() {
+# }
+
+cmd_pibake() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_pibake "$@"

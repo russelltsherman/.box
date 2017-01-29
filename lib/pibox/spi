@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+config=/boot/config.txt
+
+[ -e $config ] || touch $config
+
+set_config_var dtparam=spi $1 $config
+
+exit

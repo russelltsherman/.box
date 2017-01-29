@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box pibox i2c"
+  echo
+}
+
+main() {
+  banner
+  bot "Enable / Disable I2C interface"
+
+  echo " 0. I2C disabled"
+  echo " 1. I2C enabled"
+  echo "Select then press enter"
+  read i2c
+
+  if [ $i2c = 0 ] ; then
+    dir='off'
+
+    action "removing python-smbus"
+    sudo apt-get remove -y python-smbus
+    ok
+
+    action "removing i2c-tools"
+    sudo apt-get remove -y i2c-tools
+    ok
+  fi
+  if [ $i2c = 1 ] ; then
+    dir='on'
+
+    action "installing python-smbus"
+    sudo apt-get install -y python-smbus
+    ok
+
+    action "installing i2c-tools"
+    sudo apt-get install -y i2c-tools
+    ok
+  fi
+
+  action "Writing Configuration"
+  sudo _PIBOX_ROOT=$_PIBOX_ROOT $BOXROOTDIR/lib/pibox/i2c $dir
+  ok
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_i2c() {
+# }
+
+cmd_i2c() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_i2c "$@"

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+config=/boot/config.txt
+
+hifiberry=$1
+
+[ -e $config ] || touch $config
+
+if [ $hifiberry = 1 ] ; then
+  # DAC/DAC+ Light
+  file_writeln $config 'dtoverlay=hifiberry-dac'
+fi
+
+if [ $hifiberry = 2 ] ; then
+  # DAC+ standard/pro
+  file_writeln $config 'dtoverlay=hifiberry-dacplus'
+fi
+
+if [ $hifiberry = 3 ] ; then
+  # Digi/Digi+
+  file_writeln $config 'dtoverlay=hifiberry-digi'
+fi
+
+if [ $hifiberry = 4 ] ; then
+  # Amp/Amp+
+  file_writeln $config 'dtoverlay=hifiberry-amp'
+fi
+
+config=/etc/asound.conf
+rm -rf $config
+touch $config
+echo "pcm.!default  {
+ type hw card 0
+}
+ctl.!default {
+ type hw card 0
+}" > $config
+
+exit

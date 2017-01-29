@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source "$_PITAP2_ROOT/lib/pitap2_functions"
+
+config=/boot/config.txt
+
+[ -e $config ] || touch $config
+
+set_config_var max_usb_current $1 $config
+
+exit
+
+

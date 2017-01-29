@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box pibox unicornhat"
+  echo
+}
+
+main() {
+  banner
+  bot "Installing Pimoroni Unicorn Hat software"
+
+  echo " 1. Python 2 and 3"
+  echo " 2. Python 2"
+  echo " 3. Python 3"
+  echo "Select python version and press enter"
+  read pyvers
+
+  if [ $up = 1 ] ; then
+    # Full install for beginners:
+    curl -sS get.pimoroni.com/unicornhat | bash
+    sudo apt-get install -y python-numpy python-pil python3-numpy python3-pil
+    sudo pip install unicornhat
+  fi
+
+  if [ $up = 2 ] ; then
+    # Install for Python 2 ( idle ):
+    sudo apt-get install -y python-pip python-dev python-numpy python-pil
+    sudo pip install unicornhat
+  fi
+
+  if [ $up = 3 ] ; then
+    # Install for Python 3 ( idle3 ):
+    sudo apt-get install python3-pip python3-dev python3-numpy python3-pil
+    sudo pip-3.2 install unicornhat
+  fi
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_unicornhat() {
+# }
+
+cmd_unicornhat() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_unicornhat "$@"

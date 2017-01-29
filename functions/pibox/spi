@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box pibox spi"
+  echo
+}
+
+main() {
+  banner
+  bot "Enable / Disable SPI interface"
+
+  echo " 0. SPI disabled"
+  echo " 1. SPI enabled"
+  echo " 3. SPI test"
+  echo "Select then press enter"
+  read spi
+
+  if [ $spi = 0 ] ; then
+    dir='off'
+  fi
+
+  if [ $spi = 1 ] ; then
+    dir='on'
+  fi
+
+  if [ $spi = 3 ] ; then
+    ls /dev/*spi*
+    exit
+  fi
+
+  action "Writing Configuration"
+  sudo _PIBOX_ROOT=$_PIBOX_ROOT $BOXROOTDIR/lib/pibox/spi $dir
+  ok
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_spi() {
+# }
+
+cmd_spi() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_spi "$@"

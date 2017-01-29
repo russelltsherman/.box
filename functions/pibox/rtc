@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box pibox rtc"
+  echo
+}
+
+main() {
+  banner
+  bot "Enable / Disable Real time clock module"
+
+  echo " 0. RTC disable"
+  echo " 1. RTC enable"
+  echo " 2. RTC set time"
+  echo "Select then press enter"
+  read rtc
+
+  if [ $rtc = 0 ] ; then
+    die "RTC removal is incomplete"
+    dir='off'
+  fi
+
+  if [ $rtc = 1 ] ; then
+    dir='on'
+    action "install ntpdate"
+    sudo apt-get install -y ntpdate
+    ok
+    sudo _PIBOX_ROOT=$_PIBOX_ROOT $BOXROOTDIR/lib/pibox/rtc-ds1307 $dir
+  fi
+
+  if [ $rtc = 2 ] ; then
+    action "try get current date from NTP"
+    sudo ntpdate
+    ok
+
+    action "save vaue to RTC module"
+    sudo /etc/init.d/hwclock.sh restart
+    ok
+  fi
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_rtc() {
+# }
+
+cmd_rtc() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_rtc "$@"

@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box pibox backup"
+  echo
+}
+
+main() {
+  banner
+
+  bot "Install raspiBackup"
+
+  action "download and install raspiBackup.sh"
+  wget http://www.linux-tips-and-tricks.de/raspiBackupInstall.sh -O raspiBackupInstall.sh -q && sudo bash raspiBackupInstall.sh -c -l EN
+  ok
+
+  info "to automate backups add the following line to crontab using comand sudo crontab -e"
+  info "00 22  * * 0 /usr/local/bin/raspiBackup.sh -p /backup -t tar -k 4 -e moo@foobar.com"
+  info "Then every Sunday at 22 pm a tar backup will be created in directory /backup and a notification eMail will be sent to moo@foobar.com."
+  info "See http://www.linux-tips-and-tricks.de/en/raspberry/303-pi-creates-automatic-backups-of-itself/ for more information"
+
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_backup() {
+# }
+
+cmd_backup() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_backup "$@"
