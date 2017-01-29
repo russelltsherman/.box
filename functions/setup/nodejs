@@ -22,7 +22,7 @@ main() {
   # nvm load in coderonin file
   profile_write "# initialize NVM" $HOME/.profile
   profile_write "export NVM_DIR=\$HOME/.nvm" $HOME/.profile
-  profile_write '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' $HOME/.profile
+  profile_write '[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"' $HOME/.profile
 
   # immediately load nvm so we can install node and npm
   export NVM_DIR="$HOME/.nvm"
