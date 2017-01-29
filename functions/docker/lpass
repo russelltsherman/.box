@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box lpass"
+  echo
+}
+
+main() {
+  docker run --rm -it \
+  -v "${HOME}/.lpass:/root/.lpass" \
+  --name lpass \
+  ${DOCKER_REPO_PREFIX}/lpass "$@"
+}
+
+# _cmd_lpass() {
+# }
+
+cmd_lpass() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+    
+    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+    
+    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+    
+    main $1; exit 0
+  fi
+  
+  usage; exit 1
+}
+
+# cmd_lpass "$@"

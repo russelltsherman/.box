@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box mutt"
+  echo
+}
+
+main() {
+  # subshell so we dont overwrite variables
+  (
+    local account=$1
+    export IMAP_SERVER
+    export SMTP_SERVER
+    
+    if [[ "$account" == "riseup" ]]; then
+      export GMAIL=$MAIL_RISEUP
+      export GMAIL_NAME=$MAIL_RISEUP_NAME
+      export GMAIL_PASS=$MAIL_RISEUP_PASS
+      export GMAIL_FROM=$MAIL_RISEUP_FROM
+      IMAP_SERVER=mail.riseup.net
+      SMTP_SERVER=$IMAP_SERVER
+    fi
+    
+    docker run -it --rm \
+    -e GMAIL \
+    -e GMAIL_NAME \
+    -e GMAIL_PASS \
+    -e GMAIL_FROM \
+    -e GPG_ID \
+    -e IMAP_SERVER \
+    -e SMTP_SERVER \
+    -v "${HOME}/.gnupg:/home/user/.gnupg:ro" \
+    -v /etc/localtime:/etc/localtime:ro \
+    --name "mutt-${account}" \
+    ${DOCKER_REPO_PREFIX}/mutt
+  )
+}
+
+# _cmd_mutt() {
+# }
+
+cmd_mutt() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+    
+    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+    
+    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+    
+    main $1; exit 0
+  fi
+  
+  usage; exit 1
+}
+
+# cmd_mutt "$@"

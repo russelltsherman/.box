@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box skype"
+  echo
+}
+
+main() {
+  local RUNASNAME='skype'
+  del_stopped $RUNASNAME
+  relies_on pulseaudio
+  
+  docker run -d \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -e "DISPLAY=unix${DISPLAY}" \
+  --link pulseaudio:pulseaudio \
+  -e PULSE_SERVER=pulseaudio \
+  --security-opt seccomp:unconfined \
+  --device /dev/video0 \
+  --group-add video \
+  --group-add audio \
+  --name $RUNASNAME \
+  ${DOCKER_REPO_PREFIX}/skype
+  
+}
+
+# _cmd_skype() {
+# }
+
+cmd_skype() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+    
+    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+    
+    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+    
+    main $1; exit 0
+  fi
+  
+  usage; exit 1
+}
+
+# cmd_skype "$@"

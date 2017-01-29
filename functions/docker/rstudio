@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box rstudio"
+  echo
+}
+
+main() {
+  local RUNASNAME='rstudio'
+  del_stopped $RUNASNAME
+  
+  docker run -d \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -v "${HOME}/fastly-logs:/root/fastly-logs" \
+  -v /dev/shm:/dev/shm \
+  -e "DISPLAY=unix${DISPLAY}" \
+  -e QT_DEVICE_PIXEL_RATIO \
+  --device /dev/dri \
+  --name $RUNASNAME \
+  ${DOCKER_REPO_PREFIX}/rstudio
+  
+}
+
+_cmd_rstudio() {
+}
+
+cmd_rstudio() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+    
+    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+    
+    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+    
+    main $1; exit 0
+  fi
+  
+  usage; exit 1
+}
+
+# cmd_rstudio "$@"

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box htop"
+  echo
+}
+
+main() {
+  local RUNASNAME="htop"
+  del_stopped $RUNASNAMElocal
+  docker run --rm -it \
+  --pid host \
+  --net none \
+  --name $RUNASNAME \
+  ${DOCKER_REPO_PREFIX}/htop
+}
+
+# _cmd_htop() {
+# }
+
+cmd_htop() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+    
+    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+    
+    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+    
+    main $1; exit 0
+  fi
+  
+  usage; exit 1
+}
+
+# cmd_htop "$@"

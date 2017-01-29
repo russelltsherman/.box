@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box cadvisor"
+  echo
+}
+
+main() {
+  local RUNASNAME="cadvisor"
+  del_stopped $RUNASNAME
+  docker run -d \
+  --restart always \
+  -v /:/rootfs:ro \
+  -v /var/run:/var/run:rw \
+  -v /sys:/sys:ro  \
+  -v /var/lib/docker/:/var/lib/docker:ro \
+  -p 1234:8080 \
+  --name $RUNASNAME \
+  google/cadvisor
+  
+  hostess add cadvisor "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' cadvisor)"
+  browser-exec "http://cadvisor:8080"
+}
+
+# _cmd_cadvisor() {
+# }
+
+cmd_cadvisor() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+    
+    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+    
+    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+    
+    main $1; exit 0
+  fi
+  
+  usage; exit 1
+}
+
+# cmd_cadvisor "$@"
