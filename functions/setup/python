@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box python"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Installing Python Development tools"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    action "Install pyenv"
+    require_brew pyenv
+
+    action "add pyenv init"
+    profile_write 'eval "$(pyenv init -)"' $CODERONIN_DOTFILE
+
+    action "check out virtualenv plugin"
+    require_brew pyenv-virtualenv
+
+    action "add virtualenv init"
+    profile_write 'eval "$(pyenv virtualenv-init -)"' $CODERONIN_DOTFILE
+
+    source $CODERONIN_DOTFILE
+
+  	# try pycharm IDE
+    if [[ $1 != "--skip-gui" ]]; then
+      action "install pyCharm-de"
+      require_cask pycharm-ce
+    fi
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    # Databases: You may not need all of these;
+    # none are explicit dependencies of other items in this script.
+    # SQLite and MySQL are pretty generally used for web Development
+    sudo apt-get install -y python-mysqldb libmysqlclient-dev
+    sudo apt-get install -y libxml2-dev libxslt-dev  # needed for Python package 'lxml'
+
+    sudo apt-get install -y python python-setuptools python-dev
+    sudo easy_install -U pip
+
+    action "Install pyenv"
+    git_clone_or_update https://github.com/yyuu/pyenv.git ~/.pyenv
+
+    action "add pyenv init"
+    profile_write "export PYENV_ROOT=\$HOME/.pyenv" $CODERONIN_DOTFILE
+    profile_write "export PATH=\$PYENV_ROOT/bin:\$PATH" $CODERONIN_DOTFILE
+    profile_write 'eval "$(pyenv init -)"' $CODERONIN_DOTFILE
+
+    action "check out virtualenv plugin"
+    git_clone_or_update https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+
+    action "add virtualenv init"
+    profile_write 'eval "$(pyenv virtualenv-init -)"' $CODERONIN_DOTFILE
+
+    if [[ $1 != "--skip-gui" ]]; then
+      action "install pycharm-ce"
+      wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
+      sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu $(lsb_release -sc)-getdeb apps" >> /etc/apt/sources.list.d/getdeb.list'
+      sudo apt-get update
+      sudo apt-get install -y pycharm
+    fi
+  fi
+}
+
+_cmd_python() {
+  _values 'Params' \
+    --skip-gui"[Skip installing the GUI applications]"
+}
+
+cmd_python() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_python "$@"
