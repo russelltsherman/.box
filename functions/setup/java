@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box java"
+  echo
+}
+
+main() {
+  banner
+
+  get_platform
+
+  bot "Installing Java Development Tools"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    # jEnv is a command line tool to help you forget how to set the JAVA_HOME environment variable
+    action "Install Java Version Manager"
+    brew tap jenv/jenv
+    require_brew jenv
+
+    profile_write "export PATH=\$HOME/.jenv/bin:\$PATH" $CODERONIN_DOTFILE
+    profile_write 'if which jenv > /dev/null; then eval "$(jenv init -)"; fi' $CODERONIN_DOTFILE
+    ok
+
+    action "install Java"
+    require_cask java
+    ok
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    action "Install Java Version Manager"
+    git clone https://github.com/gcuisinier/jenv.git ~/.jenv
+
+    profile_write "export PATH=\$HOME/.jenv/bin:\$PATH" $CODERONIN_DOTFILE
+    profile_write 'if which jenv > /dev/null; then eval "$(jenv init -)"; fi' $CODERONIN_DOTFILE
+
+    action "install oracle java jdk"
+    sudo apt-get purge openjdk*
+    sudo add-apt-repository ppa:webupd8team/java
+    sudo apt-get update
+    sudo apt-get install -y oracle-java8-installer
+    sudo apt-get install -y oracle-java8-set-default
+    ok
+  fi
+
+  action "restarting shell"
+    exec $SHELL -l
+  ok
+
+  action "enabling jenv plugins"
+  jenv enable-plugin maven ant
+  jenv enable-plugin maven golo
+  jenv enable-plugin maven gradle
+  jenv enable-plugin maven grails
+  jenv enable-plugin maven groovy
+  jenv enable-plugin maven lein
+  jenv enable-plugin maven maven
+  jenv enable-plugin maven sbt
+  jenv enable-plugin maven scala
+  jenv enable-plugin maven vlt
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    action "finding current java versions"
+    for D in `find /Library/Java/JavaVirtualMachines -type d -maxdepth 1`
+    do
+      if ! [ $D = '/Library/Java/JavaVirtualMachines' ]; then
+        jenv add $D/Contents/Home
+      fi
+    done
+    ok
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    die 'not implemented'
+  fi
+
+}
+
+# _cmd_java() {
+# }
+
+cmd_java() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_java "$@"
