@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box cft"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Install Capture the flag tools"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    if [[ $1 != "--skip-gui" ]]; then
+  		require_cask xquartz
+  		require_cask wireshark
+  	fi
+
+  	# Investigate these tools more thouroughly before implementing
+  	# Install some CTF tools; see https://github.com/ctfs/write-ups
+  	require_brew bfg
+  	require_brew binwalk
+  	require_brew dex2jar
+  	require_brew dns2tcp
+  	require_brew fcrackzip
+  	require_brew foremost
+  	require_brew hashpump
+  	require_brew hydra
+  	require_brew john
+  	require_brew knock
+  	require_brew nmap
+  	require_brew pngcheck
+  	require_brew sqlmap
+  	require_brew tcpflow
+  	require_brew tcpreplay
+  	require_brew libpcap
+  	require_brew tcptrace
+  	require_brew ucspi-tcp # `tcpserver` et al.
+  	require_brew homebrew/x11/xpdf
+  	require_brew xz
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+  	die 'implementation unfinished'
+    if [[ $1 != "--skip-gui" ]]; then
+    fi
+  fi
+
+}
+
+_cmd_cft() {
+  _values 'Params' \
+    --skip-gui"[Skip installing the GUI applications]"
+}
+
+cmd_cft() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_cft "$@"
