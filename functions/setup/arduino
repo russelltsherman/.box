@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box arduino"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Install Arduino Development tools"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    if [[ $1 != "--skip-gui" ]]; then
+  		action "Install Arduino IDE"
+  		require_cask arduino
+  		ok
+  	fi
+
+  	warn "you may need to install the FTDI driver"
+  	warn "visit http://www.ftdichip.com/FTDrivers.htm to download latest."
+
+  	# TODO - check if arduino 1.6.3 supports digispark controllers
+  	# - create cask for digispark arduino ide
+  	# digispark
+  	# http://sourceforge.net/projects/digistump/files/DigisparkArduino-MacOSX-1.0.4-May19.zip/download
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+  	action "Install Arduino IDE"
+  	sudo apt-get install -y arduino arduino-core
+  	ok
+  fi
+}
+
+_cmd_arduino() {
+  _values 'Params' \
+    --skip-gui"[Skip installing the GUI applications]"
+}
+
+cmd_arduino() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_arduino "$@"
