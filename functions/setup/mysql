@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box mysql"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "installing MySQL"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+  	require_brew mysql
+
+    running "setting mysql to start automatically"
+  	ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+  	# launch mysql now
+  	launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+    ok
+
+  	# install ui query browser
+    if [[ $1 != "--skip-gui" ]]; then
+      require_cask sequel-pro
+    fi
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+  	sudo apt-get install -y mysql-server
+  	sudo mysql_install_db
+  	sudo /usr/bin/mysql_secure_installation
+
+    # if i were on debian which ui would i want?
+    # phpmyadmin ?
+    # MySql Workbench ?
+    if [[ $1 != "--skip-gui" ]]; then
+      die "no UIAPP defined for linux"
+    fi
+  fi
+}
+
+_cmd_mysql() {
+  _values 'Params' \
+    --skip-gui"[Skip installing the GUI applications]"
+}
+
+cmd_mysql() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_mysql "$@"
