@@ -1,5 +1,6 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/echos.sh
 source $BOXROOTDIR/dotfiles/.lib_sh/requirers.sh
+source $BOXROOTDIR/dotfiles/.lib_sh/dockerfunctions.sh
 
 ################################################################################
 # TUI Functions
@@ -15,7 +16,6 @@ function banner() {
  \___\___/ \__,_|\___|_|  \___/|_| |_|_|_| |_|
 '"$COL_RESET"
 }
-
 
 function info() {
   echo -e "$COL_GREEN[info]$COL_RESET "$1
@@ -144,17 +144,6 @@ function symlinkifne {
   ln -s ~/.dotfiles/$1 $1
   echo -en '\tlinked';ok
 }
-
-function prompt_name {
-  read -r -p "Enter your name and press [ENTER]: " name
-  export USER_NAME=$name
-}
-
-function prompt_email {
-  read -r -p "Enter your email and press [ENTER]: " email
-  export USER_EMAIL=$email
-}
-
 
 
 ################################################################################
