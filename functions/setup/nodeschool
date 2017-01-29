@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box nodeschool"
+  echo
+}
+
+main() {
+  banner
+
+  case "$1" in
+      2) # Javascript 101
+        bot "Javascript 101"
+        bot "installing Nodeschool workshop javascripting"
+        mkdir -p $HOME/nodeschool/javascript101/javascripting
+        npm install -g javascripting
+        bot "installing Nodeschool workshop count-to-6"
+        mkdir -p $HOME/nodeschool/javascript101/count-to-6
+        npm install -g count-to-6
+        bot "installing Nodeschool workshop planetproto"
+        mkdir -p $HOME/nodeschool/javascript101/planetproto
+        npm install -g planetproto
+      ;;
+      3) # Javascript 201
+        bot "Javascript 201"
+        bot "installing Nodeschool workshop esnext-generation"
+        mkdir -p $HOME/nodeschool/javascript201/esnext-generation
+        npm install -g esnext-generation
+        bot "installing Nodeschool workshop learn-generators"
+        mkdir -p $HOME/nodeschool/javascript201/learn-generators
+        npm install -g learn-generators
+        bot "installing Nodeschool workshop promise-it-wont-hurt"
+        mkdir -p $HOME/nodeschool/javascript201/promise-it-wont-hurt
+        npm install -g promise-it-wont-hurt
+      ;;
+      4) # JAVASCRIPT 301
+        bot "Javascript 301"
+        bot "installing Nodeschool workshop tower-of-babel"
+        mkdir -p $HOME/nodeschool/javascript301/tower-of-babel
+        npm install -g tower-of-babel
+        bot "installing Nodeschool workshop functional-javascript-workshop"
+        mkdir -p $HOME/nodeschool/javascript301/functional-javascript-workshop
+        npm install -g functional-javascript-workshop
+        bot "installing Nodeschool workshop currying-workshopper"
+        mkdir -p $HOME/nodeschool/javascript301/currying-workshopper
+        npm install -g currying-workshopper
+      ;;
+      5) # NodeJS and NPM
+        bot "NodeJS and NPM"
+        bot "installing Nodeschool workshop learnyounode"
+        mkdir -p $HOME/nodeschool/nodejsnpmkoa/learnyounode
+        npm install -g learnyounode
+        bot "installing Nodeschool workshop how-to-npm"
+        mkdir -p $HOME/nodeschool/nodejsnpmkoa/how-to-npm
+        npm install -g how-to-npm
+        bot "installing Nodeschool workshop kick-off-koa"
+        mkdir -p $HOME/nodeschool/nodejsnpmkoa/kick-off-koa
+        npm install -g kick-off-koa
+      ;;
+      6) # Git GitFlow Github
+        bot "Git GitFlow Github"
+        bot "installing Nodeschool workshop git-it"
+        mkdir -p $HOME/nodeschool/gitgitflowgithub/git-it
+        npm install -g git-it
+      ;;
+      7) # Thinking In React
+        bot "Thinking In React"
+        bot "installing Nodeschool workshop learnyoureact"
+        mkdir -p $HOME/nodeschool/react/learnyoureact
+        npm install -g learnyoureact
+        bot "installing Nodeschool workshop thinking-in-react"
+        mkdir -p $HOME/nodeschool/react/thinking-in-react
+        npm install -g thinking-in-react
+      ;;
+      *)
+        echo "2. Javascript 101"
+        echo "3. Javascript 201"
+        echo "4. Javascript 301"
+        echo "5. NodeJS and NPM"
+        echo "6. Git GitFlow and Github"
+        echo "7. Thinking In React"
+        bot "Select lesson to install then press enter"
+        read lesson
+        $BOXROOTDIR/bin/box nodeschool $lesson
+      ;;
+  esac
+
+  # npm install -g test-anything
+  # npm install -g bug-clinic
+
+  # npm install -g kick-off-koa
+
+  # npm install -g thinking-in-react
+  # npm install -g learnyoureact
+
+
+  # npm install -g learnyoumongo
+  # npm install -g learnyoucouchdb
+
+  # npm install -g async-you
+  # npm install -g scope-chains-closures
+  # npm install -g stream-adventure
+  # npm install -g elementary-electron
+  # npm install -g shader-school
+  # npm install -g levelmeup
+  # npm install -g bytewiser
+  # npm install -g browserify-adventure
+  # npm install -g nodebot-workshop
+  # npm install -g lololodash
+  # npm install -g webgl-workshop
+  # npm install -g perfschool
+  # npm install -g regex-adventure
+  # npm install -g web-audio-school
+  # npm install -g torrential
+  # npm install -g learn-sass
+  # npm install -g pattern-lab-workshop
+  # npm install -g seneca-in-practice
+}
+
+_cmd_nodeschool() {
+  _values 'Params' \
+    --skip-gui"[Skip installing the GUI applications]"
+}
+
+cmd_nodeschool() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_nodeschool "$@"
