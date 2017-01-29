@@ -8,13 +8,23 @@ usage() {
 }
 
 main() {
-  echo "$@"
+  banner
+  get_platform
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    if [[ $1 != "--skip-gui" ]]; then
+    fi
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    if [[ $1 != "--skip-gui" ]]; then
+    fi
+  fi
 }
 
 _cmd_COMMANDNAME() {
-  _alternative \
-    'args:custom args:(a b c)' \
-    'files:filenames:_files'
+  _values 'Params' \
+    --skip-gui"[Skip installing the GUI applications]"
 }
 
 cmd_COMMANDNAME() {
