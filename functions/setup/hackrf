@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box hackrf"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Installing HackRF Tools"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    action "Install python preqequisites"
+    require_brew python
+    require_brew gcc
+    require_brew swig
+    ok
+
+    action "Install prerequisite python packages"
+      pip install numpy
+      pip install Cheetah
+      pip install lxml
+      pip install scipy
+      export PKG_CONFIG_PATH="/usr/X11/lib/pkgconfig"
+      pip install matplotlib
+      require_brew wxmac --python
+    ok
+
+    action "Install gnuradio"
+      require_brew gnuradio
+    ok
+
+    mkdir $HOME/.gnuradio
+    profile_write '[grc]' $HOME/.gnuradio/config.conf
+    profile_write 'local_blocks_path=/usr/local/share/gnuradio/grc/blocks' $HOME/.gnuradio/config.conf
+
+    action "Install HackRF & RTL-SDR related blocks"
+      brew install hackrf
+      brew install rtl-sdr
+      brew install librtlsdr --HEAD
+      brew tap chleggett/gr-osmosdr
+      brew install gr-osmosdr
+    ok
+
+    action "Install GQRX"
+      brew tap chleggett/gqrx
+      brew install gqrx
+      brew linkapps gqrx
+    ok
+
+    action "Installing Inspectrum"
+    brew install qt5 fftw cmake pkg-config
+    git clone https://github.com/miek/inspectrum.git
+    cd inspectrum
+    mkdir build
+    cd build
+    CMAKE_PREFIX_PATH=$(brew --prefix qt5)/lib/cmake cmake ..
+    make install
+
+    # this is messy.. but it's working on El Capitan
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    action "Installing GNURadio"
+    mkdir ~/hackrf_files
+    wget http://www.sbrac.org/files/build-gnuradio -O ~/hackrf_files/build-gnuradio.sh
+    chmod 744 ~/hackrf_files/build-gnuradio.sh
+    ~/hackrf_files/build-gnuradio.sh
+    ok
+
+    action "Installing HackRF tools"
+    cd ~/hackrf_files && git clone https://github.com/mossmann/hackrf.git
+    cd ~/hackrf_files/hackrf/host && mkdir build && cd build && cmake .. && make && sudo make install && sudo ldconfig
+    ok
+
+    action "Installing Inspectrum"
+    sudo apt-get install -y qt5-default libfftw3-dev cmake pkg-config
+    git clone https://github.com/miek/inspectrum.git
+    cd inspectrum
+    mkdir build
+    cd build
+    cmake ..
+    make
+    sudo make install
+    ok
+
+   # when run in a virtualbox VM
+   # gnuradio companion fails to render visual elements in WX GUI FFT Sink
+   # libGL error: core dri or dri2 extension not found
+   # libGL error: failed to load driver: vboxvideo
+   #
+   # when run in a parallels 11 VM
+   # everything seems to work except for continuous audio underflow errors
+}
+
+# _cmd_hackrf() {
+# }
+
+cmd_hackrf() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_hackrf "$@"
