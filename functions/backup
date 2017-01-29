@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box backup"
+  echo
+}
+
+main() {
+  banner
+
+  action 'Kick off a Time Machine Backup'
+  tmutil startbackup -a
+
+  action 'sync OTG128x01 to Drobo'
+  rsync -azh /Volumes/OTG128x01/ /Volumes/Drobo/Archive/OTG128x01/
+
+  action 'sync Drobo with SeagateBackup'
+  rsync -azh /Volumes/Drobo/Archive/ /Volumes/SeagateBackup/Drobo/
+
+  action 'sync Drobo with Elements2TB'
+  rsync -azh /Volumes/Drobo/Archive/ /Volumes/Elements2TB/Drobo/
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_backup() {
+# }
+
+cmd_backup() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_backup "$@"
