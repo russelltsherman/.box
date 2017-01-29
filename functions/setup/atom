@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box atom"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Atom: A hackable text editor for the 21st Century"
+
+  running "installing atom"
+    if [ "$NS_PLATFORM" == "darwin" ]; then
+      require_cask atom
+    fi
+    if [ "$NS_PLATFORM" == "linux" ]; then
+      wget https://github.com/atom/atom/releases/download/v1.3.2/atom-amd64.deb
+      sudo dpkg --install atom-amd64.deb
+      rm -f atom-amd64.deb
+
+      warn "Currently only a 64-bit version is available."
+      warn "The Linux version does not currently automatically update"
+      warn "so you will need to repeat these steps to upgrade to future releases."
+    fi
+  ok
+
+  apm install atom-beautify
+  apm install editorconfig
+  apm install language-babel
+  apm install language-docker
+  apm install language-nginx
+  apm install language-ldif
+  apm install linter-eslint
+  apm install linter
+  apm install linter-docker
+  apm install nuclide
+  apm install vim-mode-plus
+
+  # # create keyboard command to show invisible characters
+  #
+  # # In init.cofee add
+  # atom.commands.add 'atom-text-editor',
+  #   'settings:toggle-show-invisibles': (event) ->
+  #     invisibles = atom.config.get('editor.showInvisibles')
+  #     atom.config.set('editor.showInvisibles', !invisibles)
+  #
+  # # In keymap.cson add
+  # '.workspace .editor:not(.mini), .workspace, .platform-darwin, .platform-win32, .platform-linux':
+  #   'cmd-i': 'settings:toggle-show-invisibles'
+}
+
+# _cmd_atom() {
+# }
+
+cmd_atom() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    usage; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_atom "$@"
