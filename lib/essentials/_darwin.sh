@@ -52,8 +52,8 @@ require_brew watch
 # Install wget with IRI support
 require_brew wget --with-iri
 
-if [[ -f "$_BOX_ROOT/.laptop.local" ]]; then
-  source "$_BOX_ROOT/.laptop.local"
+if [[ -f "$BOXROOTDIR/.laptop.local" ]]; then
+  source "$BOXROOTDIR/.laptop.local"
 fi
 
 action "cleaning up homebrew cache..."

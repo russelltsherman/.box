@@ -9,12 +9,10 @@ usage() {
 
 main() {
   banner
-
   get_platform
-
   bot "Installing Git"
 
-  GITCONFIG=$_BOX_ROOT/dotfiles/.gitconfig
+  GITCONFIG=$BOXROOTDIR/dotfiles/.gitconfig
   grep 'user = GITHUBUSER' $GITCONFIG > /dev/null 2>&1
   if [[ $? = 0 ]]; then
       read -r -p "What is your github.com username? " githubuser
@@ -110,7 +108,6 @@ main() {
       gibo Linux >> "$HOME/.gitignore_global"
     ok
   fi
-
 }
 
 # _cmd_git() {
