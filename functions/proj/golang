@@ -14,48 +14,17 @@ main() {
   local version=$2
   local file=go$version.$NS_PLATFORM-amd64
 
-  ###########################################################
-  action "create project directory"
-    mkdir -p $project_name/{bin,pkg,src}
+  running "create project directory"
+  mkdir -p $project_name/{bin,pkg,src}
   ok
 
-  # get
-  wget -O $project_name/$file.tar.gz https://storage.googleapis.com/golang/$file.tar.gz
-  # untar
-  tar -xvzf $project_name/$file.tar.gz -C $project_name
-  # copy bin
-  cp -r $project_name/go/bin $project_name
-  # test
-
-  # cleanup
-  rm -rf $project_name/$file.tar.gz
-  rm -rf $project_name/go
-
-
-  ###########################################################
-  action "initialize autoenv"
-    touch $project_name/.env
-    echo "
-export OLDPATH=\$PATH
-export PATH=\`pwd\`/bin:\$PATH
-export OLDGOPATH=\$GOPATH
-export GOPATH=\`pwd\`
-" > $project_name/.env
-
-    touch $project_name/.out
-    echo "
-export PATH=\$OLDPATH
-export GOPATH=\$OLDGOPATH
-" > $project_name/.out
+  running "initialize git"
+  ( cd $project_name && git init &>/dev/null )
+  gibo go > $project_name/.gitignore
+  cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
   ok
 
-  action "Initialize GIT"
-    ( cd $project_name && git init )
-    gibo go > $project_name/.gitignore
-    cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
-  ok
-
-  action "Initialize EDITORCONFIG"
+  running "write .editorconfig"
   echo "
 # unifying the coding style for different editors and IDEs => editorconfig.org
 ; indicate this is the root of the project
@@ -92,7 +61,38 @@ trim_trailing_whitespace = false
 [*.go]
 indent_style = tab
 " > $project_name/.editorconfig
+  ok
 
+  running "write README.md"
+  echo "## $project_name" > $project_name/README.md
+  ok
+
+  running "write TODO.md"
+  echo "## $project_name" > $project_name/TODO.md
+  ok
+
+  running "write autoenv files"
+  touch $project_name/.env
+  echo "
+export OLDPATH=\$PATH
+export PATH=\`pwd\`/bin:\$PATH
+export OLDGOPATH=\$GOPATH
+export GOPATH=\`pwd\`
+" > $project_name/.env
+
+  touch $project_name/.out
+  echo "
+export PATH=\$OLDPATH
+export GOPATH=\$OLDGOPATH
+" > $project_name/.out
+  ok
+
+  running "download golang archive"
+  wget -O $project_name/$file.tar.gz https://storage.googleapis.com/golang/$file.tar.gz
+  tar -xvzf $project_name/$file.tar.gz -C $project_name
+  cp -r $project_name/go/bin $project_name
+  rm -rf $project_name/$file.tar.gz
+  rm -rf $project_name/go
   ok
 }
 
@@ -106,15 +106,16 @@ cmd_golang() {
   if [ "$#" -lt 1 ]; then # called with no parameters
     usage; exit 0
 
-  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
-
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
       usage; exit 0
     fi
 
     main $1; exit 0
+
+  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
+    main "$@"; exit 0
+
   fi
 
   usage; exit 1

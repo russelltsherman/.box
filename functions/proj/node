@@ -12,45 +12,47 @@ main() {
   local project_name=$1
   local version=$2
 
-  ###########################################################
-  action "create project directory"
-    mkdir -p $project_name
+  running "create project directory"
+  mkdir -p $project_name
   ok
 
-  ###########################################################
-  action "initialize"
-    touch $project_name/.env
-    echo "nvm use $version
-  export OLDPATH=\$PATH
-  export PATH=\`pwd\`/node_modules/.bin:\$PATH
-  " > $project_name/.env
-
-    touch $project_name/.out
-    echo "
-  nvm use system
-  export PATH=\$OLDPATH
-  " > $project_name/.out
+  running "initialize git"
+  ( cd $project_name && git init &>/dev/null )
+  gibo node > $project_name/.gitignore
+  cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
   ok
 
-  action "Initialize NPM"
-    ( cd $project_name && npm init )
+  running "write .editorconfig"
+  cp $BOXROOTDIR/lib/editorconfig_template $project_name/.editorconfig
   ok
 
-  action "Initialize GIT"
-    ( cd $project_name && git init )
-    gibo node > $project_name/.gitignore
-    echo
-    cp $BOXROOTDIR/lib/gitattributes_template > $project_name/.gitattributes
+  running "write README.md"
+  echo "## $project_name" > $project_name/README.md
   ok
 
-  action "Initialize EDITORCONFIG"
-    cp $BOXROOTDIR/lib/editorconfig_template > $project_name/.editorconfig
+  running "write TODO.md"
+  echo "## $project_name" > $project_name/TODO.md
   ok
 
-  action "create README and TODO"
-    echo "## $project_name" > $project_name/README.md
-    echo "## $project_name" > $project_name/TODO.md
+  running "write autoenv files"
+  touch $project_name/.env
+  echo "
+nvm use $version
+export OLDPATH=\$PATH
+export PATH=\`pwd\`/node_modules/.bin:\$PATH
+" > $project_name/.env
+
+  touch $project_name/.out
+  echo "
+nvm use system
+export PATH=\$OLDPATH
+" > $project_name/.out
   ok
+
+  running "initialize NPM"
+  ( cd $project_name && npm init )
+  ok
+
 }
 
 # for examples of providing tab completion suggestions see:

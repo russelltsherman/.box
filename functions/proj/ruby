@@ -12,29 +12,36 @@ main() {
   local project_name=$1
   local version=$2
 
-  ###########################################################
-  action "create project directory"
-    mkdir -p $project_name
+  running "create project directory"
+  mkdir -p $project_name
   ok
 
-  ###########################################################
-  action "initialize"
-    echo $version > $project_name/.ruby-version
-    echo $project_name > $project_name/.ruby-gemset
-    # create Gemfile
-    ( cd $project_name && bundle init )
+  running "initialize git"
+  ( cd $project_name && git init &>/dev/null )
+  gibo ruby > $project_name/.gitignore
+  cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
   ok
 
-  action "Initialize GIT"
-    ( cd $project_name && git init )
-    gibo ruby > $project_name/.gitignore
-    cp $BOXROOTDIR/lib/gitattributes_template > $project_name/.gitattributes
+  running "write .editorconfig"
+  cp $BOXROOTDIR/lib/editorconfig_template $project_name/.editorconfig
   ok
 
-  action "Initialize EDITORCONFIG"
-    cp $BOXROOTDIR/lib/editorconfig_template > $project_name/.editorconfig
+  running "write README.md"
+  echo "## $project_name" > $project_name/README.md
   ok
 
+  running "write TODO.md"
+  echo "## $project_name" > $project_name/TODO.md
+  ok
+
+  running "write rvm env files"
+  echo $version > $project_name/.ruby-version
+  echo $project_name > $project_name/.ruby-gemset
+  ok
+
+  running "initialize bundler"
+  ( cd $project_name && bundle init )
+  ok
 }
 
 # for examples of providing tab completion suggestions see:
