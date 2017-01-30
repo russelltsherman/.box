@@ -24,3 +24,11 @@ type thefuck &>/dev/null && eval "$(thefuck --alias)" || # echo "thefuck() not f
 if [ -f $HOME/.iterm2_shell_integration.$(basename $SHELL) ];then
   source $HOME/.iterm2_shell_integration.$(basename $SHELL)
 fi
+
+# initialize GO
+if [ -d $HOME/go ]; then
+  export GOPATH=$HOME/go
+  export PATH=$PATH:$GOPATH/bin
+  alias gotour=$GOPATH/bin/gotour
+  export GOROOT=$(go env GOROOT)
+fi

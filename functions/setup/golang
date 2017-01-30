@@ -21,22 +21,26 @@ main() {
   	sudo apt-get install -y golang
   fi
 
-  # In just a few minutes, go should be all installed.
-   # Next you'll need to setup your $GOPATH
   mkdir "$HOME/go"
-  export GOPATH="$HOME/go"
 
-  # Next you'll need to add $GOPATH to your $HOME/.bash_profile ... using your favorite text editor edit $HOME/.bash_profile ...
-  profile_write "export GOPATH=\$HOME/go" $HOME/.profile
-  profile_write "export PATH=\$PATH:\$GOPATH/bin" $HOME/.profile
+  # initialize GO
+  local string="
+# initialize GO
+if [ -d \$HOME/go ]; then
+  export GOPATH=\$HOME/go
+  export PATH=\$PATH:\$GOPATH/bin
+  alias gotour=\$GOPATH/bin/gotour
+  export GOROOT=\$(go env GOROOT)
+fi"
+  if ! grep -q "# initialize GO" "$HOME/.profile" ; then
+    echo "$string" >> "$HOME/.profile"
+  fi
+  source $HOME/.profile
 
   # install the go tour code
   go get golang.org/x/tour/gotour
-  profile_write "alias gotour=\$GOPATH/bin/gotour" $HOME/.profile
 
-  # this is kinda messy.. a single gopath for all your golang projects might not be optimal
-  # check out autoenv for per-directory configuration
-
+  # create a go test file
   cat > $GOPATH/bin/gotest.go <<EOL
   package main
   import(
@@ -65,7 +69,7 @@ EOL
 
 cmd_golang() {
   if [ "$#" -lt 1 ]; then # called with no parameters
-    usage; exit 0
+    main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
