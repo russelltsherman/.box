@@ -3,15 +3,13 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box golang"
+  echo "usage: box setup golang"
   echo
 }
 
 main() {
   banner
-
   get_platform
-
   bot "Installing Golang"
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
@@ -33,14 +31,13 @@ main() {
   profile_write "export PATH=\$PATH:\$GOPATH/bin" $HOME/.profile
 
   # install the go tour code
-  go get code.google.com/p/go-tour/gotour
+  go get golang.org/x/tour/gotour
   profile_write "alias gotour=\$GOPATH/bin/gotour" $HOME/.profile
 
   # this is kinda messy.. a single gopath for all your golang projects might not be optimal
   # check out autoenv for per-directory configuration
 
-  function write_gotest() {
-      cat >$GOPATH/bin/gotest.go <<EOL
+  cat > $GOPATH/bin/gotest.go <<EOL
   package main
   import(
       "fmt"
@@ -57,25 +54,18 @@ main() {
     fmt.Println("! $ gotour")
   }
 EOL
-  }
-  write_gotest
 
   # test go install
   go run $GOPATH/bin/gotest.go
-
 }
 
-_cmd_golang() {
-  _values 'Params' \
-    --skip-gui"[Skip installing the GUI applications]"
-}
+# _cmd_golang() {
+#   _alternative "version:Go Version:(1.5.4 1.6.4 1.7.5)"
+# }
 
 cmd_golang() {
   if [ "$#" -lt 1 ]; then # called with no parameters
     usage; exit 0
-
-  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
