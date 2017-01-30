@@ -11,7 +11,7 @@ main() {
   local RUNASNAME='privoxy'
   del_stopped $RUNASNAME
   relies_on torproxy
-  
+
   docker run -d \
   --restart always \
   --link torproxy:torproxy \
@@ -19,9 +19,8 @@ main() {
   -p 8118:8118 \
   --name $RUNASNAME \
   ${DOCKER_REPO_PREFIX}/privoxy
-  
+
   hostess add privoxy "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' privoxy)"
-  
 }
 
 # _cmd_privoxy() {
@@ -29,19 +28,16 @@ main() {
 
 cmd_privoxy() {
   if [ "$#" -lt 1 ]; then # called with no parameters
-    usage; exit 0
-    
-    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
-    
-    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
       usage; exit 0
     fi
-    
+
     main $1; exit 0
   fi
-  
+
   usage; exit 1
 }
 

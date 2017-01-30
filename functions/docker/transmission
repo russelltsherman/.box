@@ -10,7 +10,7 @@ usage() {
 main() {
   local RUNASNAME='transmission'
   del_stopped $RUNASNAME
-  
+
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v "${HOME}/Torrents:/transmission/download" \
@@ -20,11 +20,11 @@ main() {
   -p 51413:51413/udp \
   --name $RUNASNAME \
   ${DOCKER_REPO_PREFIX}/transmission
-  
-  
+
+
   hostess add transmission "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' transmission)"
   browser-exec "http://transmission:9091"
-  
+
 }
 
 # _cmd_transmission() {
@@ -32,19 +32,16 @@ main() {
 
 cmd_transmission() {
   if [ "$#" -lt 1 ]; then # called with no parameters
-    usage; exit 0
-    
-    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
-    
-    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
       usage; exit 0
     fi
-    
+
     main $1; exit 0
   fi
-  
+
   usage; exit 1
 }
 

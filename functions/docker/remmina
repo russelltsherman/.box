@@ -10,7 +10,7 @@ usage() {
 main() {
   local RUNASNAME='remmina'
   del_stopped $RUNASNAME
-  
+
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -21,7 +21,7 @@ main() {
   --name $RUNASNAME \
   --net host \
   ${DOCKER_REPO_PREFIX}/remmina
-  
+
 }
 
 # _cmd_remmina() {
@@ -29,19 +29,16 @@ main() {
 
 cmd_remmina() {
   if [ "$#" -lt 1 ]; then # called with no parameters
-    usage; exit 0
-    
-    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
-    
-    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
       usage; exit 0
     fi
-    
+
     main $1; exit 0
   fi
-  
+
   usage; exit 1
 }
 

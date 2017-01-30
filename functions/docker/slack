@@ -10,7 +10,7 @@ usage() {
 main() {
   local RUNASNAME='slack'
   del_stopped $RUNASNAME
-  
+
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -24,7 +24,7 @@ main() {
   --ipc="host" \
   --name $RUNASNAME \
   ${DOCKER_REPO_PREFIX}/slack "$@"
-  
+
 }
 
 # _cmd_slack() {
@@ -33,18 +33,15 @@ main() {
 cmd_slack() {
   if [ "$#" -lt 1 ]; then # called with no parameters
     usage; exit 0
-    
-    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
-    
-    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
       usage; exit 0
     fi
-    
+
     main $1; exit 0
   fi
-  
+
   usage; exit 1
 }
 

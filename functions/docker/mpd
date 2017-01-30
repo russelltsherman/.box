@@ -10,7 +10,7 @@ usage() {
 main() {
   local RUNASNAME='mpd'
   del_stopped $RUNASNAME
-  
+
   # adding cap sys_admin so I can use nfs mount
   # the container runs as a unpriviledged user mpd
   docker run -d \
@@ -30,19 +30,16 @@ main() {
 
 cmd_mpd() {
   if [ "$#" -lt 1 ]; then # called with no parameters
-    usage; exit 0
-    
-    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
-    
-    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
       usage; exit 0
     fi
-    
+
     main $1; exit 0
   fi
-  
+
   usage; exit 1
 }
 

@@ -11,7 +11,7 @@ main() {
   local RUNASNAME='spotify'
   del_stopped $RUNASNAME
   relies_on pulseaudio
-  
+
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /etc/machine-id:/etc/machine-id:ro \
@@ -24,7 +24,7 @@ main() {
   --device /dev/dri \
   --name RUNASNAME \
   ${DOCKER_REPO_PREFIX}/steam
-  
+
 }
 
 # _cmd_steam() {
@@ -33,18 +33,15 @@ main() {
 cmd_steam() {
   if [ "$#" -lt 1 ]; then # called with no parameters
     usage; exit 0
-    
-    elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
-    
-    elif [ "$#" -eq 1 ]; then # called with 1 parameters
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
       usage; exit 0
     fi
-    
+
     main $1; exit 0
   fi
-  
+
   usage; exit 1
 }
 
