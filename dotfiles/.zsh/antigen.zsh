@@ -38,7 +38,7 @@ antigen use oh-my-zsh
 # antigen bundle vagrant
 
 # Syntax bundles from external sources
-# antigen bundle horosgrisa/autoenv
+antigen bundle horosgrisa/autoenv
 # antigen bundle rupa/z
 # antigen bundle zsh-users/zaw
 # antigen bundle zsh-users/zsh-autosuggestions
