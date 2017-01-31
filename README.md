@@ -332,7 +332,7 @@ the following are all installed inside the `install.sh` as foundational software
 * Bitcoin Core
 * Cheatsheet
 * Daisy Disk
-* Diffmerge
+* DiffMerge
 * Drobo Dashboard
 * Docker
 * Firefox

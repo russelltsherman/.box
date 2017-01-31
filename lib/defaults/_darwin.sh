@@ -71,7 +71,7 @@ defaults write com.apple.systemuiserver menuExtras -array \
   "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
   "/System/Library/CoreServices/Menu Extras/Battery.menu" \
   "/System/Library/CoreServices/Menu Extras/Clock.menu"
-ok
+
 
 running "Set highlight color to green"
 defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600";ok
@@ -604,7 +604,7 @@ ok
 #defaults write org.x.X11 wm_ffm -bool TRUE;ok
 
 running "Installing the Solarized Dark theme for iTerm (opening file)"
-open "$BOXROOTDIR/lib/box-defaults/config/Solarized Dark.itermcolors";ok
+open "$BOXROOTDIR/assets/Solarized Dark.itermcolors";ok
 
 running "Don't display the annoying prompt when quitting iTerm"
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false;ok

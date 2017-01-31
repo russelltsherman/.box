@@ -52,10 +52,7 @@ main() {
 
 cmd_ansible() {
   if [ "$#" -lt 1 ]; then # called with no parameters
-    usage; exit 0
-
-  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
+    main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then
