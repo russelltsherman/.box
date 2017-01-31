@@ -1,0 +1,28 @@
+#!/bin/bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+
+file_writeln '/etc/modules' 'rtc-ds1307'
+
+if [ $1 = 'off' ] ; then
+  die "RTC removal is incomplete"
+  sed /etc/modules -i -e "s/^rtc-ds1307/#rtc-ds1307/"
+fi
+
+if [ $1 = 'on' ] ; then
+  sed /etc/modules -i -e "s/^#rtc-ds1307/rtc-ds1307/"
+
+  rm /etc/init.d/hwclock.sh
+  cp $_PITAP2_ROOT/lib/pitap2-rtc/hwclock.sh /etc/init.d/
+
+  apt-get remove -y fake-hwclock
+  rm /etc/cron.hourly/fake-hwclock
+
+  update-rc.d -f fake-hwclock remove
+  rm /etc/init.d/fake-hwclock
+
+  update-rc.d hwclock.sh enable
+fi
+
+exit

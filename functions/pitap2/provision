@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+# Usage: pitap2 provision
+# Summary: provision PiTap2
+# Help:
+#
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+cmd_provision() {
+  bot "Waking PiTap2 Bot!"
+
+  #####################################################
+  action "provisioning software"
+  #####################################################
+  running "install git-core"
+  # # Install git first
+  sudo apt-get install git-core -y
+  ok
+
+  running "install upstart"
+  sudo apt-get install upstart -y
+  ok
+
+  running "install tcpdump"
+  sudo apt-get install tcpdump -y
+  ok
+
+  running "install bridge-util"
+  sudo apt-get install bridge-utils -y
+  ok
+
+  running "install wiring pi"
+  # Clone the program Wiring Pi from git
+  git clone git://git.drogon.net/wiringPi /home/pi/wiringPi
+  # Enter the Wiring Pi folder and build it
+  cd wiringPi && ./build
+  ok
+
+  #####################################################
+  action "provisioning network configuration"
+  #####################################################
+  running "copying network configuration"
+  sudo ifdown eth0
+  sudo cp $BOXROOTDIR/lib/pitap2/network/interfaces /etc/network/interfaces
+  sudo ifup eth0
+  ok
+
+  #####################################################
+  action "Enable I2C interface"
+  #####################################################
+  running "installing python-smbus"
+  sudo apt-get install -y python-smbus
+  ok
+
+  running "installing i2c-tools"
+  sudo apt-get install -y i2c-tools
+  ok
+
+  running "writing configuration"
+  sudo BOXROOTDIR=$BOXROOTDIR $BOXROOTDIR/lib/pitap2/i2c 'on'
+  ok
+
+  #####################################################
+  action "Enable Real time clock module"
+  #####################################################
+  running "install ntpdate"
+  sudo apt-get install -y ntpdate
+  ok
+
+  running "writing configration"
+  sudo BOXROOTDIR=$BOXROOTDIR $BOXROOTDIR/lib/pitap2/rtc/rtc-ds1307 'on'
+  ok
+
+  #####################################################
+  action "provisioning max power for universal serial bus"
+  #####################################################
+  running "Writing config value"
+  sudo BOXROOTDIR=$BOXROOTDIR $BOXROOTDIR/lib/pitap2/max-usb-current 1
+  ok
+
+  #####################################################
+  action "provisioning external hard drive for capture storage"
+  #####################################################
+  # if mount already exists do noting
+  mountline='LABEL=DATA  /mnt/data  ext4  defaults 0 2'
+  if ! grep -q "$mountline" "/etc/fstab"; then
+    $BOXROOTDIR/bin/box pitap2 disk
+  fi
+
+  #####################################################
+  action "provisioning upstart configuration"
+  #####################################################
+  running "copying update conf file into place"
+  sudo cp $BOXROOTDIR/lib/pitap2/upstart/pitap2.conf /etc/init/pitap2.conf
+  ok
+
+}

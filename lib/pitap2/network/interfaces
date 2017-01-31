@@ -1,0 +1,20 @@
+auto lo
+iface lo inet loopback
+
+### OLD - Extremely important that DHCP is disabled.
+#auto lo
+#iface lo inet loopback
+#iface eth0 inet dhcp
+
+# built in network interface used for direct connection to computer 
+# https://pihw.wordpress.com/guides/direct-network-connection/
+auto eth0
+iface eth0 inet static
+address 192.168.2.5
+netmask 255.255.0.0
+dns-nameservers 8.8.8.8 8.8.4.4
+
+#allow-hotplug wlan0
+#iface wlan0 inet manual
+#wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+#iface default inet dhcp

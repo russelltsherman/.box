@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Usage: pitap2 rtc
+# Summary: attempt to update system time from ntp and write it it to the rtc
+# Help:
+# you may have to run the set time command a couple of times to kickstart the process
+#
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+cmd_rtc() {
+  bot "Trying to get time and set RTC time"
+
+  action "try get current date from NTP"
+  sudo ntpdate
+  ok
+
+  action "save vaue to RTC module"
+  sudo /etc/init.d/hwclock.sh restart
+  ok
+
+  exit
+
+}

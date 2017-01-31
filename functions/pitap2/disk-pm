@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Usage: pitap2 storage-pm
+# Summary: install and configure hard drive power management
+# Help:
+#
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+cmd_disk-pm() {
+  action "provisioning storage power management"
+
+  sleep 2s
+  # # #####################################################################
+  # # drive power management install
+  # # http://www.htpcguides.com/spin-down-and-manage-hard-drive-power-on-raspberry-pi/
+  # # sdparm not compatible with WD Elements drive..
+  # # setting up hd-idle as it appears to be compatible with both drives
+  # # hd-idle uses a special system file for detecting disk activity,
+  # # if it doesn’t exist it won’t work
+  # cat /proc/diskstats
+  #
+  # # You should see some output including the lines below,
+  # # if you get no such file or directory you cannot use hd-idle
+  #    8       0 sda 342 0 2759 260 0 0 0 0 0 250 250
+  #    8       1 sda1 102 0 815 90 0 0 0 0 0 80 80
+  #
+  # # You have to build hd-idle so make sure you have compilation tools
+  # sudo apt-get install build-essential debhelper -y
+  #
+  # # Grab the hd-idle source
+  # wget http://sourceforge.net/projects/hd-idle/files/hd-idle-1.05.tgz
+  #
+  # # Unpack hd-idle and enter the folder
+  # tar -xvf hd-idle-1.05.tgz && cd hd-idle
+  #
+  # # Build the hd-idle package and install it
+  # dpkg-buildpackage -rfakeroot
+  # sudo dpkg -i ../hd-idle_*.deb
+  #
+  # # Double check hd-idle works with your hard drive
+  # sudo hd-idle -i 0 -a sda -i 300 -d
+  #
+  # # You should see output like this
+  # probing sda: reads: 2759, writes: 0
+  # probing sda: reads: 2759, writes: 0
+  # probing sda: reads: 2759, writes: 0
+  # # Use Ctrl+C to stop hd-idle in the terminal
+  #
+  # # Open the hd-idle configuration file to enable the service to
+  # # automatically start and spin down drives
+  # sudo nano /etc/default/hd-idle
+  #
+  # # Change this line to enable hd-idle
+  # START_HD_IDLE=true
+  #
+  # # Adjust this line to enable sleeping on the drive every 10 minutes (60 seconds * 10)
+  # HD_IDLE_OPTS="-i 0 -a sda -i 600"
+  #
+  # # Ctrl+X, Y and Enter to save.
+  #
+  # # Restart the service
+  # sudo service hd-idle restart
+
+  ok
+
+}

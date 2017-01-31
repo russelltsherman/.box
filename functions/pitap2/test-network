@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Usage: pitap2 test-network
+# Summary: automate the testing of newtork throughput
+# Help:
+#
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+cmd_test-network() {
+  ######################################################################
+  # testing network throughput
+  # http://williamknowles.co.uk/?p=68
+}

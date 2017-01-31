@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Usage: pitap2 test-storage
+# Summary: automate the testing of data storage throughput
+# Help:
+#
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+cmd_test-storage() {
+  bot "PITAP2BOT!"
+
+  action "testing write throughput"
+  dd if=/dev/zero of=/mnt/data/captures/testfile bs=500M count=1 oflag=direct
+  ok
+
+  action "cleaning up"
+  rm -rf /mnt/data/captures/testfile
+  ok
+
+  exit
+
+  # test results using 128gb ssd drive
+  # http://www.amazon.com/gp/product/B00EZ2FRU2
+  # 1+0 records in
+  # 1+0 records out
+  # 524288000 bytes (524 MB) copied, 15.1522 s, 34.6 MB/s
+
+  # test results using Western Digital 1TB passport
+  # http://www.amazon.com/dp/B00W8XXRPM
+  # 1+0 records in
+  # 1+0 records out
+  # 524288000 bytes (524 MB) copied, 16.056 s, 32.7 MB/s
+}
