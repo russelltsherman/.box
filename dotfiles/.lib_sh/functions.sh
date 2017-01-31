@@ -29,23 +29,6 @@ function die() {
   echo "$@" 1>&2 ; exit 1;
 }
 
-
-
-function require_nvm() {
-  mkdir -p ~/.nvm
-  cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
-  sourceNVM
-  nvm install $1
-  if [[ $? != 0 ]]; then
-    action "installing nvm"
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash
-    . ~/.bashrc
-    nvm install $1
-  fi
-  nvm use $1
-  ok
-}
-
 function require_vagrant_plugin() {
   running "vagrant plugin $1"
   local vagrant_plugin="$1"

@@ -18,7 +18,9 @@ bot "I'm going to install tooling and tweak your system settings. Here I go..."
 ################################################################################
 # passwordless sudo
 ################################################################################
-if [[ ! -f "/etc/sudoers.d/coderonin" ]];then
+if [ -f "/etc/sudoers.d/coderonin" ];then
+  bot "It looks like you are already set up to sudo without a password."
+else
   ################################################################################
   # Ask for the administrator password upfront
   ################################################################################
@@ -37,8 +39,6 @@ if [[ ! -f "/etc/sudoers.d/coderonin" ]];then
     sudo "$BASH" -c "echo \"$DEVUSER ALL=(ALL) NOPASSWD: ALL\" > \"/etc/sudoers.d/$DEVUSER\""
     bot "You can now run sudo commands without password!"
   fi
-else
-  bot "It looks like you are already set up to sudo without a password."
 fi
 
 
@@ -55,7 +55,9 @@ source "$BOXROOTDIR/functions/setup/ssh"
 IMGDIR=$BOXROOTDIR/assets
 MD5_NEWWP=$(md5 $IMGDIR/wallpaper.jpg | awk '{print $4}')
 MD5_OLDWP=$(md5 /System/Library/CoreServices/DefaultDesktop.jpg | awk '{print $4}')
-if [[ "$MD5_NEWWP" != "$MD5_OLDWP" ]]; then
+if [[ "$MD5_NEWWP" == "$MD5_OLDWP" ]]; then
+  bot "It looks like you are already using our project wallpaper image."
+else
   read -r -p "Do you want to use the project's custom desktop wallpaper? [Y|n] " response
   if [[ $response =~ ^(no|n|N) ]];then
     echo "skipping...";
@@ -72,8 +74,6 @@ if [[ "$MD5_NEWWP" != "$MD5_OLDWP" ]]; then
     sudo cp $IMGDIR/wallpaper.jpg /Library/Desktop\ Pictures/Sierra.jpg;
     sudo cp $IMGDIR/wallpaper.jpg /Library/Desktop\ Pictures/El\ Capitan.jpg;ok
   fi
-else
-  bot "It looks like you are already using our project wallpaper image."
 fi
 
 
@@ -81,10 +81,10 @@ fi
 # xCode
 ################################################################################
 xcode_tools=$(xcode-select --install 2>&1 > /dev/null)
-if [[ $? != 0 ]]; then
-  bot "Looks like Xcode cli tools are already installed"
-else
+if [[ $? == 0 ]]; then
   die "Looks like you need to install Xcode cli tools"
+else
+  bot "Looks like Xcode cli tools are already installed"
 fi
 
 
@@ -129,6 +129,31 @@ source "$BOXROOTDIR/lib/essentials/_$NS_PLATFORM.sh"
 ################################################################################
 bot "Setting System Defaults"
 source "$BOXROOTDIR/lib/defaults/_$NS_PLATFORM.sh"
+
+
+################################################################################
+# NodeJS Version Manager
+################################################################################
+if [ -d $HOME/.nvm ]; then
+  bot "NodeJS Version Manager found... updating"
+  (cd ~/.nvm && ./install.sh)
+else
+  bot "Installing NodeJS Version Manager"
+
+  git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+
+  # nvm load in coderonin file
+  profile_write "# initialize NVM" $HOME/.profile
+  profile_write "export NVM_DIR=\$HOME/.nvm" $HOME/.profile
+  profile_write '[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"' $HOME/.profile
+
+  # immediately load nvm so we can install node and npm
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+  require_nvm 4.4.7
+fi
+
 
 
 ################################################################################
@@ -230,6 +255,21 @@ fi
 
 
 ################################################################################
+# vim plugins
+################################################################################
+bot "Installing plugins for vim"
+if [ "$NS_PLATFORM" == "darwin" ]; then
+  # add vundle to manage vim plugins
+  git_clone_or_update https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  # use vundle to install other plugins
+  vim +PluginInstall +qall > /dev/null 2>&1
+fi
+if [ "$NS_PLATFORM" == "linux" ]; then
+  die 'not implemented'
+fi
+
+
+################################################################################
 # dotfiles
 ################################################################################
 bot "creating symlinks for project dotfiles..."
@@ -261,7 +301,7 @@ popd > /dev/null 2>&1
 ################################################################################
 # zshell
 ################################################################################
-if [[ "zsh" == $ZSH_NAME ]];then
+if [ "$ZSH_NAME" == "zsh" ];then
   bot "Zshell"
 
   running "ensure that zsh exists in /etc/shells"
