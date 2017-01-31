@@ -42,7 +42,9 @@ action "Installing build tools"
     xclip \
     zlib1g \
     zlib1g-dev \
-    wget
+    wget \
+    zsh
+
 ok
 
 #########################################################

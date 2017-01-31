@@ -115,6 +115,12 @@ require_brew watch
 # Internet file retriever https://www.gnu.org/software/wget/
 require_brew wget --with-iri
 
+# UNIX shell (command interpreter) https://www.zsh.org/
+require_brew zsh
+
+# Additional completion definitions for zsh https://github.com/zsh-users/zsh-completions
+require_brew zsh-completions
+
 action "cleaning up homebrew cache..."
 # Remove outdated versions from the cellar
 brew cleanup

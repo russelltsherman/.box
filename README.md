@@ -272,7 +272,6 @@ the following are all installed inside the `install.sh` as foundational software
 
 * xCode CLI tools
 * homebrew
-* zsh
 
 
 ## Utilities
@@ -312,10 +311,23 @@ the following are all installed inside the `install.sh` as foundational software
 * vim --override-system-vi
 * watch
 * wget --enable-iri
+* zsh
+* zsh-completions
 
 ## Apps
 
-* Atom
+* Atom and atom plugins
+  -  atom-beautify
+  -  editorconfig
+  -  language-babel
+  -  language-docker
+  -  language-nginx
+  -  language-ldif
+  -  linter-eslint
+  -  linter
+  -  linter-docker
+  -  nuclide
+  -  vim-mode-plus
 * Docker
 * SizeUp
 

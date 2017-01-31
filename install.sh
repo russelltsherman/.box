@@ -137,6 +137,7 @@ source "$BOXROOTDIR/lib/defaults/_$NS_PLATFORM.sh"
 source "$BOXROOTDIR/functions/setup/atom"
 ( cmd_atom )
 
+
 ################################################################################
 # sizeup window manager
 ################################################################################
@@ -148,6 +149,7 @@ if [ "$NS_PLATFORM" == "darwin" ]; then
   running "Don't show the preferences window on next start"
   defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
 fi
+
 
 ################################################################################
 # docker
@@ -226,44 +228,6 @@ if [ "$NS_PLATFORM" == "linux" ]; then
   ok
 fi
 
-################################################################################
-# zshell
-################################################################################
-if [[ "zsh" == $ZSH_NAME ]];then
-  bot "Installing Zshell"
-
-  if [ "$NS_PLATFORM" == "darwin" ]; then
-    require_brew zsh
-    require_brew zsh-completions
-  fi
-  if [ "$NS_PLATFORM" == "linux" ]; then
-    running "Install ZSH"
-    sudo apt-get install -y zsh
-    ok
-  fi
-
-  running "ensure that zsh exists in /etc/shells"
-    if ! grep -q "/usr/local/bin/zsh" "/etc/shells" ; then
-      sudo echo "/usr/local/bin/zsh" >> "/etc/shells"
-    fi
-  ok
-
-  # implementing antigen for easier management of zsh plugins
-  # https://joshldavis.com/2014/07/26/oh-my-zsh-is-a-disease-antigen-is-the-vaccine/
-  git_clone_or_update git://github.com/zsh-users/antigen.git "$BOXROOTDIR/.antigen"
-
-  running "Set Zsh as your default shell:"
-  if [ "$NS_PLATFORM" == "darwin" ]; then
-    chsh -s /usr/local/bin/zsh
-  fi
-  if [ "$NS_PLATFORM" == "linux" ]; then
-    chsh -s /usr/bin/zsh
-  fi
-  ok
-else
-  bot "Looks like you're already running in zShell"
-fi
-
 
 ################################################################################
 # dotfiles
@@ -293,3 +257,31 @@ for file in .*; do
 done
 
 popd > /dev/null 2>&1
+
+################################################################################
+# zshell
+################################################################################
+if [[ "zsh" == $ZSH_NAME ]];then
+  bot "Zshell"
+
+  running "ensure that zsh exists in /etc/shells"
+    if ! grep -q "/usr/local/bin/zsh" "/etc/shells" ; then
+      sudo echo "/usr/local/bin/zsh" >> "/etc/shells"
+    fi
+  ok
+
+  # implementing antigen for easier management of zsh plugins
+  # https://joshldavis.com/2014/07/26/oh-my-zsh-is-a-disease-antigen-is-the-vaccine/
+  git_clone_or_update git://github.com/zsh-users/antigen.git "$BOXROOTDIR/.antigen"
+
+  running "Set Zsh as your default shell:"
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    chsh -s /usr/local/bin/zsh
+  fi
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    chsh -s /usr/bin/zsh
+  fi
+  ok
+else
+  bot "Looks like you're already running in zShell"
+fi
