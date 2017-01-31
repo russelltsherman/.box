@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='spotify'
-  del_stopped $RUNASNAME
+  local container_name='spotify'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -21,7 +21,7 @@ main() {
   --device /dev/dri \
   --group-add audio \
   --group-add video \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/spotify
 
 }

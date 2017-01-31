@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='ricochet'
-  del_stopped $RUNASNAME
+  local container_name='ricochet'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -19,7 +19,7 @@ main() {
   -e GDK_DPI_SCALE \
   -e QT_DEVICE_PIXEL_RATIO \
   --device /dev/dri \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/ricochet
 
 }

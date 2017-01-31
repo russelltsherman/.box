@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='pulseaudio'
-  del_stopped $RUNASNAME
+  local container_name='pulseaudio'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -17,7 +17,7 @@ main() {
   -p 4713:4713 \
   --restart always \
   --group-add audio \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/pulseaudio
 }
 

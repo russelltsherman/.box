@@ -8,13 +8,13 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='pond'
-  del_stopped $RUNASNAME
+  local container_name='pond'
+  del_stopped $container_name
   relies_on torproxy
 
   docker run --rm -it \
   --net container:torproxy \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/pond
 
 }

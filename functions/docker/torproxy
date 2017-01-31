@@ -8,14 +8,14 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='torproxy'
-  del_stopped $RUNASNAME
+  local container_name='torproxy'
+  del_stopped $container_name
 
   docker run -d \
   --restart always \
   -v /etc/localtime:/etc/localtime:ro \
   -p 9050:9050 \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/tor-proxy
 
   hostess add torproxy "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' torproxy)"

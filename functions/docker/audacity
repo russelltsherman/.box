@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="audacity"
-  del_stopped $RUNASNAME
+  local container_name="audacity"
+  del_stopped $container_name
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -17,7 +17,7 @@ main() {
   -e QT_DEVICE_PIXEL_RATIO \
   --device /dev/snd \
   --group-add audio \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/audacity
 }
 

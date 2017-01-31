@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='scudcloud'
-  del_stopped $RUNASNAME
+  local container_name='scudcloud'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -30,7 +30,7 @@ main() {
   -v /etc/machine-id:/etc/machine-id:ro \
   -v "${HOME}/.scudcloud:/home/jessie/.config/scudcloud" \
   --device /dev/snd \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/scudcloud
 
   # exit current shell

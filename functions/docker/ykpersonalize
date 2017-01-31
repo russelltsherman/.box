@@ -9,14 +9,14 @@ usage() {
 
 
 main() {
-  local RUNASNAME='ykpersonalize'
-  del_stopped $RUNASNAME
+  local container_name='ykpersonalize'
+  del_stopped $container_name
 
   docker run --rm -it \
   -v /etc/localtime:/etc/localtime:ro \
   --device /dev/usb \
   --device /dev/bus/usb \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/ykpersonalize bash
 
 }

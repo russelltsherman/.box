@@ -8,15 +8,15 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='wireshark'
-  del_stopped $RUNASNAME
+  local container_name='wireshark'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -e "DISPLAY=unix${DISPLAY}" \
   --net host \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/wireshark
 
 }

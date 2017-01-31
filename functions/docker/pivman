@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='pivman'
-  del_stopped $RUNASNAME
+  local container_name='pivman'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -17,7 +17,7 @@ main() {
   -e "DISPLAY=unix${DISPLAY}" \
   --device /dev/bus/usb \
   --device /dev/usb \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/pivman
 
 }

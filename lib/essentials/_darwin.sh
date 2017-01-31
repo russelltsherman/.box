@@ -82,6 +82,9 @@ require_brew most
 # Collection of tools that nobody wrote when UNIX was young https://joeyh.name/code/moreutils/
 require_brew moreutils
 
+# CLI for MySQL with auto-completion and syntax highlighting http://mycli.net/
+require_brew mycli
+
 # Port scanning utility for large networks https://nmap.org/
 require_brew nmap
 

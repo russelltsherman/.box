@@ -8,7 +8,7 @@ usage() {
 }
 
 main() {
-  RUNASNAME="john"
+  container_name="john"
   
   local file
   file=$(realpath "$1")

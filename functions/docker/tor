@@ -8,12 +8,12 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='tor'
-  del_stopped $RUNASNAME
+  local container_name='tor'
+  del_stopped $container_name
 
   docker run -d \
   --net host \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/tor
 
   # set up the redirect iptables rules

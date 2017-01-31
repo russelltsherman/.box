@@ -8,14 +8,14 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='yubico-piv-tool'
-  del_stopped $RUNASNAME
+  local container_name='yubico-piv-tool'
+  del_stopped $container_name
 
   docker run --rm -it \
   -v /etc/localtime:/etc/localtime:ro \
   --device /dev/usb \
   --device /dev/bus/usb \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/yubico-piv-tool bash
 
 }

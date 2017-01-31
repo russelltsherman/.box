@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='privoxy'
-  del_stopped $RUNASNAME
+  local container_name='privoxy'
+  del_stopped $container_name
   relies_on torproxy
 
   docker run -d \
@@ -17,7 +17,7 @@ main() {
   --link torproxy:torproxy \
   -v /etc/localtime:/etc/localtime:ro \
   -p 8118:8118 \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/privoxy
 
   hostess add privoxy "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' privoxy)"

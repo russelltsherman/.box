@@ -8,13 +8,13 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='pms'
-  del_stopped $RUNASNAME
+  local container_name='pms'
+  del_stopped $container_name
 
   docker run --rm -it \
   -v "${HOME}/.mpd/socket:/var/run/mpd/socket" \
   -e MPD_HOST=/var/run/mpd/socket \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/pms "$@"
 
 }

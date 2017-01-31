@@ -8,14 +8,14 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='s3cmd'
-  del_stopped $RUNASNAME
+  local container_name='s3cmd'
+  del_stopped $container_name
 
   docker run --rm -it \
   -e AWS_ACCESS_KEY="${DOCKER_AWS_ACCESS_KEY}" \
   -e AWS_SECRET_KEY="${DOCKER_AWS_ACCESS_SECRET}" \
   -v "$(pwd):/root/s3cmd-workspace" \
-  --name #RUNASNAME \
+  --name #container_name \
   ${DOCKER_REPO_PREFIX}/s3cmd "$@"
 }
 

@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='spotify'
-  del_stopped $RUNASNAME
+  local container_name='spotify'
+  del_stopped $container_name
   relies_on pulseaudio
 
   docker run -d \
@@ -22,7 +22,7 @@ main() {
   --link pulseaudio:pulseaudio \
   -e PULSE_SERVER=pulseaudio \
   --device /dev/dri \
-  --name RUNASNAME \
+  --name container_name \
   ${DOCKER_REPO_PREFIX}/steam
 
 }

@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="imagemin"
-  del_stopped $RUNASNAME
+  local container_name="imagemin"
+  del_stopped $container_name
   local image=$1
   local extension="${image##*.}"
   local filename="${image%.*}"
@@ -17,7 +17,7 @@ main() {
   docker run --rm -it \
   -v /etc/localtime:/etc/localtime:ro \
   -v "${HOME}/Pictures:/root/Pictures" \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/imagemin sh -c "imagemin /root/Pictures/${image} > /root/Pictures/${filename}_min.${extension}"
 }
 

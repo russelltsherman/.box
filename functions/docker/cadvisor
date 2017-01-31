@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="cadvisor"
-  del_stopped $RUNASNAME
+  local container_name="cadvisor"
+  del_stopped $container_name
   docker run -d \
   --restart always \
   -v /:/rootfs:ro \
@@ -17,7 +17,7 @@ main() {
   -v /sys:/sys:ro  \
   -v /var/lib/docker/:/var/lib/docker:ro \
   -p 1234:8080 \
-  --name $RUNASNAME \
+  --name $container_name \
   google/cadvisor
 
   hostess add cadvisor "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' cadvisor)"

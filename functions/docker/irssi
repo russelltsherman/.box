@@ -8,15 +8,15 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="irssi"
-  del_stopped $RUNASNAME
+  local container_name="irssi"
+  del_stopped $container_name
   # relies_on notify_osd
 
   docker run --rm -it \
   -v /etc/localtime:/etc/localtime:ro \
   -v "${HOME}/.irssi:/home/user/.irssi" \
   --read-only \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/irssi
 }
 

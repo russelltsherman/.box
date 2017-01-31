@@ -8,13 +8,13 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='weeslack'
-  del_stopped $RUNASNAME
+  local container_name='weeslack'
+  del_stopped $container_name
 
   docker run --rm -it \
   -v /etc/localtime:/etc/localtime:ro \
   -v "${HOME}/.weechat:/home/user/.weechat" \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/wee-slack
 
 }

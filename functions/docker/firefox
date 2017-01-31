@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="firefox"
-  del_stopped $RUNASNAME
+  local container_name="firefox"
+  del_stopped $container_name
   docker run -d \
   --memory 2gb \
   --net host \
@@ -26,7 +26,7 @@ main() {
   -e GDK_DPI_SCALE \
   --device /dev/snd \
   --device /dev/dri \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/firefox "$@"
 
   # exit current shell

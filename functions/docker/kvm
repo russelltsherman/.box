@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='kvm'
-  del_stopped $RUNASNAME
+  local container_name='kvm'
+  del_stopped $container_name
   relies_on pulseaudio
 
   # modprobe the module
@@ -23,7 +23,7 @@ main() {
   --link pulseaudio:pulseaudio \
   -e PULSE_SERVER=pulseaudio \
   --group-add audio \
-  --name $RUNASNAME \
+  --name $container_name \
   --privileged \
   ${DOCKER_REPO_PREFIX}/kvm
 

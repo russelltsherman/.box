@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='skype'
-  del_stopped $RUNASNAME
+  local container_name='skype'
+  del_stopped $container_name
   relies_on pulseaudio
 
   docker run -d \
@@ -22,7 +22,7 @@ main() {
   --device /dev/video0 \
   --group-add video \
   --group-add audio \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/skype
 
 }

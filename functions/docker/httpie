@@ -8,11 +8,11 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="httpie"
-  del_stopped $RUNASNAME
+  local container_name="httpie"
+  del_stopped $container_name
   docker run -t --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  --name $RUNASNAME \
+  --name $container_name \
   --log-driver none \
   ${DOCKER_REPO_PREFIX}/httpie "$@"
 }

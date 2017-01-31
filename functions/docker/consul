@@ -8,11 +8,11 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="consul"
-  del_stopped $RUNASNAME
+  local container_name="consul"
+  del_stopped $container_name
   # check if we passed args and if consul is running
   local state
-  state=$(docker inspect --format "{{.State.Running}}" $RUNASNAME 2>/dev/null)
+  state=$(docker inspect --format "{{.State.Running}}" $container_name 2>/dev/null)
   if [[ "$state" == "true" ]] && [[ "$*" != "" ]]; then
     docker exec -it consul consul "$@"
     return 0
@@ -24,7 +24,7 @@ main() {
   -v /var/run/docker.sock:/var/run/docker.sock \
   --net host \
   -e GOMAXPROCS=2 \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/consul agent \
   -bootstrap-expect 1 \
   -config-dir /etc/consul.d \

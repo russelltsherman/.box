@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='torbrowser'
-  del_stopped $RUNASNAME
+  local container_name='torbrowser'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -18,7 +18,7 @@ main() {
   -e GDK_SCALE \
   -e GDK_DPI_SCALE \
   --device /dev/snd \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/tor-browser
 
   # exit current shell

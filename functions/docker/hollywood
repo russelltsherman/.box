@@ -8,10 +8,10 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="hollywood"
-  del_stopped $RUNASNAME
+  local container_name="hollywood"
+  del_stopped $container_name
   docker run --rm -it \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/hollywood
 }
 

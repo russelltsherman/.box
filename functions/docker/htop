@@ -8,12 +8,12 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="htop"
-  del_stopped $RUNASNAMElocal
+  local container_name="htop"
+  del_stopped $container_namelocal
   docker run --rm -it \
   --pid host \
   --net none \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/htop
 }
 

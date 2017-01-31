@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='notify_osd'
-  del_stopped $RUNASNAME
+  local container_name='notify_osd'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -19,7 +19,7 @@ main() {
   -v /home/user/.dbus \
   -v /home/user/.cache/dconf \
   -e "DISPLAY=unix${DISPLAY}" \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/notify-osd
 }
 

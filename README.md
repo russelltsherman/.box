@@ -293,6 +293,7 @@ the following are all installed inside the `install.sh` as foundational software
 * maven
 * most
 * moreutils
+* mycli
 * nmap
 * openconnect
 * pv

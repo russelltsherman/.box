@@ -8,7 +8,7 @@ usage() {
 }
 
 main() {
-  local RUNASNAME="chrome"
+  local container_name="chrome"
 
   # add flags for proxy if passed
   local proxy=
@@ -23,7 +23,7 @@ main() {
     args="https://check.torproject.org/api/ip ${*:2}"
   fi
 
-  del_stopped $RUNASNAME
+  del_stopped $container_name
 
   # one day remove /etc/hosts bind mount when effing
   # overlay support inotify, such bullshit
@@ -46,7 +46,7 @@ main() {
   --device /dev/bus/usb \
   --group-add audio \
   --group-add video \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/chrome --user-data-dir=/data \
   --proxy-server="$proxy" \
   --host-resolver-rules="$map" "$args"

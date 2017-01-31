@@ -8,13 +8,13 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='watchman'
-  del_stopped $RUNASNAME
+  local container_name='watchman'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v "${HOME}/Downloads:/root/Downloads" \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/watchman --foreground
 
 }

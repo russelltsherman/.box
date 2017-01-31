@@ -8,13 +8,13 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='registrator'
-  del_stopped $RUNASNAME
+  local container_name='registrator'
+  del_stopped $container_name
 
   docker run -d --restart always \
   -v /var/run/docker.sock:/tmp/docker.sock \
   --net host \
-  --name $RUNASNAME \
+  --name $container_name \
   gliderlabs/registrator consul:
 
 }

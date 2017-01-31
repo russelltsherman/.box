@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='slack'
-  del_stopped $RUNASNAME
+  local container_name='slack'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -22,7 +22,7 @@ main() {
   --group-add video \
   -v "${HOME}/.slack:/root/.config/Slack" \
   --ipc="host" \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/slack "$@"
 
 }

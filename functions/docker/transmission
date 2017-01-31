@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='transmission'
-  del_stopped $RUNASNAME
+  local container_name='transmission'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -18,7 +18,7 @@ main() {
   -p 9091:9091 \
   -p 51413:51413 \
   -p 51413:51413/udp \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/transmission
 
 

@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='rstudio'
-  del_stopped $RUNASNAME
+  local container_name='rstudio'
+  del_stopped $container_name
 
   docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
@@ -19,7 +19,7 @@ main() {
   -e "DISPLAY=unix${DISPLAY}" \
   -e QT_DEVICE_PIXEL_RATIO \
   --device /dev/dri \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/rstudio
 }
 

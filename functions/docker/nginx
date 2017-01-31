@@ -8,14 +8,14 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='nginx'
-  del_stopped $RUNASNAME
+  local container_name='nginx'
+  del_stopped $container_name
 
   docker run -d \
   --restart always \
   -v "${HOME}/.nginx:/etc/nginx" \
   --net host \
-  --name $RUNASNAME \
+  --name $container_name \
   nginx
 
   # add domain to hosts & open nginx

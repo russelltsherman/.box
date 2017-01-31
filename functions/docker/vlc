@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='vlc'
-  del_stopped $RUNASNAME
+  local container_name='vlc'
+  del_stopped $container_name
   relies_on pulseaudio
 
   docker run -d \
@@ -25,7 +25,7 @@ main() {
   --group-add video \
   -v "${HOME}/Torrents:/home/vlc/Torrents" \
   --device /dev/dri \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/vlc
 }
 

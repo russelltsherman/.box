@@ -8,14 +8,14 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='shorewall'
-  del_stopped $RUNASNAME
+  local container_name='shorewall'
+  del_stopped $container_name
 
   docker run --rm -it \
   --net host \
   --cap-add NET_ADMIN \
   --privileged \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/shorewall "$@"
 
 }

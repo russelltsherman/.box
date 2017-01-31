@@ -8,14 +8,14 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='termboy'
-  del_stopped $RUNASNAME
+  local container_name='termboy'
+  del_stopped $container_name
 
   local game=$1
 
   docker run --rm -it \
   --device /dev/snd \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/nes "/games/${game}.rom"
 
 }

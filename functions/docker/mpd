@@ -8,8 +8,8 @@ usage() {
 }
 
 main() {
-  local RUNASNAME='mpd'
-  del_stopped $RUNASNAME
+  local container_name='mpd'
+  del_stopped $container_name
 
   # adding cap sys_admin so I can use nfs mount
   # the container runs as a unpriviledged user mpd
@@ -21,7 +21,7 @@ main() {
   -v /etc/exports:/etc/exports:ro \
   -v "${HOME}/.mpd:/var/lib/mpd" \
   -v "${HOME}/.mpd.conf:/etc/mpd.conf" \
-  --name $RUNASNAME \
+  --name $container_name \
   ${DOCKER_REPO_PREFIX}/mpd
 }
 
