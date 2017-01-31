@@ -268,11 +268,16 @@ Here is the current list:
 
 # Software Installation
 
-xCode CLI tools,
-homebrew, fontconfig, zsh
+* xCode CLI tools
+* homebrew
+* atom
+* zsh
+
 
 , ruby, nvm (node + npm), and  (latest) are all installed inside the `install.sh` as foundational software for running this project.
+
 Additional software is configured in `config.js` and can be customized in your own fork/branch.
+
 The following is the software that I have set as default:
 
 ## Utilities

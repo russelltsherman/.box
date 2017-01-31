@@ -8,9 +8,8 @@ usage() {
 }
 
 main() {
-  banner
   get_platform
-  bot "Atom: A hackable text editor for the 21st Century"
+  bot "Installing Atom: A hackable text editor for the 21st Century"
 
   running "installing atom"
     if [ "$NS_PLATFORM" == "darwin" ]; then
@@ -57,7 +56,7 @@ main() {
 
 cmd_atom() {
   if [ "$#" -lt 1 ]; then # called with no parameters
-    usage; exit 0
+    main; exit 0
 
   elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
     main "$@"; exit 0
