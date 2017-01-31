@@ -8,13 +8,10 @@ usage() {
 }
 
 main() {
-  banner
   get_platform
-  bot "SSH Setup"
 
-  running "checking for existing rsa key"
   if [ ! -f ~/.ssh/id_rsa ]; then
-    action "rsa key not present.. lets create one."
+    bot "rsa key not present.. lets create one."
 
     if [ -z ${USER_EMAIL+x} ]; then
       prompt_email
@@ -34,7 +31,7 @@ main() {
       ssh-add ~/.ssh/id_rsa
     ok
   else
-    ok
+    bot "Looks like you already have rsa key"
   fi
 }
 
@@ -43,7 +40,7 @@ main() {
 
 cmd_ssh() {
   if [ "$#" -lt 1 ]; then # called with no parameters
-    usage; exit 0
+    main; exit 0
 
   elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
     main "$@"; exit 0
