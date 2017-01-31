@@ -8,7 +8,7 @@ usage() {
 }
 
 main() {
-  if [ ! -f ~/.ssh/id_rsa* ]; then
+  if [ ! -f "$HOME/.ssh/id_rsa"* ]; then
     bot "rsa key not present.. lets create one."
 
     local fullname=`osascript -e "long user name of (system info)"`
