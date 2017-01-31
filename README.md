@@ -268,17 +268,12 @@ Here is the current list:
 
 # Software Installation
 
+the following are all installed inside the `install.sh` as foundational software for running this project.
+
 * xCode CLI tools
 * homebrew
-* atom
 * zsh
 
-
-, ruby, nvm (node + npm), and  (latest) are all installed inside the `install.sh` as foundational software for running this project.
-
-Additional software is configured in `config.js` and can be customized in your own fork/branch.
-
-The following is the software that I have set as default:
 
 ## Utilities
 
@@ -319,12 +314,16 @@ The following is the software that I have set as default:
 * wget --enable-iri
 
 ## Apps
+
+* Atom
+* Docker
+* SizeUp
+
 <!--
 * box-sync
 * slack
 * gpgtools
 * iterm2
-* sizeup
 * xquartz
 -->
 

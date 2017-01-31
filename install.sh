@@ -135,7 +135,7 @@ source "$BOXROOTDIR/lib/defaults/_$NS_PLATFORM.sh"
 # atom text editor
 ################################################################################
 source "$BOXROOTDIR/functions/setup/atom"
-(cmd_atom)
+( cmd_atom )
 
 ################################################################################
 # sizeup window manager
@@ -149,6 +149,82 @@ if [ "$NS_PLATFORM" == "darwin" ]; then
   defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
 fi
 
+################################################################################
+# docker
+################################################################################
+bot "Install Docker"
+if [ "$NS_PLATFORM" == "darwin" ]; then
+  require_cask docker
+fi
+if [ "$NS_PLATFORM" == "linux" ]; then
+  running "purge old repos if they exist"
+    # Purge the old repo if it exists.
+    sudo apt-get purge "lxc-docker*"
+    sudo apt-get purge "docker.io*"
+  ok
+
+  running "add docker apt repo to sources"
+    sudo rm /etc/apt/sources.list.d/backports.list
+    sudo_write 'deb http://http.debian.net/debian wheezy-backports main' /etc/apt/sources.list.d/backports.list
+    sudo_write 'deb https://apt.dockerproject.org/repo debian-jessie main' /etc/apt/sources.list.d/docker.list
+  ok
+
+  running "ensure dependencies"
+    sudo apt-get install -y libapparmor1 aufs-tools apt-transport-https ca-certificates
+  ok
+
+  running "add public key for repo"
+    sudo apt-key adv \
+      --keyserver hkp://ha.pool.sks-keyservers.net:80 \
+      --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+  ok
+
+  running "update apt cache"
+    # Update the APT package index.
+    sudo apt-get update
+    # Verify that APT is pulling from the right repository.
+    sudo apt-cache policy docker-engine
+  ok
+
+  running "install linux-image-extra kernel package"
+    # For Ubuntu Trusty, Vivid, and Wily, it’s recommended to install the linux-image-extra kernel package.
+    # The linux-image-extra package allows you use the aufs storage driver.
+    sudo apt-get -y install linux-image-extra-$(uname -r)
+  ok
+
+  running "install docker engine"
+    # Install Docker.
+    sudo apt-get -y install docker-engine
+  ok
+
+  running "start docker"
+    # Start the docker daemon.
+    sudo service docker start
+  ok
+
+  running "hello world docker"
+    # Verify docker is installed correctly.
+    sudo docker run hello-world
+  ok
+
+  running "make docker accessible without sudo"
+    # Add the docker group if it doesn't already exist.
+    sudo groupadd docker
+    # Add the connected user "${USER}" to the docker group.
+    # Change the user name to match your preferred user.
+    # You may have to logout and log back in again for
+    # this to take effect.
+    DEV=`whoami`
+    sudo gpasswd -aG $DEV docker
+    # Restart the Docker daemon.
+    sudo service docker restart
+  ok
+
+  running "installing docker compose"
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+  ok
+fi
 
 ################################################################################
 # zshell
