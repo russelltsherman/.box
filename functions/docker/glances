@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Glances is a cross-platform system monitoring tool written in Python.
+# https://nicolargo.github.io/glances/
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box glances"
+  echo
+}
+
+main() {
+  local container_name="glances"
+  del_stopped $container_name
+
+  docker run --rm -it \
+    --name $container_name \
+    -v /var/run/docker.sock:/var/run/docker.sock:ro \
+    --pid host \
+    docker.io/nicolargo/glances
+}
+
+# for examples of providing tab completion suggestions see:
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# _cmd_glances() {
+# }
+
+cmd_glances() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_glances "$@"
