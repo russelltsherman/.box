@@ -270,10 +270,6 @@ Here is the current list:
 
 the following are all installed inside the `install.sh` as foundational software for running this project.
 
-* xCode CLI tools
-* homebrew
-
-
 ## Utilities
 
 * ack
@@ -291,6 +287,7 @@ the following are all installed inside the `install.sh` as foundational software
 * gnu-sed
 * gnu-which
 * homebrew/dupes/grep
+* homebrew
 * htop
 * hub
 * imagemagick
@@ -316,6 +313,10 @@ the following are all installed inside the `install.sh` as foundational software
 
 ## Apps
 
+* 1password
+* Adium
+* Alfred
+* Armory
 * Atom and atom plugins
   -  atom-beautify
   -  editorconfig
@@ -328,16 +329,28 @@ the following are all installed inside the `install.sh` as foundational software
   -  linter-docker
   -  nuclide
   -  vim-mode-plus
+* Bitcoin Core
+* Cheatsheet
+* Daisy Disk
+* Diffmerge
+* Drobo Dashboard
 * Docker
+* Firefox
+* Google Chrome
+* Growl Notify
+* GPG Suite
+* iTerm2
+* LastPass
+* MacPilot
 * SizeUp
-
-<!--
-* box-sync
-* slack
-* gpgtools
-* iterm2
+* Slack
+* Sophos Antivirus
+* the Unarchiver
+* Tower
+* VLC
+* xCode CLI tools
 * xquartz
--->
+* yohimbo
 
 ## NPM Global Modules
 
@@ -354,9 +367,6 @@ the following are all installed inside the `install.sh` as foundational software
 * vtop
 * yo
 -->
-
-## Ruby Gems
-<!-- * git-up -->
 
 # License
 This project is licensed under ISC. Please fork, contribute and share.
