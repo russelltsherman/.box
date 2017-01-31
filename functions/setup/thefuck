@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box thefuck"
+  echo "usage: box setup thefuck"
   echo
 }
 

@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box herokutoolbelt"
+  echo "usage: box setup herokutoolbelt"
   echo
 }
 

@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box memcached"
+  echo "usage: box setup memcached"
   echo
 }
 

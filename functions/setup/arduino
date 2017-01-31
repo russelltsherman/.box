@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box arduino"
+  echo "usage: box setup arduino"
   echo
 }
 

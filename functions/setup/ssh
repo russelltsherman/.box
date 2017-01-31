@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box ssh"
+  echo "usage: box setup ssh"
   echo
 }
 
@@ -36,7 +36,6 @@ main() {
   else
     ok
   fi
-
 }
 
 # _cmd_ssh() {
