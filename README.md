@@ -31,8 +31,8 @@
 - [Software Installation](#software-installation)
   - [Utilities](#utilities)
   - [Apps](#apps)
-  - [NPM Global Modules](#npm-global-modules)
-  - [Ruby Gems](#ruby-gems)
+  <!-- - [NPM Global Modules](#npm-global-modules) -->
+  <!-- - [Ruby Gems](#ruby-gems) -->
 - [License](#license)
 - [Contributions](#contributions)
 - [Loathing, Mehs and Praise](#loathing-mehs-and-praise)
@@ -348,9 +348,9 @@ the following are all installed inside the `install.sh` as foundational software
 * xquartz
 * yohimbo
 
+<!--
 ## NPM Global Modules
 
-<!--
 * antic
 * buzzphrase
 * esformatter
