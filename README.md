@@ -268,31 +268,44 @@ Here is the current list:
 
 # Software Installation
 
-homebrew, fontconfig, git, ruby, nvm (node + npm), and zsh (latest) are all installed inside the `install.sh` as foundational software for running this project.
+xCode CLI tools,
+homebrew, fontconfig, zsh
+
+, ruby, nvm (node + npm), and  (latest) are all installed inside the `install.sh` as foundational software for running this project.
 Additional software is configured in `config.js` and can be customized in your own fork/branch.
 The following is the software that I have set as default:
 
 ## Utilities
 
-* coreutils
-* moreutils
-* findutils
 * ack
 * ag
+* bash
+* bash-completion
+* coreutils
 * dos2unix
+* findutils
+* fontconfig
 * fortune
 * gawk
 * gifsicle
 * gnupg
 * gnu-sed
+* gnu-which
 * homebrew/dupes/grep
+* htop
+* hub
 * imagemagick
 * imagesnap
 * jq
+* maven
+* most
+* moreutils
 * nmap
 * openconnect
+* pv
 * reattach-to-user-namespace
 * homebrew/dupes/screen
+* tig
 * tmux
 * tree
 * ttyrec
@@ -301,15 +314,18 @@ The following is the software that I have set as default:
 * wget --enable-iri
 
 ## Apps
+<!--
 * box-sync
 * slack
 * gpgtools
 * iterm2
 * sizeup
 * xquartz
+-->
 
 ## NPM Global Modules
 
+<!--
 * antic
 * buzzphrase
 * esformatter
@@ -321,9 +337,10 @@ The following is the software that I have set as default:
 * trash
 * vtop
 * yo
+-->
 
 ## Ruby Gems
-* git-up
+<!-- * git-up -->
 
 # License
 This project is licensed under ISC. Please fork, contribute and share.
