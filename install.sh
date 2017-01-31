@@ -138,6 +138,19 @@ source "$BOXROOTDIR/functions/setup/atom"
 (cmd_atom)
 
 ################################################################################
+# sizeup window manager
+################################################################################
+if [ "$NS_PLATFORM" == "darwin" ]; then
+  bot "Installing Sizeup Window Manager"
+  require_cask sizeup
+  running "Start SizeUp at login"
+  defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true;ok
+  running "Don't show the preferences window on next start"
+  defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
+fi
+
+
+################################################################################
 # zshell
 ################################################################################
 if [[ "zsh" == $ZSH_NAME ]];then
