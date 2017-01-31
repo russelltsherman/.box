@@ -32,14 +32,23 @@ main() {
     echo -e "\n=> RVM Installed"
   else
     echo -e "\n=> Install RVM"
-  	gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+    gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
     curl -sSL https://get.rvm.io | bash -s stable --ruby
-  	# echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
+    # echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
   fi
   ok
 
   # tell gem to skip generation of rdocs
   profile_write "gem: --no-ri --no-rdoc" "$HOME/.gemrc"
+
+  running "install latest ruby"
+  rvm install ruby --latest
+
+  running "activate latest ruby"
+  rvm use --latest
+
+  running "install bundler into global gemset"
+  rvm @global do gem install bundler
 }
 
 # _cmd_ruby() {
