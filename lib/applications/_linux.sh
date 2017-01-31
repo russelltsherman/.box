@@ -5,14 +5,14 @@ sudo dpkg --install atom-amd64.deb
 rm -f atom-amd64.deb
 ok
 
-apm install atom-beautify
-apm install editorconfig
-apm install language-babel
-apm install language-docker
-apm install language-nginx
-apm install language-ldif
-apm install linter-eslint
-apm install linter
-apm install linter-docker
-apm install nuclide
-apm install vim-mode-plus
+require_apm atom-beautify
+require_apm editorconfig
+require_apm language-babel
+require_apm language-docker
+require_apm language-nginx
+require_apm language-ldif
+require_apm linter-eslint
+require_apm linter
+require_apm linter-docker
+require_apm nuclide
+require_apm vim-mode-plus
