@@ -154,12 +154,12 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false;ok
 running "Disable smart dashes as they're annoying when typing code"
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false;ok
 
-running "Set a custom wallpaper image"
-# `DefaultDesktop.jpg` is already a symlink, and
-# all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
-rm -rf ~/Library/Application Support/Dock/desktoppicture.db
-sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
-sudo ln -s ~/.dotfiles/img/wallpaper.jpg /System/Library/CoreServices/DefaultDesktop.jpg;ok
+# running "Set a custom wallpaper image"
+# # `DefaultDesktop.jpg` is already a symlink, and
+# # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
+# rm -rf ~/Library/Application Support/Dock/desktoppicture.db
+# sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
+# sudo ln -s ~/.dotfiles/assets/wallpaper.jpg /System/Library/CoreServices/DefaultDesktop.jpg;ok
 
 ###############################################################################
 action "Trackpad, mouse, keyboard, Bluetooth accessories, and input"
