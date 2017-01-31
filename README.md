@@ -274,6 +274,7 @@ the following are all installed inside the `install.sh` as foundational software
 * bash-completion
 * coreutils
 * dos2unix
+* fdupes
 * findutils
 * fontconfig
 * fortune

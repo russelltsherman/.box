@@ -27,6 +27,9 @@ require_brew dos2unix
 require_brew fontconfig
 # need fontconfig to install/build fonts
 
+# Identify or delete duplicate files https://github.com/adrianlopezroche/fdupes
+require_brew fdupes
+
 # Collection of GNU find, xargs, and locate https://www.gnu.org/software/findutils/
 require_brew findutils
 # PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
