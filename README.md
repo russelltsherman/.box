@@ -1,9 +1,5 @@
 
-
 # dot box
-
-- provide a scaffolding where commands can be added or removed by simply cloning/removing a git repo from ./plugins/
-- provide advanced autocompletion including specific command arguments
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
