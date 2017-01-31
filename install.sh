@@ -15,6 +15,7 @@ bot "Hi! $DEVUSER"
 
 bot "I'm going to install tooling and tweak your system settings. Here I go..."
 
+
 ################################################################################
 # passwordless sudo
 ################################################################################
@@ -88,7 +89,6 @@ else
 fi
 
 
-
 ################################################################################
 # homebrew
 ################################################################################
@@ -114,7 +114,6 @@ if [ "$NS_PLATFORM" == "darwin" ]; then
     bot "Looks like Homebrew Cask is already installed"
   fi
 fi
-
 
 
 ################################################################################
@@ -155,25 +154,11 @@ else
 fi
 
 
-
 ################################################################################
-# atom text editor
+# install appications
 ################################################################################
-source "$BOXROOTDIR/functions/setup/atom"
-( cmd_atom )
-
-
-################################################################################
-# sizeup window manager
-################################################################################
-if [ "$NS_PLATFORM" == "darwin" ]; then
-  bot "Installing Sizeup Window Manager"
-  require_cask sizeup
-  running "Start SizeUp at login"
-  defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true;ok
-  running "Don't show the preferences window on next start"
-  defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
-fi
+bot "Install Applications"
+source "$BOXROOTDIR/lib/applications/_$NS_PLATFORM.sh"
 
 
 ################################################################################
@@ -297,6 +282,7 @@ for file in .*; do
 done
 
 popd > /dev/null 2>&1
+
 
 ################################################################################
 # zshell
