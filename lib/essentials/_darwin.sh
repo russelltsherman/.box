@@ -83,7 +83,7 @@ require_brew moreutils
 require_brew nmap
 
 # Open client for Cisco AnyConnect VPN http://www.infradead.org/openconnect.html
-openconnect
+require_brew openconnect
 
 # Monitor data's progress through a pipe https://www.ivarch.com/programs/pv.shtml
 require_brew pv
