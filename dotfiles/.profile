@@ -16,8 +16,8 @@ export LIB_SH_DIR=$BOXROOTDIR/dotfiles/.lib_sh
 [ -s "$LIB_SH_DIR/paths.sh" ] && source $LIB_SH_DIR/paths.sh
 
 # initialize GO
-if [ -d $HOME/go ]; then
-  export GOPATH=$HOME/go
+if [ -d $HOME/src/go ]; then
+  export GOPATH=$HOME/src/go
   export PATH=$PATH:$GOPATH/bin
   alias gotour=$GOPATH/bin/gotour
   export GOROOT=$(go env GOROOT)

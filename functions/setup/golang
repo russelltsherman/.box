@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box setup golang"
+  echo "usage: box setup golang [directory]"
   echo
 }
 
@@ -21,13 +21,13 @@ main() {
   	sudo apt-get install -y golang
   fi
 
-  mkdir "$HOME/go"
+  mkdir -p "$HOME/src/go"
 
   # initialize GO
   local string="
 # initialize GO
-if [ -d \$HOME/go ]; then
-  export GOPATH=\$HOME/go
+if [ -d \$HOME/src/go ]; then
+  export GOPATH=\$HOME/src/go
   export PATH=\$PATH:\$GOPATH/bin
   alias gotour=\$GOPATH/bin/gotour
   export GOROOT=\$(go env GOROOT)
