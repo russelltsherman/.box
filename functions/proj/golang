@@ -64,11 +64,11 @@ indent_style = tab
   ok
 
   running "write README.md"
-  echo "## $project_name" > $project_name/README.md
+  echo "# $project_name" > $project_name/README.md
   ok
 
   running "write TODO.md"
-  echo "## $project_name" > $project_name/TODO.md
+  echo "# $project_name" > $project_name/TODO.md
   ok
 
   running "write autoenv files"

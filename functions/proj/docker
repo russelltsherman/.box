@@ -26,11 +26,11 @@ main() {
   ok
 
   running "write README.md"
-  echo "## $project_name" > $project_name/README.md
+  echo "# $project_name" > $project_name/README.md
   ok
 
   running "write TODO.md"
-  echo "## $project_name" > $project_name/TODO.md
+  echo "# $project_name" > $project_name/TODO.md
   ok
 
   running "write .dockerignore"
@@ -55,6 +55,11 @@ TODO.md
   running "write .docker_env"
   touch $project_name/.docker_env
   ok
+
+  running "write Makefile"
+  touch $project_name/.docker_env
+  ok
+
 }
 
 # for examples of providing tab completion suggestions see:
