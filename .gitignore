@@ -1,4 +1,6 @@
 
+# ignore the .antigen directory
+.antigen
 
 .gh_api_token
 

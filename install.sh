@@ -325,6 +325,11 @@ if [ "$NS_PLATFORM" == "linux" ]; then
   die 'not implemented'
 fi
 
+################################################################################
+# antigen
+################################################################################
+bot "cloning antigen..."
+git_clone_or_update https://github.com/zsh-users/antigen.git $BOXROOTDIR/.antigen
 
 ################################################################################
 # dotfiles
