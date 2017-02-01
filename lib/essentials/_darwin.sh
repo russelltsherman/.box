@@ -48,7 +48,7 @@ require_brew gifsicle
 require_brew gnupg
 
 # GNU implementation of the famous stream editor https://www.gnu.org/software/sed/
-require_brew gnu-sed --default-names
+require_brew gnu-sed --with-default-names
 # Install GNU `sed`, overwriting the built-in `sed`
 # so we can do "sed -i 's/foo/bar/' file" instead of "sed -i '' 's/foo/bar/' file"
 
