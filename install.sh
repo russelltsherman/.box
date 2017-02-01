@@ -91,26 +91,28 @@ fi
 ################################################################################
 # passwordless sudo
 ################################################################################
-if [ -f "/etc/sudoers.d/coderonin" ];then
-  bot "It looks like you are already set up to sudo without a password."
-else
-  ################################################################################
-  # Ask for the administrator password upfront
-  ################################################################################
-  bot "I need you to enter your sudo password so I can install some things:"
-  sudo -v
+if [ -d "/etc/sudoers.d/" ]; then
+  if [ -f "/etc/sudoers.d/coderonin" ];then
+    bot "It looks like you are already set up to sudo without a password."
+  else
+    ################################################################################
+    # Ask for the administrator password upfront
+    ################################################################################
+    bot "I need you to enter your sudo password so I can install some things:"
+    sudo -v
 
-  # Keep-alive: update existing sudo time stamp until the script has finished
-  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+    # Keep-alive: update existing sudo time stamp until the script has finished
+    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-  bot "Do you want me to setup this machine to allow you to run sudo without a password?\nPlease read here to see what I am doing:\nhttp://wiki.summercode.com/sudo_without_a_password_in_mac_os_x \n"
+    bot "Do you want me to setup this machine to allow you to run sudo without a password?\nPlease read here to see what I am doing:\nhttp://wiki.summercode.com/sudo_without_a_password_in_mac_os_x \n"
 
-  read -r -p "Make sudo passwordless? [y|N] " response
-  if [[ $response =~ (yes|y|Y) ]];then
-    sudo "$BASH" -c "touch /etc/sudoers.d/$DEVUSER"
-    sudo "$BASH" -c "chmod 640 /etc/sudoers.d/$DEVUSER"
-    sudo "$BASH" -c "echo \"$DEVUSER ALL=(ALL) NOPASSWD: ALL\" > \"/etc/sudoers.d/$DEVUSER\""
-    bot "You can now run sudo commands without password!"
+    read -r -p "Make sudo passwordless? [y|N] " response
+    if [[ $response =~ (yes|y|Y) ]];then
+      sudo "$BASH" -c "touch /etc/sudoers.d/$DEVUSER"
+      sudo "$BASH" -c "chmod 640 /etc/sudoers.d/$DEVUSER"
+      sudo "$BASH" -c "echo \"$DEVUSER ALL=(ALL) NOPASSWD: ALL\" > \"/etc/sudoers.d/$DEVUSER\""
+      bot "You can now run sudo commands without password!"
+    fi
   fi
 fi
 
