@@ -42,6 +42,10 @@ main() {
   running "initialize bundler"
   ( cd $project_name && bundle init )
   ok
+
+  running "initial git commit"
+  ( cd $project_name && git add . && git commit -a -m 'initial commit' )
+  ok
 }
 
 # for examples of providing tab completion suggestions see:
