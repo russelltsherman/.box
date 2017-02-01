@@ -19,8 +19,8 @@ bot "I'm going to install tooling and tweak your system settings. Here I go..."
 ################################################################################
 # gitconfig
 ################################################################################
-grep 'user = GITHUBUSER' $BOXROOTDIR/dotfiles/.gitconfig > /dev/null 2>&1
-if [[ $? = 0 ]]; then
+grep 'path = ~/.gitconfig_global' $HOME/.gitconfig > /dev/null 2>&1
+if [ ! "$?" == "0" ]; then
   read -r -p "What is your github.com username? " githubuser
 
   fullname=`osascript -e "long user name of (system info)"`
@@ -68,25 +68,20 @@ if [[ $? = 0 ]]; then
     fi
   fi
 
-  running "replacing items in .gitconfig with your info ($COL_YELLOW$fullname, $email, $githubuser$COL_RESET)"
+  running "creating .gitconfig with your info ($COL_YELLOW$fullname, $email, $githubuser$COL_RESET)"
+  git config --global user.name $fullname
+  git config --global user.email $email
+  git config --global github.user $githubuser
 
-  # test if gnu-sed or MacOS sed
+  echo "# https://github.com/blog/180-local-github-config
 
-  sed -i "s/GITHUBFULLNAME/$firstname $lastname/" $BOXROOTDIR/dotfiles/.gitconfig > /dev/null 2>&1 | true
-  if [[ ${PIPESTATUS[0]} != 0 ]]; then
-    echo
-    running "looks like you are using MacOS sed rather than gnu-sed, accommodating"
-    sed -i '' "s/GITHUBFULLNAME/$firstname $lastname/" $BOXROOTDIR/dotfiles/.gitconfig;
-    sed -i '' 's/GITHUBEMAIL/'$email'/' $BOXROOTDIR/dotfiles/.gitconfig;
-    sed -i '' 's/GITHUBUSER/'$githubuser'/' $BOXROOTDIR/dotfiles/.gitconfig;
-  else
-    echo
-    bot "looks like you are already using gnu-sed. woot!"
-    sed -i 's/GITHUBEMAIL/'$email'/' $BOXROOTDIR/dotfiles/.gitconfig;
-    sed -i 's/GITHUBUSER/'$githubuser'/' $BOXROOTDIR/dotfiles/.gitconfig;
-  fi
+[include]
+  path = ~/.gitconfig_global
+
+  " >> $HOME/.gitconfig
+
+
 fi
-
 
 ################################################################################
 # passwordless sudo
