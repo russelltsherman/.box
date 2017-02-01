@@ -17,7 +17,7 @@ main() {
 
   running "initialize git"
   ( cd $project_name && git init &>/dev/null )
-  gibo docker > $project_name/.gitignore
+  gibo Docker > $project_name/.gitignore
   cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
   ok
 
@@ -40,6 +40,7 @@ main() {
 .editorconfig
 .gitattributes
 .gitignore
+Makefile
 TODO.md
   " > $project_name/.dockerignore
   ok
@@ -57,9 +58,31 @@ TODO.md
   ok
 
   running "write Makefile"
-  touch $project_name/.docker_env
+  echo "NS = dockerhuborg
+REPO = servicename
+ARCH = systemarch
+VERSION ?= latest
+
+.PHONY: build push console test tag_latest run start stop rm
+
+build:
+	docker build -t \$(NS)/\$(REPO):\$(ARCH)-\$(VERSION) \$(ARCH)-\$(VERSION)
+
+push:
+	docker push \$(NS)/\$(REPO):\$(ARCH)-\$(VERSION)
+
+console:
+	docker run -it \$(NS)/\$(REPO):\$(ARCH)-\$(VERSION) /bin/bash
+
+tag_latest:
+	docker tag -f \$(NS)/\$(REPO):\$(ARCH)-\$(VERSION) \$(NS)/\$(REPO):\$(ARCH)-latest
+
+default: build
+" > $project_name/Makefile
   ok
 
+  running "initial git commit"
+  ( cd $project_name && git add . && git commit -a -m 'initial commit' )
 }
 
 # for examples of providing tab completion suggestions see:
