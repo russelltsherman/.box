@@ -8,46 +8,54 @@ usage() {
 }
 
 main() {
-  if [ ! -f "$HOME/.ssh/id_rsa"* ]; then
-    bot "rsa key not present.. lets create one."
+  for f in $HOME/.ssh/id_rsa*; do
+      ## Check if the glob gets expanded to existing files.
+      ## If not, f here will be exactly the pattern above
+      ## and the exists test will evaluate to false.
+      if [ -f "$f" ]; then
+        bot "Looks like you already have an rsa key"
+      else
+        bot "rsa key not present.. lets create one."
 
-    local fullname=`osascript -e "long user name of (system info)"`
+        local fullname=`osascript -e "long user name of (system info)"`
 
-    if [[ -n "$fullname" ]];then
-      local lastname=$(echo $fullname | awk '{print $2}');
-      local firstname=$(echo $fullname | awk '{print $1}');
-    fi
+        if [[ -n "$fullname" ]];then
+          local lastname=$(echo $fullname | awk '{print $2}');
+          local firstname=$(echo $fullname | awk '{print $1}');
+        fi
 
-    local email=`dscl . -read /Users/$(whoami) | grep EMailAddress | sed "s/EMailAddress: //"`
+        local email=`dscl . -read /Users/$(whoami) | grep EMailAddress | sed "s/EMailAddress: //"`
 
-    if [[ ! $email ]];then
-      response='n'
-    else
-      echo -e "The best I can make out, your email address is $COL_YELLOW$email$COL_RESET"
-      read -r -p "Is this correct? [Y|n] " response
-    fi
+        if [[ ! $email ]];then
+          response='n'
+        else
+          echo -e "The best I can make out, your email address is $COL_YELLOW$email$COL_RESET"
+          read -r -p "Is this correct? [Y|n] " response
+        fi
 
-    if [[ $response =~ ^(no|n|N) ]];then
-      read -r -p "What is your email? " email
-      if [[ ! $email ]];then
-        error "you must provide an email to create an rsa key"
-        exit 1
+        if [[ $response =~ ^(no|n|N) ]];then
+          read -r -p "What is your email? " email
+          if [[ ! $email ]];then
+            error "you must provide an email to create an rsa key"
+            exit 1
+          fi
+        fi
+
+        running "create rsa key"
+        ssh-keygen -t rsa -b 2048 -C "$email"; ok
+
+        # Then add your new key to the ssh-agent:
+        # start the ssh-agent in the background
+        running "start ssh-agent in the background"
+        eval "$(ssh-agent -s)"; ok
+
+        running "adding yout key to the ssh-agent"
+        ssh-add ~/.ssh/id_rsa; ok
       fi
-    fi
 
-    running "create rsa key"
-    ssh-keygen -t rsa -b 2048 -C "$email"; ok
-
-    # Then add your new key to the ssh-agent:
-    # start the ssh-agent in the background
-    running "start ssh-agent in the background"
-    eval "$(ssh-agent -s)"; ok
-
-    running "adding yout key to the ssh-agent"
-    ssh-add ~/.ssh/id_rsa; ok
-  else
-    bot "Looks like you already have rsa key"
-  fi
+      ## This is all we needed to know, so we can break after the first iteration
+      break
+  done
 }
 
 # _cmd_ssh() {
