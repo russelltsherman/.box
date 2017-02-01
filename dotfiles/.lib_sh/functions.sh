@@ -87,6 +87,55 @@ function get_platform() {
   ok
 }
 
+function get_osx_version() {
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    IFS='.' read -r -a vers <<< $(sw_vers -productVersion)
+    case ${vers[1]} in
+      1)
+        export OSX_VERSION="Cheeta/Puma"
+        ;;
+      2)
+        export OSX_VERSION="Jaguar"
+        ;;
+      3)
+        export OSX_VERSION="Panther"
+        ;;
+      4)
+        export OSX_VERSION="Tiger"
+        ;;
+      5)
+        export OSX_VERSION="Snow Leopard"
+        ;;
+      6)
+        export OSX_VERSION="Lion"
+        ;;
+      7)
+        export OSX_VERSION="Mountain Lion"
+        ;;
+      8)
+        export OSX_VERSION="Mavericks"
+        ;;
+      9)
+        export OSX_VERSION="Yosemite"
+        ;;
+      10)
+        export OSX_VERSION="Mavericks"
+        ;;
+      11)
+        export OSX_VERSION="El Capitan"
+        ;;
+      12)
+        export OSX_VERSION="Sierra"
+        ;;
+      *)
+        export OSX_VERSION="Unknown"
+        ;;
+    esac
+    running "OSX $OSX_VERSION detected"
+  fi
+}
+
+
 function profile_write {
   # try to ensure we don't create duplicate entries in the file
   action "ensure that $1 exists in $2"
