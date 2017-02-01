@@ -110,7 +110,7 @@ require_brew tree
 require_brew ttyrec
 
 # Vi "workalike" with many additional features http://www.vim.org/
-require_brew vim --override-system-vi
+require_brew vim --with-override-system-vi
 
 # Executes a program periodically, showing output fullscreen https://gitlab.com/procps-ng/procps
 require_brew watch
