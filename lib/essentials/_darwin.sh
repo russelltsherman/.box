@@ -73,9 +73,6 @@ require_brew imagesnap
 # Lightweight and flexible command-line JSON processor https://stedolan.github.io/jq/
 require_brew jq
 
-# Java-based project management https://maven.apache.org/
-require_brew maven
-
 # Powerful paging program http://www.jedsoft.org/most/
 require_brew most
 

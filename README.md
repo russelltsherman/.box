@@ -290,7 +290,6 @@ the following are all installed inside the `install.sh` as foundational software
 * imagemagick
 * imagesnap
 * jq
-* maven
 * most
 * moreutils
 * mycli

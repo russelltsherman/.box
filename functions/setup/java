@@ -50,16 +50,16 @@ main() {
   ok
 
   action "enabling jenv plugins"
-  jenv enable-plugin maven ant
-  jenv enable-plugin maven golo
-  jenv enable-plugin maven gradle
-  jenv enable-plugin maven grails
-  jenv enable-plugin maven groovy
-  jenv enable-plugin maven lein
-  jenv enable-plugin maven maven
-  jenv enable-plugin maven sbt
-  jenv enable-plugin maven scala
-  jenv enable-plugin maven vlt
+  jenv enable-plugin ant
+  jenv enable-plugin golo
+  jenv enable-plugin gradle
+  jenv enable-plugin grails
+  jenv enable-plugin groovy
+  jenv enable-plugin lein
+  jenv enable-plugin maven
+  jenv enable-plugin sbt
+  jenv enable-plugin scala
+  jenv enable-plugin vlt
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
     action "finding current java versions"
