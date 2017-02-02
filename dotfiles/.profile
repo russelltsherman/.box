@@ -23,14 +23,22 @@ if [ -d $HOME/src/go ]; then
   export GOROOT=$(go env GOROOT)
 fi
 
-# initialize NVM
-export NVM_DIR=$HOME/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+# lazily initialize NVM
+nvm() {
+  echo 'load NVM'
+  export NVM_DIR=$HOME/.nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
 
 # initialize RVM
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
+rvm() {
+  echo 'load RVM'
+  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+  export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
+  rvm "$@"
+}
 
 # initialize thefuck
 type thefuck &>/dev/null && eval "$(thefuck --alias)" || # echo "thefuck() not found."
