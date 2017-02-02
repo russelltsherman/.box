@@ -9,6 +9,7 @@ source ~/.zsh/exports.zsh
 source ~/.zsh/functions.zsh
 source ~/.zsh/history.zsh
 source ~/.zsh/setopt.zsh
+source ~/.zsh/window.zsh
 source ~/.zsh/zsh_hooks.zsh
 
 # ##############################################################################
