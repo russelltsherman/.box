@@ -1,0 +1,21 @@
+
+
+antibody bundle horosgrisa/autoenv
+antibody bundle rupa/z
+# antibody bundle zsh-users/zaw
+antibody bundle zsh-users/zsh-autosuggestions
+
+# antibody bundle zsh-users/zsh-completions
+# antibody bundle zsh-users/zsh-syntax-highlighting
+# antibody bundle zsh-users/zsh-history-substring-search
+# antibody bundle caarlos0/git-add-remote kind:path
+# antibody bundle caarlos0/jvm
+# antibody bundle caarlos0/ports kind:path
+# antibody bundle caarlos0/zsh-git-fetch-merge kind:path
+# antibody bundle caarlos0/zsh-git-sync kind:path
+# antibody bundle caarlos0/zsh-mkc
+# antibody bundle caarlos0/zsh-open-pr kind:path
+# antibody bundle mafredri/zsh-async
+# antibody bundle sindresorhus/pure
+# antibody bundle Tarrasch/zsh-bd
+# antibody bundle wbinglee/zsh-wakatime

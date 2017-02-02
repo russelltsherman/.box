@@ -79,8 +79,6 @@ if [ ! "$?" == "0" ]; then
   path = ~/.gitconfig_global
 
   " >> $HOME/.gitconfig
-
-
 fi
 
 ################################################################################
@@ -322,11 +320,6 @@ if [ "$NS_PLATFORM" == "linux" ]; then
   die 'not implemented'
 fi
 
-################################################################################
-# antigen
-################################################################################
-bot "cloning antigen..."
-git_clone_or_update https://github.com/zsh-users/antigen.git $BOXROOTDIR/.antigen
 
 ################################################################################
 # dotfiles
@@ -356,6 +349,20 @@ for file in .*; do
 done
 
 popd > /dev/null 2>&1
+
+
+################################################################################
+# antibody (antigen ported to go for much faster load time)
+################################################################################
+brew_bin=$(which brew) 2>&1 > /dev/null
+if [[ $? != 0 ]]; then
+  brew untap -q getantibody/homebrew-antibody || true
+  brew tap -q getantibody/homebrew-antibody
+  brew install antibody
+else
+  curl -sL https://git.io/antibody | sh -s
+fi
+antibody bundle robbyrussell/oh-my-zsh
 
 
 ################################################################################

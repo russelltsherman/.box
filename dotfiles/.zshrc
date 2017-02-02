@@ -1,7 +1,7 @@
 # ##############################################################################
 # Import the zsh specific environment config
 # ##############################################################################
-source ~/.zsh/antigen.zsh
+source ~/.zsh/antibody.zsh
 source ~/.zsh/bindkeys.zsh
 source ~/.zsh/colors.zsh
 source ~/.zsh/completion.zsh
