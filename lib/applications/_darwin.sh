@@ -2,13 +2,6 @@ require_cask 1password
 
 require_cask adium
 
-require_cask alfred
-# brew cask alfred link
-# an issue with alfred link prevents it from running before you open alfred and set a sync folder
-# https://github.com/caskroom/homebrew-cask/issues/8052
-# don't forget to check out alfred workflows
-# https://github.com/zenorocha/alfred-workflows
-
 require_cask armory
 
 require_cask atom
@@ -67,8 +60,6 @@ require_cask tower
 require_cask vlc
 
 require_cask xquartz
-
-require_cask yojimbo
 
 # ###############################################################################
 # bot "installing GUI tools via homebrew casks..."

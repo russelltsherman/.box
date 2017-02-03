@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# https://maker.ifttt.com/use/
+#
+# EventName
+# Value1
+#
+
+main() {
+  local IFTTT_KEY='CExal2nOaQpkgfvdqEFSKkVQzahiIp0-NHMCZn-Ysu'
+  local IFTTT_EVENT='punbot_says'
+
+  local value1="fvdqEFSKkVQ"
+  local value2="\n\n"
+  local value3="\n\n"
+
+  curl -X POST \
+    -H "Content-Type: application/json" \
+    -d "{\"value1\":\"$value1\",\"value2\":\"$value2\",\"value3\":\"$value3\"}" \
+    https://maker.ifttt.com/trigger/$IFTTT_EVENT/with/key/$IFTTT_KEY
+}
+
+main "$@"
