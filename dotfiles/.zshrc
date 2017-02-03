@@ -17,3 +17,6 @@ source ~/.zsh/zsh_hooks.zsh
 # Import the shell-agnostic (Bash or Zsh) environment config
 # ##############################################################################
 source ~/.profile
+
+# new env var to hide legacy commands in docker cli
+export DOCKER_HIDE_LEGACY_COMMANDS=1
