@@ -16,6 +16,7 @@ require_apm linter
 require_apm linter-docker
 require_apm nuclide
 require_apm vim-mode-plus
+require_apm wakatime
 
 require_cask bitcoin-core
 
