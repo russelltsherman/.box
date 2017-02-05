@@ -24,21 +24,13 @@ if [ -d $HOME/src/go ]; then
 fi
 
 # lazily initialize NVM
-nvm() {
-  echo 'load NVM'
-  export NVM_DIR=$HOME/.nvm
-  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-  nvm "$@"
-}
+export NVM_DIR=$HOME/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 
 # initialize RVM
-rvm() {
-  echo 'load RVM'
-  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-  export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
-  rvm "$@"
-}
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
 
 # initialize thefuck
 type thefuck &>/dev/null && eval "$(thefuck --alias)" || # echo "thefuck() not found."
