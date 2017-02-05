@@ -7,13 +7,12 @@
 dlaunch() {
   local name=$1
   local state
-  state=$(docker inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
+  state=$(docker inspect --format "{{.State.Running}}" "$name" > /dev/null 2>&1)
 
   if [[ "$state" == "true" ]]; then
     docker attach $name
   else
-    docker rm "$name"
-    [[ -s "$HOME/.dockerlaunch/$1" ]] && source "$HOME/.dockerlaunch/$1";
+    box docker $name
   fi
 }
 
