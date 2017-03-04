@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#
+#
+echo "shasum -a 256 $@"
+shasum -a 256 "$@"
