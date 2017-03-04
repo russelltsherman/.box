@@ -18,6 +18,18 @@ Dockerize all service installs
 can we replace dotenv with a docker solution to spin up the right version services when needed?
 
 
-## tools with subcommands
-look at this package as a way of creating tool packages with subcommands
-https://github.com/russelltsherman/xref-guarinogabriel-Mac-CLI/blob/master/mac-cli/completion/bash_completion
+## other tools to investigate
+
+MAC-CLI
+https://github.com/russelltsherman/xref-guarinogabriel-Mac-CLI
+
+CLIMATE
+https://github.com/adtac/climate
+
+TLDR
+https://github.com/tldr-pages/tldr
+https://tldr.ostera.io
+
+BRO
+http://bropages.org
+https://github.com/hubsmoke/bro/
