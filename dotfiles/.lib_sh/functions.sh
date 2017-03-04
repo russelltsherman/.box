@@ -59,7 +59,7 @@ function require_vagrant_plugin() {
 function git_clone_or_update() {
   if [ -d "$2/.git" ]; then
     action "update $1"
-    cd "$2"; git pull > /dev/null 2>&1
+    (cd "$2"; git pull > /dev/null 2>&1)
     ok
   else
     action "clone $1"
