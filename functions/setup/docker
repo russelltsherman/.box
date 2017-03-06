@@ -25,7 +25,6 @@ main() {
       sudo rm /etc/apt/sources.list.d/backports.list
       sudo_write 'deb http://http.debian.net/debian wheezy-backports main' /etc/apt/sources.list.d/backports.list
       sudo_write 'deb https://apt.dockerproject.org/repo debian-jessie main' /etc/apt/sources.list.d/docker.list
-    ok
 
     running "ensure dependencies"
       sudo apt-get install -y libapparmor1 aufs-tools apt-transport-https ca-certificates > /dev/null 2>&1

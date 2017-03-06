@@ -110,7 +110,10 @@ main() {
     ok
 
     action "Installing GitIgnore Boilerplate Manager"
-      curl -L https://raw.github.com/simonwhitaker/gibo/master/gibo -so ~/bin/gibo && chmod +x ~/bin/gibo && gibo -u
+      if [ ! -d "$HOME/bin" ]; then
+        mkdir "$HOME/bin"
+      fi
+      curl -L https://raw.github.com/simonwhitaker/gibo/master/gibo -so $HOME/bin/gibo && chmod +x $HOME/bin/gibo && gibo -u
     ok
 
     action "Writing OS Specific .gitignore_global"
@@ -118,7 +121,7 @@ main() {
         mv "$HOME/.gitignore_global" "$HOME/.gitignore_global_bak"
       fi
       # use gibo to populate a sensible global gitignore
-      gibo Linux >> "$HOME/.gitignore_global"
+      $HOME/bin/gibo Linux >> "$HOME/.gitignore_global"
     ok
 
     action "Install gitKraken git GUI"

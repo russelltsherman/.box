@@ -25,11 +25,11 @@ fi
 
 # lazily initialize NVM
 export NVM_DIR=$HOME/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[ -s $NVM_DIR/nvm.sh ] && source $NVM_DIR/nvm.sh
 
 # initialize RVM
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[ -s $HOME/.rvm/scripts/rvm ] && source $HOME/.rvm/scripts/rvm
 export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
 
 # initialize thefuck
