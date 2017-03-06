@@ -5,6 +5,9 @@ BOXROOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # include my library helpers for colorized echo and require_brew, etc
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
+export BOXROOTDIR=$BOXROOTDIR
+export BOXFUNCDIR=$BOXROOTDIR/functions
+
 banner
 
 get_platform
@@ -44,6 +47,8 @@ if [ ! "$?" == "0" ]; then
       echo -e "I see that your full name is $COL_YELLOW$firstname $lastname$COL_RESET"
       read -r -p "Is this correct? [Y|n] " response
     fi
+  else
+    response='n'
   fi
 
   if [[ $response =~ ^(no|n|N) ]];then
@@ -82,6 +87,7 @@ if [ ! "$?" == "0" ]; then
   " >> $HOME/.gitconfig
 fi
 
+
 ################################################################################
 # passwordless sudo
 ################################################################################
@@ -114,34 +120,36 @@ fi
 ################################################################################
 # ssh key
 ################################################################################
-source "$BOXROOTDIR/functions/setup/ssh"
-cmd_ssh
+source "$BOXFUNCDIR/setup/ssh"
+(cmd_ssh "$email")
 
 
 ################################################################################
 # Default wallpaper
 ################################################################################
-IMGDIR=$BOXROOTDIR/assets
-MD5_NEWWP=$(md5 $IMGDIR/wallpaper.jpg | awk '{print $4}')
-MD5_OLDWP=$(md5 /System/Library/CoreServices/DefaultDesktop.jpg | awk '{print $4}')
-if [[ "$MD5_NEWWP" == "$MD5_OLDWP" ]]; then
-  bot "It looks like you are already using our project wallpaper image."
-else
-  read -r -p "Do you want to use the project's custom desktop wallpaper? [Y|n] " response
-  if [[ $response =~ ^(no|n|N) ]];then
-    echo "skipping...";
-    ok
+if [ "$NS_PLATFORM" == "darwin" ]; then
+  IMGDIR=$BOXROOTDIR/assets
+  MD5_NEWWP=$(md5 $IMGDIR/wallpaper.jpg | awk '{print $4}')
+  MD5_OLDWP=$(md5 /System/Library/CoreServices/DefaultDesktop.jpg | awk '{print $4}')
+  if [[ "$MD5_NEWWP" == "$MD5_OLDWP" ]]; then
+    bot "It looks like you are already using our project wallpaper image."
   else
-    running "Set a custom wallpaper image"
-    # `DefaultDesktop.jpg` is already a symlink, and
-    # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
-    rm -rf ~/Library/Application Support/Dock/desktoppicture.db
-    sudo rm -f /System/Library/CoreServices/DefaultDesktop.jpg > /dev/null 2>&1
-    sudo rm -f /Library/Desktop\ Pictures/El\ Capitan.jpg > /dev/null 2>&1
-    sudo rm -f /Library/Desktop\ Pictures/Sierra.jpg > /dev/null 2>&1
-    sudo cp $IMGDIR/wallpaper.jpg /System/Library/CoreServices/DefaultDesktop.jpg;
-    sudo cp $IMGDIR/wallpaper.jpg /Library/Desktop\ Pictures/Sierra.jpg;
-    sudo cp $IMGDIR/wallpaper.jpg /Library/Desktop\ Pictures/El\ Capitan.jpg;ok
+    read -r -p "Do you want to use the project's custom desktop wallpaper? [Y|n] " response
+    if [[ $response =~ ^(no|n|N) ]];then
+      echo "skipping...";
+      ok
+    else
+      running "Set a custom wallpaper image"
+      # `DefaultDesktop.jpg` is already a symlink, and
+      # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
+      rm -rf ~/Library/Application Support/Dock/desktoppicture.db
+      sudo rm -f /System/Library/CoreServices/DefaultDesktop.jpg > /dev/null 2>&1
+      sudo rm -f /Library/Desktop\ Pictures/El\ Capitan.jpg > /dev/null 2>&1
+      sudo rm -f /Library/Desktop\ Pictures/Sierra.jpg > /dev/null 2>&1
+      sudo cp $IMGDIR/wallpaper.jpg /System/Library/CoreServices/DefaultDesktop.jpg;
+      sudo cp $IMGDIR/wallpaper.jpg /Library/Desktop\ Pictures/Sierra.jpg;
+      sudo cp $IMGDIR/wallpaper.jpg /Library/Desktop\ Pictures/El\ Capitan.jpg;ok
+    fi
   fi
 fi
 
@@ -149,11 +157,13 @@ fi
 ################################################################################
 # xCode
 ################################################################################
-xcode_tools=$(xcode-select --install 2>&1 > /dev/null)
-if [[ $? == 0 ]]; then
-  die "Looks like you need to install Xcode cli tools"
-else
-  bot "Looks like Xcode cli tools are already installed"
+if [ "$NS_PLATFORM" == "darwin" ]; then
+  xcode_tools=$(xcode-select --install 2>&1 > /dev/null)
+  if [[ $? == 0 ]]; then
+    die "Looks like you need to install Xcode cli tools"
+  else
+    bot "Looks like Xcode cli tools are already installed"
+  fi
 fi
 
 
@@ -201,25 +211,8 @@ source "$BOXROOTDIR/lib/defaults/_$NS_PLATFORM.sh"
 ################################################################################
 # NodeJS Version Manager
 ################################################################################
-if [ -d $HOME/.nvm ]; then
-  bot "NodeJS Version Manager found... updating"
-  (cd ~/.nvm && ./install.sh)
-else
-  bot "Installing NodeJS Version Manager"
-
-  git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
-
-  # nvm load in coderonin file
-  profile_write "# initialize NVM" $HOME/.profile
-  profile_write "export NVM_DIR=\$HOME/.nvm" $HOME/.profile
-  profile_write '[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"' $HOME/.profile
-
-  # immediately load nvm so we can install node and npm
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-  require_nvm 4.4.7
-fi
+source "$BOXFUNCDIR/setup/nodejs"
+(cmd_nodejs)
 
 
 ################################################################################
@@ -230,96 +223,34 @@ source "$BOXROOTDIR/lib/applications/_$NS_PLATFORM.sh"
 
 
 ################################################################################
+# atom
+################################################################################
+source "$BOXFUNCDIR/setup/atom"
+(cmd_atom)
+
+
+################################################################################
 # docker
 ################################################################################
-bot "Install Docker"
-if [ "$NS_PLATFORM" == "darwin" ]; then
-  require_cask docker
-fi
-if [ "$NS_PLATFORM" == "linux" ]; then
-  running "purge old repos if they exist"
-    # Purge the old repo if it exists.
-    sudo apt-get purge "lxc-docker*"
-    sudo apt-get purge "docker.io*"
-  ok
+source "$BOXFUNCDIR/setup/docker"
+(cmd_docker)
 
-  running "add docker apt repo to sources"
-    sudo rm /etc/apt/sources.list.d/backports.list
-    sudo_write 'deb http://http.debian.net/debian wheezy-backports main' /etc/apt/sources.list.d/backports.list
-    sudo_write 'deb https://apt.dockerproject.org/repo debian-jessie main' /etc/apt/sources.list.d/docker.list
-  ok
 
-  running "ensure dependencies"
-    sudo apt-get install -y libapparmor1 aufs-tools apt-transport-https ca-certificates
-  ok
-
-  running "add public key for repo"
-    sudo apt-key adv \
-      --keyserver hkp://ha.pool.sks-keyservers.net:80 \
-      --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-  ok
-
-  running "update apt cache"
-    # Update the APT package index.
-    sudo apt-get update
-    # Verify that APT is pulling from the right repository.
-    sudo apt-cache policy docker-engine
-  ok
-
-  running "install linux-image-extra kernel package"
-    # For Ubuntu Trusty, Vivid, and Wily, it’s recommended to install the linux-image-extra kernel package.
-    # The linux-image-extra package allows you use the aufs storage driver.
-    sudo apt-get -y install linux-image-extra-$(uname -r)
-  ok
-
-  running "install docker engine"
-    # Install Docker.
-    sudo apt-get -y install docker-engine
-  ok
-
-  running "start docker"
-    # Start the docker daemon.
-    sudo service docker start
-  ok
-
-  running "hello world docker"
-    # Verify docker is installed correctly.
-    sudo docker run hello-world
-  ok
-
-  running "make docker accessible without sudo"
-    # Add the docker group if it doesn't already exist.
-    sudo groupadd docker
-    # Add the connected user "${USER}" to the docker group.
-    # Change the user name to match your preferred user.
-    # You may have to logout and log back in again for
-    # this to take effect.
-    DEV=`whoami`
-    sudo gpasswd -aG $DEV docker
-    # Restart the Docker daemon.
-    sudo service docker restart
-  ok
-
-  running "installing docker compose"
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
-  ok
-fi
+################################################################################
+# docker
+################################################################################
+source "$BOXFUNCDIR/setup/visualstudiocode"
+(cmd_visualtudiocode)
 
 
 ################################################################################
 # vim plugins
 ################################################################################
 bot "Installing plugins for vim"
-if [ "$NS_PLATFORM" == "darwin" ]; then
-  # add vundle to manage vim plugins
-  git_clone_or_update https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  # use vundle to install other plugins
-  vim +PluginInstall +qall > /dev/null 2>&1
-fi
-if [ "$NS_PLATFORM" == "linux" ]; then
-  die 'not implemented'
-fi
+# add vundle to manage vim plugins
+(git_clone_or_update https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim)
+# use vundle to install other plugins
+(vim +PluginInstall +qall)
 
 
 ################################################################################
@@ -355,12 +286,12 @@ popd > /dev/null 2>&1
 ################################################################################
 # antibody (antigen ported to go for much faster load time)
 ################################################################################
-brew_bin=$(which brew) 2>&1 > /dev/null
-if [[ $? != 0 ]]; then
+if [ "$NS_PLATFORM" == "darwin" ]; then
   brew untap -q getantibody/homebrew-antibody || true
   brew tap -q getantibody/homebrew-antibody
   brew install antibody
-else
+fi
+if [ "$NS_PLATFORM" == "linux" ]; then
   curl -sL https://git.io/antibody | sh -s
 fi
 antibody bundle robbyrussell/oh-my-zsh
@@ -369,7 +300,7 @@ antibody bundle robbyrussell/oh-my-zsh
 ################################################################################
 # zshell
 ################################################################################
-if [ "$ZSH_NAME" == "zsh" ];then
+if [ "$SHELL" == "/bin/bash" ];then
   bot "Zshell"
 
   running "ensure that zsh exists in /etc/shells"

@@ -6,7 +6,6 @@ if command -v aptitude >/dev/null 2>&1 ; then
 else
   pm="apt-get"
 fi
-info -e "Using $pm for package installation\n"
 
 # action "Remapping Super_L"
 #   touch $HOME/.Xmodmap

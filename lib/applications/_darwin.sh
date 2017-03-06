@@ -4,25 +4,6 @@ require_cask adium
 
 require_cask armory
 
-require_cask atom
-require_apm atom-beautify
-require_apm editorconfig
-require_apm language-babel
-require_apm language-docker
-require_apm language-nginx
-require_apm language-ldif
-require_apm linter
-require_apm linter-eslint
-require_apm linter-docker
-require_apm linter-golint
-require_apm linter-gotype
-require_apm go-plus
-require_apm go-debug
-require_apm go-signature-statusbar
-require_apm nuclide
-require_apm vim-mode-plus
-require_apm wakatime
-
 # require_cask bitcoin-core
 
 # require_cask cheatsheet
@@ -62,8 +43,6 @@ require_cask sophos-anti-virus-home-edition
 require_cask the-unarchiver
 
 require_cask tower
-
-require_cask visual-studio-code
 
 require_cask vlc
 

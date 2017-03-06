@@ -3,11 +3,12 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box setup ssh"
+  echo "usage: box setup ssh [email]"
   echo
 }
 
 main() {
+  email=$1
   for f in $HOME/.ssh/id_rsa*; do
       ## Check if the glob gets expanded to existing files.
       ## If not, f here will be exactly the pattern above
@@ -17,10 +18,8 @@ main() {
       else
         bot "rsa key not present.. lets create one."
 
-        read -r -p "What is your email? " email
         if [[ ! $email ]];then
-          error "you must provide an email to create an rsa key"
-          exit 1
+          read -r -p "What is your email? " email
         fi
 
         running "create rsa key"
@@ -46,9 +45,6 @@ main() {
 cmd_ssh() {
   if [ "$#" -lt 1 ]; then # called with no parameters
     main; exit 0
-
-  elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
-    main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
     if [[ $1 == "help" ]]; then

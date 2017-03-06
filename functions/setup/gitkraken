@@ -13,13 +13,15 @@ main() {
   bot "RELEASE THE KRAKEN!!!"
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
-    wget https://release.gitkraken.com/darwin/installGitKraken.dmg
+    (wget https://release.gitkraken.com/darwin/installGitKraken.dmg)
     die 'Sorry-- you have to drive from here'
   fi
   if [ "$NS_PLATFORM" == "linux" ]; then
-    wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
-    sudo dpkg --install gitkraken-amd64.deb
-    rm -f gitkraken-amd64.deb
+    (
+      wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
+      sudo dpkg --install gitkraken-amd64.deb
+      rm -f gitkraken-amd64.deb
+    )
   fi
 }
 

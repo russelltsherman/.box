@@ -18,8 +18,10 @@ main() {
     brew install thefuck
   fi
   if [ "$NS_PLATFORM" == "linux" ]; then
-    sudo apt-get install python-pip python-dev
-    sudo pip install psutil thefuck
+    (
+      sudo apt-get install python-pip python-dev
+      sudo pip install psutil thefuck
+    )
   fi
 
   running "adding the fucking alias"

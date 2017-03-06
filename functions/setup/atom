@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box setup atom"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Install Atom: A hackable text editor for the 21st Century"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    (require_cask atom)
+  fi
+
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    (
+      curl -L https://github.com/atom/atom/releases/latest | \
+      egrep -o '/atom/atom/releases/download/v[0-9.]*/atom-amd64.deb' | \
+      wget --base=http://github.com/ -i - -O atom-amd64.deb 
+
+      sudo dpkg --install atom-amd64.deb
+      rm -f atom-amd64.deb
+    )
+  fi
+
+  require_apm atom-beautify
+  require_apm editorconfig
+  require_apm language-babel
+  require_apm language-docker
+  require_apm language-nginx
+  require_apm language-ldif
+  require_apm linter
+  require_apm linter-eslint
+  require_apm linter-docker
+  require_apm linter-golint
+  require_apm linter-gotype
+  require_apm go-plus
+  require_apm go-debug
+  require_apm go-signature-statusbar
+  require_apm nuclide
+  require_apm vim-mode-plus
+  require_apm wakatime
+}
+
+cmd_atom() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_atom "$@"

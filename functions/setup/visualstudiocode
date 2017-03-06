@@ -16,9 +16,11 @@ main() {
     require_cask visual-studio-code
   fi
   if [ "$NS_PLATFORM" == "linux" ]; then
-    wget -O code_1.7.2-1479766213_amd64.deb https://go.microsoft.com/fwlink/?LinkID=760868
-    sudo dpkg --install code_1.7.2-1479766213_amd64.deb
-    rm -f code_1.7.2-1479766213_amd64.deb
+    (
+      wget -O code_1.7.2-1479766213_amd64.deb https://go.microsoft.com/fwlink/?LinkID=760868
+      sudo dpkg --install code_1.7.2-1479766213_amd64.deb
+      rm -f code_1.7.2-1479766213_amd64.deb
+    )
   fi
 }
 
