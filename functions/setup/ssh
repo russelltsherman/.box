@@ -17,28 +17,10 @@ main() {
       else
         bot "rsa key not present.. lets create one."
 
-        local fullname=`osascript -e "long user name of (system info)"`
-
-        if [[ -n "$fullname" ]];then
-          local lastname=$(echo $fullname | awk '{print $2}');
-          local firstname=$(echo $fullname | awk '{print $1}');
-        fi
-
-        local email=`dscl . -read /Users/$(whoami) | grep EMailAddress | sed "s/EMailAddress: //"`
-
+        read -r -p "What is your email? " email
         if [[ ! $email ]];then
-          response='n'
-        else
-          echo -e "The best I can make out, your email address is $COL_YELLOW$email$COL_RESET"
-          read -r -p "Is this correct? [Y|n] " response
-        fi
-
-        if [[ $response =~ ^(no|n|N) ]];then
-          read -r -p "What is your email? " email
-          if [[ ! $email ]];then
-            error "you must provide an email to create an rsa key"
-            exit 1
-          fi
+          error "you must provide an email to create an rsa key"
+          exit 1
         fi
 
         running "create rsa key"
