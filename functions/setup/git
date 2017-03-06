@@ -92,7 +92,9 @@ main() {
     ok
 
     action "Writing OS Specific .gitignore_global"
-      mv "$HOME/.gitignore_global" "$HOME/.gitignore_global_bak"
+      if [ -f "$HOME/.gitignore_global" ]; then
+        mv "$HOME/.gitignore_global" "$HOME/.gitignore_global_bak"
+      fi
       # use gibo to populate a sensible global gitignore
       gibo OSX >> "$HOME/.gitignore_global"
     ok
@@ -112,7 +114,9 @@ main() {
     ok
 
     action "Writing OS Specific .gitignore_global"
-      mv "$HOME/.gitignore_global" "$HOME/.gitignore_global_bak"
+      if [ -f "$HOME/.gitignore_global" ]; then
+        mv "$HOME/.gitignore_global" "$HOME/.gitignore_global_bak"
+      fi
       # use gibo to populate a sensible global gitignore
       gibo Linux >> "$HOME/.gitignore_global"
     ok
