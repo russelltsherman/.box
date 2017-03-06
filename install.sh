@@ -45,7 +45,7 @@ if [ ! "$?" == "0" ]; then
       read -r -p "Is this correct? [Y|n] " response
     fi
   fi
-  
+
   if [[ $response =~ ^(no|n|N) ]];then
     read -r -p "What is your first name? " firstname
     read -r -p "What is your last name? " lastname
@@ -115,7 +115,7 @@ fi
 # ssh key
 ################################################################################
 source "$BOXROOTDIR/functions/setup/ssh"
-(cmd_ssh)
+cmd_ssh
 
 
 ################################################################################
