@@ -15,30 +15,31 @@ main() {
   GITCONFIG=$BOXROOTDIR/dotfiles/.gitconfig
   grep 'user = GITHUBUSER' $GITCONFIG > /dev/null 2>&1
   if [[ $? = 0 ]]; then
-      read -r -p "What is your github.com username? " githubuser
+    read -r -p "What is your github.com username? " githubuser
 
-    fullname=`osascript -e "long user name of (system info)"`
+    if [ "$NS_PLATFORM" == "darwin" ]; then
+      fullname=`osascript -e "long user name of (system info)"`
 
-    if [[ -n "$fullname" ]];then
-      lastname=$(echo $fullname | awk '{print $2}');
-      firstname=$(echo $fullname | awk '{print $1}');
-    fi
+      if [[ -n "$fullname" ]];then
+        lastname=$(echo $fullname | awk '{print $2}');
+        firstname=$(echo $fullname | awk '{print $1}');
+      fi
+      if [[ -z $lastname ]]; then
+        lastname=`dscl . -read /Users/$(whoami) | grep LastName | sed "s/LastName: //"`
+      fi
+      if [[ -z $firstname ]]; then
+        firstname=`dscl . -read /Users/$(whoami) | grep FirstName | sed "s/FirstName: //"`
+      fi
+      email=`dscl . -read /Users/$(whoami)  | grep EMailAddress | sed "s/EMailAddress: //"`
 
-    if [[ -z $lastname ]]; then
-      lastname=`dscl . -read /Users/$(whoami) | grep LastName | sed "s/LastName: //"`
-    fi
-
-    if [[ -z $firstname ]]; then
-      firstname=`dscl . -read /Users/$(whoami) | grep FirstName | sed "s/FirstName: //"`
-    fi
-
-    email=`dscl . -read /Users/$(whoami)  | grep EMailAddress | sed "s/EMailAddress: //"`
-
-    if [[ ! "$firstname" ]];then
-      response='n'
+      if [[ ! "$firstname" ]];then
+        response='n'
+      else
+        echo -e "I see that your full name is $COL_YELLOW$firstname $lastname$COL_RESET"
+        read -r -p "Is this correct? [Y|n] " response
+      fi
     else
-      echo -e "I see that your full name is $COL_YELLOW$firstname $lastname$COL_RESET"
-      read -r -p "Is this correct? [Y|n] " response
+      response='n'
     fi
 
     if [[ $response =~ ^(no|n|N) ]];then
@@ -83,7 +84,11 @@ main() {
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
     action "Installing Git-Flow"
-      require_brew git git-flow gibo
+      require_brew git git-flow
+    ok
+
+    action "Installing GitIgnore Boilerplate Manager"
+      require_brew gibo
     ok
 
     action "Writing OS Specific .gitignore_global"
