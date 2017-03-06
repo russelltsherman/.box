@@ -22,13 +22,6 @@ main() {
     sudo apt-get install -y vagrant
   fi
   ok
-
-  require_vagrant_plugin 'vagrant-proxmox'
-  git clone https://github.com/telcat/vagrant-proxmox.git
-  cd vagrant-proxmox
-  vagrant box add dummy dummy_box/dummy.box
-  cd ..
-  rm -rf vagrant-proxmox
 }
 
 # _cmd_virtualbox() {
