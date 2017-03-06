@@ -244,13 +244,10 @@ source "$BOXFUNCDIR/setup/visualstudiocode"
 
 
 ################################################################################
-# vim plugins
+# vim
 ################################################################################
-bot "Installing plugins for vim"
-# add vundle to manage vim plugins
-(git_clone_or_update https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim)
-# use vundle to install other plugins
-(vim +PluginInstall +qall)
+source "$BOXFUNCDIR/setup/vim"
+(cmd_vim)
 
 
 ################################################################################

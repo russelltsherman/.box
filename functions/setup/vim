@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box setup vim"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Installing Vim"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    # Vi "workalike" with many additional features http://www.vim.org/
+    require_brew vim --with-override-system-vi
+  fi
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    sudo apt-get install -y vim
+  fi
+  ok
+
+  bot "Installing plugins for vim"
+  # add vundle to manage vim plugins
+  (git_clone_or_update https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim)
+  # use vundle to install other plugins
+  (vim +PluginInstall +qall)
+  ok
+}
+
+# _cmd_vim() {
+# }
+
+cmd_vim() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_vim "$@"

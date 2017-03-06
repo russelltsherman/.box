@@ -109,9 +109,6 @@ require_brew tree
 # Terminal interaction recorder and player http://0xcc.net/ttyrec/
 require_brew ttyrec
 
-# Vi "workalike" with many additional features http://www.vim.org/
-require_brew vim --with-override-system-vi
-
 # Executes a program periodically, showing output fullscreen https://gitlab.com/procps-ng/procps
 require_brew watch
 
