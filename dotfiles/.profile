@@ -33,4 +33,4 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
 
 # initialize thefuck
-type thefuck &>/dev/null && eval "$(thefuck --alias)" || # echo "thefuck() not found."
+type thefuck &>/dev/null && eval "$(thefuck --alias)" # || echo "thefuck() not found."
