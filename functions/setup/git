@@ -96,6 +96,10 @@ main() {
       # use gibo to populate a sensible global gitignore
       gibo OSX >> "$HOME/.gitignore_global"
     ok
+
+    action "Install Tower git GUI"
+      require_cask tower
+    ok
   fi
 
   if [ "$NS_PLATFORM" == "linux" ]; then
@@ -111,6 +115,12 @@ main() {
       mv "$HOME/.gitignore_global" "$HOME/.gitignore_global_bak"
       # use gibo to populate a sensible global gitignore
       gibo Linux >> "$HOME/.gitignore_global"
+    ok
+
+    action "Install gitKraken git GUI"
+      wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
+      sudo dpkg --install gitkraken-amd64.deb
+      rm -f gitkraken-amd64.deb
     ok
   fi
 }

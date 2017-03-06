@@ -18,8 +18,6 @@ require_cask dropbox
 
 require_cask firefox
 
-require_cask google-chrome
-
 require_cask growlnotify
 
 require_cask gpgtools
@@ -41,8 +39,6 @@ require_cask slack
 require_cask sophos-anti-virus-home-edition
 
 require_cask the-unarchiver
-
-require_cask tower
 
 require_cask vlc
 

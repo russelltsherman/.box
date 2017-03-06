@@ -14,15 +14,13 @@ main() {
   running "Installing Google Chrome"
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
-    (require_cask chrome)
+    require_cask google-chrome
   fi
   if [ "$NS_PLATFORM" == "linux" ]; then
-    (
       wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
       sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
       sudo apt-get update > /dev/null 2>&1
       sudo apt-get install google-chrome-stable > /dev/null 2>&1
-    )
   fi
   ok
 }
