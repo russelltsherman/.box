@@ -23,28 +23,29 @@ grep 'path = ~/.gitconfig_global' $HOME/.gitconfig > /dev/null 2>&1
 if [ ! "$?" == "0" ]; then
   read -r -p "What is your github.com username? " githubuser
 
-  fullname=`osascript -e "long user name of (system info)"`
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    fullname=`osascript -e "long user name of (system info)"`
 
-  if [[ -n "$fullname" ]];then
-    lastname=$(echo $fullname | awk '{print $2}');
-    firstname=$(echo $fullname | awk '{print $1}');
-  fi
+    if [[ -n "$fullname" ]];then
+      lastname=$(echo $fullname | awk '{print $2}');
+      firstname=$(echo $fullname | awk '{print $1}');
+    fi
+    if [[ -z $lastname ]]; then
+      lastname=`dscl . -read /Users/$(whoami) | grep LastName | sed "s/LastName: //"`
+    fi
+    if [[ -z $firstname ]]; then
+      firstname=`dscl . -read /Users/$(whoami) | grep FirstName | sed "s/FirstName: //"`
+    fi
+    email=`dscl . -read /Users/$(whoami)  | grep EMailAddress | sed "s/EMailAddress: //"`
 
-  if [[ -z $lastname ]]; then
-    lastname=`dscl . -read /Users/$(whoami) | grep LastName | sed "s/LastName: //"`
+    if [[ ! "$firstname" ]];then
+      response='n'
+    else
+      echo -e "I see that your full name is $COL_YELLOW$firstname $lastname$COL_RESET"
+      read -r -p "Is this correct? [Y|n] " response
+    fi
   fi
-  if [[ -z $firstname ]]; then
-    firstname=`dscl . -read /Users/$(whoami) | grep FirstName | sed "s/FirstName: //"`
-  fi
-  email=`dscl . -read /Users/$(whoami)  | grep EMailAddress | sed "s/EMailAddress: //"`
-
-  if [[ ! "$firstname" ]];then
-    response='n'
-  else
-    echo -e "I see that your full name is $COL_YELLOW$firstname $lastname$COL_RESET"
-    read -r -p "Is this correct? [Y|n] " response
-  fi
-
+  
   if [[ $response =~ ^(no|n|N) ]];then
     read -r -p "What is your first name? " firstname
     read -r -p "What is your last name? " lastname
