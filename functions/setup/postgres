@@ -14,27 +14,23 @@ main() {
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
     require_brew postgresql
-
-    running "setting postgres to start automatically"
     ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
     # initialize database
     initdb /usr/local/var/postgres
     # launch postgres now
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
-    ok
-
-  	# install ui query browser
-    if [[ $1 != "--skip-gui" ]]; then
-      require_cask pgadmin3
-    fi
   fi
 
   if [ "$NS_PLATFORM" == "linux" ]; then
     sudo apt-get install -y postgresql postgresql-contrib pgadmin3
+  fi
 
-    if [[ $1 != "--skip-gui" ]]; then
-      die "no UIAPP defined for linux"
-    fi
+  ok
+
+  # install gui query browser
+  if [[ $1 != "--skip-gui" ]]; then
+    source $BOXROOTDIR/functions/setup/valentina
+    cmd_valentina
   fi
 }
 

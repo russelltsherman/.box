@@ -20,24 +20,18 @@ main() {
   	# launch mysql now
   	launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
     ok
-
-  	# install ui query browser
-    if [[ $1 != "--skip-gui" ]]; then
-      require_cask sequel-pro
-    fi
   fi
 
   if [ "$NS_PLATFORM" == "linux" ]; then
   	sudo apt-get install -y mysql-server
   	sudo mysql_install_db
   	sudo /usr/bin/mysql_secure_installation
+  fi
 
-    # if i were on debian which ui would i want?
-    # phpmyadmin ?
-    # MySql Workbench ?
-    if [[ $1 != "--skip-gui" ]]; then
-      die "no UIAPP defined for linux"
-    fi
+  # install gui query browser
+  if [[ $1 != "--skip-gui" ]]; then
+    source $BOXROOTDIR/functions/setup/valentina
+    cmd_valentina
   fi
 }
 
