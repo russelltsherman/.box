@@ -14,17 +14,11 @@ main() {
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
     require_brew redis
-
     running "setting redis to start automatically"
     ln -sfv /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
     # Then to load redis now:
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
     ok
-
-    # a gui client for redis
-    if [[ $1 != "--skip-gui" ]]; then
-      require_cask rdm
-    fi
   fi
 
   if [ "$NS_PLATFORM" == "linux" ]; then
@@ -32,9 +26,17 @@ main() {
     sudo apt-get update
     sudo apt-get install -y redis-server
     # does it auto start ?
+  fi
 
-    if [[ $1 != "--skip-gui" ]]; then
-      die "no UIAPP defined for linux"
+  # a gui client for redis
+  if [[ $1 != "--skip-gui" ]]; then
+    if [ "$NS_PLATFORM" == "darwin" ]; then
+      require_cask rdm
+    fi
+    if [ "$NS_PLATFORM" == "linux" ]; then
+      git clone --recursive https://github.com/uglide/RedisDesktopManager.git -b 0.8.0 rdm
+      ( cd ./rdm/src/ && ./configure && source /opt/qt56/bin/qt56-env.sh && qmake && make && sudo make install )
+      ( cd /usr/share/redis-desktop-manager/bin && sudo mv qt.conf qt.backup )
     fi
   fi
 }
