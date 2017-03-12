@@ -20,7 +20,7 @@ main() {
     (
       curl -L https://github.com/atom/atom/releases/latest | \
       egrep -o '/atom/atom/releases/download/v[0-9.]*/atom-amd64.deb' | \
-      wget --base=http://github.com/ -i - -O atom-amd64.deb 
+      wget --base=http://github.com/ -i - -O atom-amd64.deb
 
       sudo dpkg --install atom-amd64.deb
       rm -f atom-amd64.deb
@@ -42,7 +42,7 @@ main() {
   require_apm go-debug
   require_apm go-signature-statusbar
   require_apm nuclide
-  require_apm vim-mode-plus
+  # require_apm vim-mode-plus
   require_apm wakatime
 }
 
