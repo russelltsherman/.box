@@ -14,28 +14,27 @@ main() {
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
     require_brew mongo
-
-    running "setting mongodb to start automatically"
     ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
     # launch mongodb now
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
-    ok
-
-    # a gui client for mongo
-    if [[ $1 != "--skip-gui" ]]; then
-      # require_cask mongohub
-      require_cask robomongo
-    fi
   fi
-
   if [ "$NS_PLATFORM" == "linux" ]; then
   	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
   	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
   	sudo apt-get update
   	sudo apt-get install -y mongodb-org
+  fi
 
-    if [[ $1 != "--skip-gui" ]]; then
-      die "no UIAPP defined for linux"
+  # a gui client for mongo
+  if [[ $1 != "--skip-gui" ]]; then
+    if [ "$NS_PLATFORM" == "darwin" ]; then
+      require_cask mongotron
+    fi
+    if [ "$NS_PLATFORM" == "linux" ]; then
+      wget https://github.com/officert/mongotron/releases/download/1.0.0-alpha.5/Mongotron-linux-x64.zip
+      unzip Mongotron-linux-x64.zip
+      mv Mongotron-linux-x64 Mongotron
+      rm Mongotron-linux-x64.zip
     fi
   fi
 }
