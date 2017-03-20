@@ -32,5 +32,12 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [ -s $HOME/.rvm/scripts/rvm ] && source $HOME/.rvm/scripts/rvm
 export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
 
+# all this for container based GUI apps
+export DISPLAY=:0
+export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+export DOCKER_DISPLAY=$IP:0
+/opt/X11/bin/xhost $IP
+/opt/X11/bin/xhost -
+
 # initialize thefuck
 type thefuck &>/dev/null && eval "$(thefuck --alias)" # || echo "thefuck() not found."
