@@ -28,6 +28,10 @@ main() {
     # for some reason this causes setup to stall
     # source $HOME/.profile
     # require_nvm 4.4.7
+
+    npm install -g yarn
+    npm install -g bower
+    npm install -g polymer-cli
   fi
 }
 
