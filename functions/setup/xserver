@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box setup xserver"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Install X-windows server"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    require_cask xquartz
+    sudo sed 's/\#X11Forwarding no/X11Forwarding yes/g' /etc/ssh/sshd_config
+  fi
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    # built in
+    sudo sed 's/\#   ForwardX11 no/ForwardX11 yes/g' /etc/ssh/ssh_config
+  fi
+  if [ "$NS_PLATFORM" == "windows" ]; then
+    # http://sourceforge.net/projects/xming/
+  fi
+
+
+}
+
+# _cmd_vxserver() {
+# }
+
+cmd_vxserver() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_vxserver "$@"
