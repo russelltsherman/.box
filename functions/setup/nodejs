@@ -29,8 +29,12 @@ main() {
     # source $HOME/.profile
     # require_nvm 4.4.7
 
-    npm install -g yarn
+    npm config set save=true
+    npm config set save-exact=true
+
     npm install -g bower
+    npm install -g eslint
+    npm install -g jshint
     npm install -g polymer-cli
   fi
 }

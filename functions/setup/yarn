@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box setup xserver"
+  echo
+}
+
+main() {
+  banner
+  get_platform
+  bot "Install X-windows server"
+
+  if [ "$NS_PLATFORM" == "darwin" ]; then
+    require_brew yarn
+  fi
+  if [ "$NS_PLATFORM" == "linux" ]; then
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    sudo apt-get update && sudo apt-get install yarn
+  fi
+}
+
+# _cmd_yarn() {
+# }
+
+cmd_yarn() {
+  if [ "$#" -lt 1 ]; then # called with no parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_yarn "$@"

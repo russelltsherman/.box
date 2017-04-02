@@ -39,5 +39,8 @@ export DOCKER_DISPLAY=$IP:0
 /opt/X11/bin/xhost $IP
 /opt/X11/bin/xhost -
 
+# add yarn to page
+export PATH="$PATH:`yarn global bin`"
+
 # initialize thefuck
 type thefuck &>/dev/null && eval "$(thefuck --alias)" # || echo "thefuck() not found."
