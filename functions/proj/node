@@ -26,8 +26,32 @@ main() {
   cp $BOXROOTDIR/lib/editorconfig_template $project_name/.editorconfig
   ok
 
+  running "write .eslintconfig"
+  cp $BOXROOTDIR/lib/eslintrc_template $project_name/.eslintrc.json
+  gibo node > $project_name/.eslintignore
+  ok
+
   running "write README.md"
-  echo "# $project_name" > $project_name/README.md
+  echo "
+# $project_name
+
+[![Build Status][build-badge]][build-url]
+[![Coverage Status][coverage-badge]][coverage-url]
+[![Dependency Status][dependency-badge]][dependency-url]
+[![Known Vulnerabilities][vulnerability-badge]][vulnerability-url]
+[![Google - JavaScript Style Guide][style-badge]][style-url]
+
+[build-badge]: https://travis-ci.org/BurnerDev/$project_name.svg?branch=master
+[build-url]: https://travis-ci.org/BurnerDev/$project_name
+[coverage-badge]: https://img.shields.io/codecov/c/github/BurnerDev/$project_name.svg?style=flat-square
+[coverage-url]: https://codecov.io/gh/BurnerDev/$project_name?branch=master
+[dependency-badge]: https://david-dm.org/BurnerDev/$project_name.svg
+[dependency-url]: https://david-dm.org/BurnerDev/$project_name.svg
+[vulnerability-badge]: https://snyk.io/test/github/BurnerDev/$project_name/badge.svg
+[vulnerability-url]: https://snyk.io/test/github/BurnerDev/$project_name
+[style-badge]: https://img.shields.io/badge/code%20style-google-brightgreen.svg?style=flat-square
+[style-url]: https://google.github.io/styleguide/jsguide.html
+" > $project_name/README.md
   ok
 
   running "write TODO.md"
@@ -49,8 +73,31 @@ export PATH=\$OLDPATH
 " > $project_name/.out
   ok
 
-  running "initialize NPM"
-  ( cd $project_name && npm init )
+  running "write .travis.yml"
+  touch $project_name/.travis.yml
+  echo "
+language: node_js
+node_js:
+  - \"7\"
+after_script:
+  - npm install codecov
+  - NODE_ENV=test ./node_modules/.bin/nyc report --reporter=lcov > coverage.lcov
+  - ./node_modules/.bin/codecov
+" > $project_name/.travis.yml
+  ok
+
+  running "initialize app"
+  ( cd $project_name && mkdir test )
+  ( cd $project_name && touch test/$project_name.spec.js )
+  ( cd $project_name && touch index.js )
+  ok
+
+  running "initialize yarn"
+  ( cd $project_name && yarn init )
+  ok
+
+  running "initialize dev dependencies"
+  ( cd $project_name && yarn add mocha chai supertest nyc sinon sinon-chai eslint eslint-config-google )
   ok
 
   running "initial git commit"
