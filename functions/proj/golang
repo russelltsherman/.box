@@ -74,7 +74,7 @@ indent_style = tab
   running "write .envrc"
   touch $project_name/.envrc
   echo "
-layout go
+layout gb
 " > $project_name/.envrc
 
   running "download golang archive"

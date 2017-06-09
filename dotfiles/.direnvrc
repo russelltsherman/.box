@@ -3,6 +3,10 @@ set -e
 export NODE_VERSIONS=$HOME/.nvm/versions/node
 export NODE_VERSION_PREFIX="v"
 
+# Usage: use node
+#
+# make node projects load node versions from NVM
+#
 use_node() {
   local version=$1
   local via=""
@@ -62,4 +66,18 @@ use_node() {
   else
     log_status "Successfully loaded NodeJS $(node --version) (via $via), from prefix ($node_prefix)"
   fi
+}
+
+# Usage: layout gb
+#
+# Sets up environment for a Go project using the alternative gb build tool. In
+# addition to project executables on PATH, this includes an exclusive, project-
+# local GOPATH which enables many tools like gocode and oracle to "just work".
+#
+# http://getgb.io/
+#
+layout_gb() {
+  export GOPATH="$PWD/vendor:$PWD"
+  PATH_add "$PWD/vendor/bin"
+  PATH_add bin
 }
