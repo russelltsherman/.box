@@ -1,6 +1,5 @@
 
 
-antibody bundle horosgrisa/autoenv
 antibody bundle rupa/z
 # antibody bundle zsh-users/zaw
 # antibody bundle zsh-users/zsh-autosuggestions

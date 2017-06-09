@@ -38,26 +38,32 @@ main() {
   pyenv virtualenv $version
   ok
 
-  running "write pyenv files"
+  running "write .python-version"
   echo "$version" > $project_name/.python-version
-  echo "$project_name" > $project_name/.python-virtualenv
   ok
 
-  # pyenv install 2.7.11
-  # pyenv install 3.5.1
-  # pyenv rehash
+  running "write .envrc"
+  touch $project_name/.envrc
+  echo "
+# handle creating, activating and deactivating a python virtualenv
+layout python
+# read from .vars file to load env vars. this file ix excluded from github to keep secrets secrets
+# see the contents of .vars.example for a list of expected content for the .vars file
+source .vars
+" > $project_name/.envrc
+  ok
 
-  # # list virtualenvs
-  # pyenv virtualenvs
+  running "gitignoring .vars"
+  echo "
+  # ignore .vars file
+  .vars
+  " > $project_name/.gitignore
+  ok
 
-  # # create a new virtualenv
-  # pyenv virtualenv $project_name
-
-  # # destroy a  virtualenv
-  # pyenv uninstall $project_name
-
-  # # create a directory switch for a virtualenv
-  # pyenv local $project_name
+  running "write .vars and .vars.example"
+  touch $project_name/.vars
+  touch $project_name/.vars.example
+  ok
 
   running "initial git commit"
   ( cd $project_name && git add . && git commit -a -m 'initial commit' )

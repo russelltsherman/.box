@@ -58,19 +58,32 @@ main() {
   echo "# $project_name" > $project_name/TODO.md
   ok
 
-  running "write autoenv files"
-  touch $project_name/.env
-  echo "
-nvm use $version
-export OLDPATH=\$PATH
-export PATH=\`pwd\`/node_modules/.bin:\$PATH
-" > $project_name/.env
+  running "write .node-version"
+  touch $project_name/.node-version
+  echo "$version" > $project_name/.node-version
+  ok
 
-  touch $project_name/.out
+  running "write .envrc"
+  touch $project_name/.envrc
   echo "
-nvm use system
-export PATH=\$OLDPATH
-" > $project_name/.out
+use node
+layout node
+# read from .vars file to load env vars. this file ix excluded from github to keep secrets secrets
+# see the contents of .vars.example for a list of expected content for the .vars file
+source .vars
+" > $project_name/.envrc
+  ok
+
+  running "gitignoring .vars"
+  echo "
+  # ignore .vars file
+  .vars
+  " > $project_name/.gitignore
+  ok
+
+  running "write .vars and .vars.example"
+  touch $project_name/.vars
+  touch $project_name/.vars.example
   ok
 
   running "write .travis.yml"

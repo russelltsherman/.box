@@ -20,6 +20,9 @@ require_brew coreutils
 # Don't forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
 # sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
 
+# direnv is an environment switcher for the shell.
+require_brew direnv
+
 # Convert text between DOS, UNIX, and Mac formats https://waterlan.home.xs4all.nl/dos2unix.html
 require_brew dos2unix
 

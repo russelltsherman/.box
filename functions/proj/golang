@@ -71,21 +71,11 @@ indent_style = tab
   echo "# $project_name" > $project_name/TODO.md
   ok
 
-  running "write autoenv files"
-  touch $project_name/.env
+  running "write .envrc"
+  touch $project_name/.envrc
   echo "
-export OLDPATH=\$PATH
-export PATH=\`pwd\`/bin:\$PATH
-export OLDGOPATH=\$GOPATH
-export GOPATH=\`pwd\`
-" > $project_name/.env
-
-  touch $project_name/.out
-  echo "
-export PATH=\$OLDPATH
-export GOPATH=\$OLDGOPATH
-" > $project_name/.out
-  ok
+layout go
+" > $project_name/.envrc
 
   running "download golang archive"
   wget -O $project_name/$file.tar.gz https://storage.googleapis.com/golang/$file.tar.gz
