@@ -34,7 +34,7 @@ main() {
   ok
 
   running "initialize vagrant"
-  ( cd $project_name && vagrant init ubuntu/trusty64; )
+  ( cd $project_name && vagrant init ubuntu/xenial64; )
   ok
 
   running "initial git commit"
