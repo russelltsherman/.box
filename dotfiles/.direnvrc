@@ -1,16 +1,15 @@
 set -e
 
-export NODE_VERSIONS=$HOME/.nvm/versions/node
-export NODE_VERSION_PREFIX="v"
-
 # Usage: use node
 #
 # make node projects load node versions from NVM
 #
 use_node() {
+  NODE_VERSIONS=$HOME/.nvm/versions/node
+
   local version=$1
   local via=""
-  local node_version_prefix=${NODE_VERSION_PREFIX:-node-v}
+  local node_version_prefix="v"
   local node_wanted
   local node_prefix
 
@@ -39,7 +38,7 @@ use_node() {
     # Look for matching node versions in $NODE_VERSIONS path
     find "$NODE_VERSIONS" -maxdepth 1 -mindepth 1 -type d -name "$node_wanted*" |
     # Strip possible "/" suffix from $NODE_VERSIONS, then use that to
-    # Strip $NODE_VERSIONS/$NODE_VERSION_PREFIX prefix from line.
+    # Strip $NODE_VERSIONS/$node_version_prefix prefix from line.
     while IFS= read -r line; do echo "${line#${NODE_VERSIONS%/}/${node_version_prefix}}"; done |
     # Sort by version: split by "." then reverse numeric sort for each piece of the version string
     sort -t . -k 1,1rn -k 2,2rn -k 3,3rn |
