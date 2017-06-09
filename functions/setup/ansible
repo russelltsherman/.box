@@ -11,39 +11,14 @@ main() {
   banner
   get_platform
 
-  action "install ansible from source"
-    git clone git://github.com/ansible/ansible.git --recursive
-    cd ./ansible
-    source ./hacking/env-setup
-    # Once running the env-setup script you’ll be running from checkout and the
-    # default inventory file will be /etc/ansible/hosts. You can optionally specify
-    # an inventory file (see Inventory) other than /etc/ansible/hosts:
-    echo "127.0.0.1" > ~/ansible_hosts
-    export ANSIBLE_INVENTORY=~/ansible_hosts
-    ok
-
-  action "add ansible to paths"
-    profile_write '# add ansible git repo to paths' $HOME/.profile
-    profile_write 'PATH=$PATH:~/ansible/bin:' $HOME/.profile
-    profile_write 'PYTHONPATH=$PYTHONPATH:~/ansible/lib:' $HOME/.profile
-    profile_write 'MANPATH=$MANPATH:!/ansible/docs/man' $HOME/.profile
-
   action "install python dependencies"
     sudo pip install --upgrade pip
-    sudo pip install paramiko PyYAML Jinja2 httplib2 six
+    sudo pip install ansible
     ok
 
   action "install debops playbooks"
-    sudo pip install debops netaddr passlib
+    sudo pip install ldap netaddr passlib debops
     sudo debops-update
-    ok
-
-  action "create update script"
-    touch ~/ansible/update
-    chmod +x ~/ansible/update
-    echo "#!/usr/bin/env bash" > ~/ansible/update
-    echo "git pull --rebase" >> ~/ansible/update
-    echo "git submodule update --init --recursive" >> ~/ansible/update
     ok
 }
 
