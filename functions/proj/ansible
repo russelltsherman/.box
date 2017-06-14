@@ -13,7 +13,7 @@ main() {
 
   ###########################################################
   bot "Cloning Ansible Project Skeleton"
-  git clone https://github.com/bertvv/ansible-skeleton.git $project_name
+  git clone https://github.com/russelltsherman/proj-ansible.git $project_name
 }
 
 # for examples of providing tab completion suggestions see:
