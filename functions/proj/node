@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box node [project_name] [node_version]"
+  echo "usage: box proj node [project_name] [node_version]"
   echo
 }
 

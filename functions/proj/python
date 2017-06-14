@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box python [project_name] [python_version]"
+  echo "usage: box proj python [project_name] [python_version]"
   echo
 }
 

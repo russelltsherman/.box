@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box vagrant [project_name]"
+  echo "usage: box proj vagrant [project_name]"
   echo
 }
 

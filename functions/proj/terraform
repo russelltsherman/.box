@@ -3,7 +3,7 @@
 source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
 
 usage() {
-  echo "usage: box terraform [project_name]"
+  echo "usage: box proj terraform [project_name]"
   echo
 }
 
