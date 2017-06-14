@@ -11,35 +11,9 @@ main() {
   banner
   local project_name=$1
 
-  running "create project directory"
-  mkdir -p $project_name
-  ok
-
-  running "initialize git"
-  ( cd $project_name && git init &>/dev/null )
-  gibo vagrant > $project_name/.gitignore
-  cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
-  ok
-
-  running "write .editorconfig"
-  cp $BOXROOTDIR/lib/editorconfig_template $project_name/.editorconfig
-  ok
-
-  running "write README.md"
-  echo "# $project_name" > $project_name/README.md
-  ok
-
-  running "write TODO.md"
-  echo "# $project_name" > $project_name/TODO.md
-  ok
-
-  running "initialize vagrant"
-  ( cd $project_name && vagrant init ubuntu/xenial64; )
-  ok
-
-  running "initial git commit"
-  ( cd $project_name && git add . && git commit -a -m 'initial commit' )
-  ok
+  ###########################################################
+  bot "Cloning Vagrant Project Skeleton"
+  git clone https://github.com/russelltsherman/proj-vagrant.git $project_name
 }
 
 # for examples of providing tab completion suggestions see:
