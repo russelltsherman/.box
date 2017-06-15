@@ -18,6 +18,10 @@ main() {
   running "initialize git"
   ( cd $project_name && git init &>/dev/null )
   gibo Docker > $project_name/.gitignore
+  echo "
+# ignore contents of .direnv
+.direnv
+" >> $project_name/.gitignore
   cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
   ok
 
