@@ -8,6 +8,7 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Contributor Code of Conduct
+
 ## Version 0.4
 
 As contributors and maintainers of this project, we pledge to respect all people who contribute through reporting issues, posting feature requests, updating documentation, submitting pull requests or patches, and other activities.
