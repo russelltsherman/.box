@@ -94,6 +94,10 @@ require_brew openconnect
 # Monitor data's progress through a pipe https://www.ivarch.com/programs/pv.shtml
 require_brew pv
 
+# Simple Python Version Management: pyenv
+require_brew pyenv
+require_brew pyenv-virtualenv
+
 # Reattach process (e.g., tmux) to background https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 require_brew reattach-to-user-namespace
 
