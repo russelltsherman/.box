@@ -42,7 +42,7 @@ require_cask the-unarchiver
 
 require_cask vlc
 
-# require_cask xquartz
+require_cask xquartz
 
 # ###############################################################################
 # bot "installing GUI tools via homebrew casks..."
