@@ -16,7 +16,7 @@ main() {
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v "${HOME}/fastly-logs:/root/fastly-logs" \
   -v /dev/shm:/dev/shm \
-  -e "DISPLAY=unix${DISPLAY}" \
+  -e "DISPLAY=${DISPLAY}" \
   -e QT_DEVICE_PIXEL_RATIO \
   --device /dev/dri \
   --name $container_name \

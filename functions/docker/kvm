@@ -19,7 +19,7 @@ main() {
   -v /etc/localtime:/etc/localtime:ro \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v /run/libvirt:/var/run/libvirt \
-  -e "DISPLAY=unix${DISPLAY}" \
+  -e "DISPLAY=${DISPLAY}" \
   --link pulseaudio:pulseaudio \
   -e PULSE_SERVER=pulseaudio \
   --group-add audio \

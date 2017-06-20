@@ -18,7 +18,7 @@ main() {
   -v /var/run/dbus:/var/run/dbus \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v "${HOME}/.steam:/home/steam" \
-  -e "DISPLAY=unix${DISPLAY}" \
+  -e "DISPLAY=${DISPLAY}" \
   --link pulseaudio:pulseaudio \
   -e PULSE_SERVER=pulseaudio \
   --device /dev/dri \

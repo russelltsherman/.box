@@ -18,7 +18,7 @@ main() {
   -v /etc \
   -v /home/user/.dbus \
   -v /home/user/.cache/dconf \
-  -e "DISPLAY=unix${DISPLAY}" \
+  -e "DISPLAY=${DISPLAY}" \
   --name $container_name \
   ${DOCKER_REPO_PREFIX}/notify-osd
 }
