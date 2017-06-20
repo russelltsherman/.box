@@ -24,6 +24,8 @@ require_cask gpgtools
 
 require_cask iterm2
 
+require_cask kindle
+
 # require_cask lastpass
 
 # require_cask macpilot
