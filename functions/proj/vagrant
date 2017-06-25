@@ -14,6 +14,19 @@ main() {
   ###########################################################
   bot "Cloning Vagrant Project Skeleton"
   git clone https://github.com/russelltsherman/proj-vagrant.git $project_name
+  ok
+
+  running "purging upstream git history"
+  ( cd $project_name && rm -rf .git )
+  ok
+
+  running "initialize new git repo"
+  ( cd $project_name && git init &>/dev/null )
+  ok
+
+  running "initial git commit"
+  ( cd $project_name && git add . && git commit -a -m 'initial commit' )
+  ok
 }
 
 # for examples of providing tab completion suggestions see:
