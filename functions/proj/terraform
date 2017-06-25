@@ -33,9 +33,34 @@ main() {
   echo "# $project_name" > $project_name/TODO.md
   ok
 
-  running "initialize vagrant"
-  ( cd $project_name && vagrant init ubuntu/xenial64; )
+  running "write .envrc"
+  touch $project_name/.envrc
+  echo "
+# read from .vars file to load env vars. this file ix excluded from github to keep secrets secrets
+# see the contents of .vars.example for a list of expected content for the .vars file
+source .vars
+" > $project_name/.envrc
   ok
+
+  running "writing .gitignore"
+  echo "
+  terraform.tfstate*
+  .terraform*
+  environment
+
+  # ignore .vars file
+  .vars
+  " > $project_name/.gitignore
+  ok
+
+  running "write .vars and .vars.example"
+  touch $project_name/.vars
+  touch $project_name/.vars.example
+  ok
+
+  touch $project_name/terraform.tf
+  touch $project_name/outputs.tf
+  touch $project_name/variables.tf
 
   running "initial git commit"
   ( cd $project_name && git add . && git commit -a -m 'initial commit' )
