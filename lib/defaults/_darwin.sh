@@ -44,8 +44,8 @@ defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool TRUE;ok
 ################################################
 action "Standard System Changes"
 ################################################
-running "always boot in verbose mode (not OSX GUI mode)"
-sudo nvram boot-args="-v";ok
+# running "always boot in verbose mode (not OSX GUI mode)"
+# sudo nvram boot-args="-v";ok
 
 running "allow 'locate' command"
 sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist > /dev/null 2>&1;ok
