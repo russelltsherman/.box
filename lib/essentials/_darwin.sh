@@ -76,6 +76,9 @@ require_brew imagesnap
 # Lightweight and flexible command-line JSON processor https://stedolan.github.io/jq/
 require_brew jq
 
+# A simple command line interface for the Mac App Store.
+require_brew mas
+
 # Powerful paging program http://www.jedsoft.org/most/
 require_brew most
 
