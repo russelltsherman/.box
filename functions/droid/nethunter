@@ -50,16 +50,16 @@ main() {
 
   bot "Download NetHunter"
     running "http://images.kali.org/$image"
-    wget -nc http://images.kali.org/$image --directory-prefix $_DROID_ROOT/share/
+    wget -nc http://images.kali.org/$image --directory-prefix $BOXROOTDIR/share/
 
   bot "Checking Download Integrity"
-    downloaded=`$sha_cmd $_DROID_ROOT/share/$image | awk '{ print $1 }'`
+    downloaded=`$sha_cmd $BOXROOTDIR/share/$image | awk '{ print $1 }'`
     warn "expected: $sha1_sum"
     warn "     got: $downloaded"
 
   bot "Pushing $image to device"
-    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/$image /sdcard/
-    $_DROID_ROOT/bin/adb reboot bootloader
+    $BOXROOTDIR/bin/adb push $BOXROOTDIR/share/$image /sdcard/
+    $BOXROOTDIR/bin/adb reboot bootloader
     sleep 7
 
   bot "Boot to recovery and load Kali NetHunter"

@@ -18,8 +18,8 @@ main() {
   select_droid
 
   action "Unlocking Bootloader"
-    $_DROID_ROOT/bin/fastboot oem unlock
-    $_DROID_ROOT/bin/fastboot reboot
+    $BOXROOTDIR/bin/fastboot oem unlock
+    $BOXROOTDIR/bin/fastboot reboot
     ok
 
 
@@ -36,8 +36,8 @@ main() {
 
 
   bot "Pushing UPDATE-SuperSU-v2.46.zip"
-    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/$suzip /sdcard/
-    $_DROID_ROOT/bin/adb reboot bootloader
+    $BOXROOTDIR/bin/adb push $BOXROOTDIR/share/$suzip /sdcard/
+    $BOXROOTDIR/bin/adb reboot bootloader
     sleep 7
 
 
@@ -48,10 +48,10 @@ main() {
     read recovery
 
     if [ $recovery = 1 ] ; then
-      $_DROID_ROOT/bin/fastboot flash recovery $_DROID_ROOT/share/$clockwork
+      $BOXROOTDIR/bin/fastboot flash recovery $BOXROOTDIR/share/$clockwork
     fi
     if [ $recovery = 2 ] ; then
-      $_DROID_ROOT/bin/fastboot flash recovery $_DROID_ROOT/share/$teamwin
+      $BOXROOTDIR/bin/fastboot flash recovery $BOXROOTDIR/share/$teamwin
     fi
 
 

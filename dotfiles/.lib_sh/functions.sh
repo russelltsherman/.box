@@ -127,6 +127,9 @@ function get_osx_version() {
       12)
         export OSX_VERSION="Sierra"
         ;;
+      13)
+        export OSX_VERSION="High Sierra"
+        ;;
       *)
         export OSX_VERSION="Unknown"
         ;;
@@ -202,19 +205,20 @@ function select_droid {
       product='grouper'
       suzip='UPDATE-SuperSU-v1.45.zip'
       clockwork='recovery-clockwork-touch-6.0.4.3-grouper.img'
-      teamwin='twrp-3.0.2-0-grouper.img'
+      teamwin='twrp-3.1.1-0-grouper.img'
+
     fi
     if [ $device = 2 ] ; then
       product='flo'
-      suzip='SuperSU-root-BETA-v2.67.zip'
+      suzip='SuperSU-v2.82-201705271822'
       clockwork='recovery-clockwork-touch-6.0.4.7-flo.img'
-      teamwin='twrp-3.0.2-0-flo.img'
+      teamwin='twrp-3.1.1-0-flo.img'
     fi
     if [ $device = 3 ] ; then
       product='deb'
-      suzip='SuperSU-root-BETA-v2.67.zip'
+      suzip='SuperSU-v2.82-201705271822'
       clockwork='recovery-clockwork-touch-6.0.4.8-deb.img'
-      teamwin='twrp-3.0.2-0-deb.img'
+      teamwin='twrp-3.1.1-0-deb.img'
     fi
 }
 

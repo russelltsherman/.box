@@ -32,9 +32,9 @@ main() {
       usbhost='timur-usbhost-flo601-v4-beta3-russellsherman-2016-06-22.zip'
     fi
 
-    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/TimursKernel/$services /sdcard/
-    $_DROID_ROOT/bin/adb push $_DROID_ROOT/share/TimursKernel/$usbhost /sdcard/
-    $_DROID_ROOT/bin/adb reboot bootloader
+    $BOXROOTDIR/bin/adb push $BOXROOTDIR/share/TimursKernel/$services /sdcard/
+    $BOXROOTDIR/bin/adb push $BOXROOTDIR/share/TimursKernel/$usbhost /sdcard/
+    $BOXROOTDIR/bin/adb reboot bootloader
     sleep 7
 
   bot "Boot to recovery and Install Timurs Kernel"

@@ -28,13 +28,13 @@ main() {
 
   if [ $selection = 1 ] ; then
     action "Unlocking Bootloader"
-    $_DROID_ROOT/bin/fastboot oem unlock
+    $BOXROOTDIR/bin/fastboot oem unlock
     ok
   fi
 
   if [ $selection = 2 ] ; then
     action "Locking Bootloader"
-    $_DROID_ROOT/bin/fastboot oem lock
+    $BOXROOTDIR/bin/fastboot oem lock
     ok
   fi
 
