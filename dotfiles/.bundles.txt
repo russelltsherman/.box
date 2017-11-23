@@ -1,6 +1,8 @@
 
 
 antibody bundle rupa/z
+antibody bundle robbyrussell/oh-my-zsh
+
 # antibody bundle zsh-users/zaw
 # antibody bundle zsh-users/zsh-autosuggestions
 # antibody bundle zsh-users/zsh-completions
