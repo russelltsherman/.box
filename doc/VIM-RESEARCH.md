@@ -1,9 +1,8 @@
-
-VIM TMUX refs
+# VIM TMUX refs
 
 - vimtutor
 
-* [Thoughtbot]
+- [Thoughtbot]
   - [Vim Navigation Commands](https://www.youtube.com/watch?v=Qem8cpbJeYc)
   - [Let VIM do the typing](https://www.youtube.com/watch?v=3TX3kV3TICU)
   - [Improving Vim Speed](https://www.youtube.com/watch?v=OnUiHLYZgaA)
@@ -11,45 +10,43 @@ VIM TMUX refs
   - [Learn Vim in a Week](https://www.youtube.com/watch?v=_NUO4JEtkDw)
   - [tpopes config and plugins](https://www.youtube.com/watch?v=MGmIJyTf8pg)
 
+- [Nick Nisi]
+  - `https://github.com/nicknisi/dotfiles`
+  - `https://github.com/nicknisi/vim-workshop`
+  - `https://www.youtube.com/watch?v=5r6yzFEXajQ`
 
-* [Nick Nisi]
-  - https://github.com/nicknisi/dotfiles
-  - https://github.com/nicknisi/vim-workshop
-  - https://www.youtube.com/watch?v=5r6yzFEXajQ
+- [ColbyCheeZe]
+  - `http://www.colbycheeze.com/blog/2015/02/level-up-your-workflow-with-vim-and-tmux.html`
+  - `https://github.com/colbycheeze/dotfiles`
+  - `https://www.youtube.com/watch?v=YD9aFIvlQYs`
 
+- [SteveLosh]
+  - `http://learnvimscriptthehardway.stevelosh.com/`
 
-* [ColbyCheeZe]
-  - http://www.colbycheeze.com/blog/2015/02/level-up-your-workflow-with-vim-and-tmux.html
-  - https://github.com/colbycheeze/dotfiles
-  - https://www.youtube.com/watch?v=YD9aFIvlQYs
-
-
-* [SteveLosh]
-  - http://learnvimscriptthehardway.stevelosh.com/
-
-
-* [Hermann Vocke]
-  - http://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/
-
+- [Hermann Vocke]
+  - `http://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/`
 
 ## vim high-value plugins
 
 Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
-- https://github.com/ctrlpvim/ctrlp.vim
+
+- `https://github.com/ctrlpvim/ctrlp.vim`
 
 A tree explorer plugin for vim.
-- https://github.com/scrooloose/nerdtree
+
+- `https://github.com/scrooloose/nerdtree`
 
 Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module / CLI script 'ack'
-- https://github.com/rking/ag.vim
+
+- `https://github.com/rking/ag.vim`
 
 rails.vim: Ruby on Rails power tools
-- https://github.com/tpope/vim-rails
+
+- `https://github.com/tpope/vim-rails`
 
 Run Rspec specs from Vim
-- https://github.com/thoughtbot/vim-rspec
 
-
+- `https://github.com/thoughtbot/vim-rspec`
 
 i: insert before current character
 I: insert before all current line characters (sans whitespace)
