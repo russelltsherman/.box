@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+
+usage() {
+  echo "usage: box setup hosts"
+  echo
+}
+
+main() {
+  banner
+
+  get_platform
+
+  bot "Updating HOSTS file"
+
+  # /etc/hosts
+  read -r -p "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? [y|N] " response
+  if [[ $response =~ (yes|y|Y) ]];then
+
+    action "cp /etc/hosts /etc/hosts.backup"
+    sudo cp /etc/hosts /etc/hosts.backup
+    ok
+
+    action "cp ./configs/hosts /etc/hosts"
+    sudo cp $BOXROOTDIR/lib/hosts /etc/hosts
+    ok
+
+    bot "Your /etc/hosts file has been updated. Last version is saved in /etc/hosts.backup"
+  fi
+
+}
+
+# _cmd_hosts() {
+#   _alternative "command:Command Path:_files"
+# }
+
+cmd_hosts() {
+  if [ "$#" -lt 1 ]; then
+    # called with no parameters
+    main; exit 0
+
+  elif [ "$#" -eq 1 ]; then
+    # called with 1 parameters
+    if [[ $1 == "help" ]]; then
+      usage; exit 0
+    fi
+
+    main $1; exit 0
+  fi
+
+  usage; exit 1
+}
+
+# cmd_hosts "$@"
