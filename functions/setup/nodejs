@@ -17,8 +17,8 @@ main() {
   else
     bot "Installing NodeJS Version Manager"
 
-    git clone https://github.com/creationix/nvm.git ~/.nvm > /dev/null 2>&1
-    (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags` > /dev/null 2>&1)
+    latest=$(curl https://api.github.com/repos/creationix/nvm/releases/latest -s | jq .name -r)
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/$latest/install.sh | bash
 
     profile_write "# initialize NVM" $HOME/.profile
     profile_write "export NVM_DIR=\$HOME/.nvm" $HOME/.profile
