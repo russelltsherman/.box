@@ -23,6 +23,7 @@ action "Installing build tools"
       clang \
       curl \
       git \
+      jq \
       most \
       libxslt1.1 \
       libssl-dev \
