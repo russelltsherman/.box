@@ -16,4 +16,4 @@ source ~/.zsh/zsh_hooks.zsh
 # new env var to hide legacy commands in docker cli
 export DOCKER_HIDE_LEGACY_COMMANDS=1
 
-eval "$(direnv hook zsh)"
+type direnv &>/dev/null && eval "$(direnv hook zsh)"
