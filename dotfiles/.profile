@@ -36,8 +36,9 @@ export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
 export DISPLAY=:0
 export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 export DOCKER_DISPLAY=$IP:0
-/opt/X11/bin/xhost $IP
-/opt/X11/bin/xhost -
+xhost_path=$(which xhost)
+$xhost_path $IP
+$xhost_path -
 
 # add yarn to page
 export PATH="$PATH:`yarn global bin`"
