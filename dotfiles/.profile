@@ -32,9 +32,13 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [ -s $HOME/.rvm/scripts/rvm ] && source $HOME/.rvm/scripts/rvm
 export PATH="$GEM_HOME/bin:$PATH" # RVM demands ruby bin is first in path
 
+# attempt to detect which is the active netwrok interface
+ifconfig en0 &>/dev/null && nterface="en0"  # running on my macbook
+ifconfig enp0s3 &>/dev/null && nterface="enp0s3" # running in virtualbox virtualmachine
+
 # all this for container based GUI apps
 export DISPLAY=:0
-export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+export IP=$(ifconfig $nterface | grep inet | awk '$1=="inet" {print $2}' | tr -d 'addr:' )
 export DOCKER_DISPLAY=$IP:0
 xhost_path=$(which xhost)
 $xhost_path $IP
