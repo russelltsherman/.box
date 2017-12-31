@@ -47,5 +47,5 @@ export PATH="$PATH:`yarn global bin`"
 type thefuck &>/dev/null && eval "$(thefuck --alias)" # || echo "thefuck() not found."
 
 # initialie pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+type pyenv &>/dev/null && eval "$(pyenv init -)"
+type pyenv &>/dev/null && eval "$(pyenv virtualenv-init -)"
