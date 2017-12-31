@@ -27,12 +27,12 @@ __command_path() {
   done
 }
 
-# look into file and see if it defines a functions names _cmd_$(basename $1)
+# look into file and see if it defines a functions named _cmd_$(basename $1)
 __command_valid() {
   if [ -f $1 ]; then
     source $1
     if typeset -f cmd_$(basename $1) > /dev/null; then
-      # file defines a funtion called cmd_$(basename $1)
+      # file defines a funtion named cmd_$(basename $1)
       echo 'TRUE'
     fi
     unset -f $1 >/dev/null 2>&1
