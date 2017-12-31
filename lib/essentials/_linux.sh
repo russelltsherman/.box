@@ -22,6 +22,7 @@ action "Installing build tools"
       module-assistant \
       clang \
       curl \
+      direnv \
       git \
       jq \
       most \
