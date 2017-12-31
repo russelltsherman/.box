@@ -23,7 +23,7 @@ main() {
         fi
 
         running "create rsa key"
-        ssh-keygen -t rsa -b 2048 -C "$email"; ok
+        ssh-keygen -t rsa -b 4096 -C "$email"; ok
 
         # Then add your new key to the ssh-agent:
         # start the ssh-agent in the background
