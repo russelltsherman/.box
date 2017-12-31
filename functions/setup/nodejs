@@ -29,13 +29,13 @@ main() {
     # source $HOME/.profile
     # require_nvm 4.4.7
 
-    npm config set save=true
-    npm config set save-exact=true
+    # npm config set save=true
+    # npm config set save-exact=true
 
-    npm install -g bower
-    npm install -g eslint
-    npm install -g jshint
-    npm install -g polymer-cli
+    # npm install -g bower
+    # npm install -g eslint
+    # npm install -g jshint
+    # npm install -g polymer-cli
   fi
 }
 
