@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box consul"
@@ -24,12 +25,12 @@ main() {
   -v /var/run/docker.sock:/var/run/docker.sock \
   --net host \
   -e GOMAXPROCS=2 \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/consul agent \
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/consul" agent \
   -bootstrap-expect 1 \
   -config-dir /etc/consul.d \
   -data-dir /data \
-  -encrypt "$(docker run --rm ${DOCKER_REPO_PREFIX}/consul keygen)" \
+  -encrypt "$(docker run --rm "${DOCKER_REPO_PREFIX}/consul" keygen)" \
   -ui-dir /usr/src/consul \
   -server \
   -dc neverland \
@@ -47,11 +48,11 @@ cmd_consul() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

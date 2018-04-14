@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box proj python [project_name] [python_version]"
@@ -13,64 +14,64 @@ main() {
   local version=$2
 
   running "create project directory"
-  mkdir -p $project_name
+  mkdir -p "$project_name"
   ok
 
   running "initialize git"
-  ( cd $project_name && git init &>/dev/null )
-  gibo python > $project_name/.gitignore
+  ( cd "$project_name" && git init &>/dev/null )
+  gibo python > "$project_name/.gitignore"
   echo "
 # ignore contents of .direnv
 .direnv
-" >> $project_name/.gitignore
-  cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
+" >> "$project_name/.gitignore"
+    cp "${BOXROOTDIR}/lib/gitattributes_template" "$project_name/.gitattributes"
   ok
 
   running "write .editorconfig"
-  cp $BOXROOTDIR/lib/editorconfig_template $project_name/.editorconfig
+  cp "${BOXROOTDIR}/lib/editorconfig_template" "$project_name/.editorconfig"
   ok
 
   running "write README.md"
-  echo "# $project_name" > $project_name/README.md
+  echo "# $project_name" > "$project_name/README.md"
   ok
 
   running "write TODO.md"
-  echo "# $project_name" > $project_name/TODO.md
+  echo "# $project_name" > "$project_name/TODO.md"
   ok
 
   running "create virtual environment"
-  pyenv virtualenv $version
+  pyenv virtualenv "$version"
   ok
 
   running "write .python-version"
-  echo "$version" > $project_name/.python-version
+  echo "$version" > "$project_name/.python-version"
   ok
 
   running "write .envrc"
-  touch $project_name/.envrc
+  touch "$project_name/.envrc"
   echo "
 # handle creating, activating and deactivating a python virtualenv
 layout python
 # read from .vars file to load env vars. this file ix excluded from github to keep secrets secrets
 # see the contents of .vars.example for a list of expected content for the .vars file
 source .vars
-" > $project_name/.envrc
+" > "$project_name/.envrc"
   ok
 
   running "gitignoring .vars"
   echo "
   # ignore .vars file
   .vars
-  " > $project_name/.gitignore
+  " > "$project_name/.gitignore"
   ok
 
   running "write .vars and .vars.example"
-  touch $project_name/.vars
-  touch $project_name/.vars.example
+  touch "$project_name/.vars"
+  touch "$project_name/.vars.example"
   ok
 
   running "initial git commit"
-  ( cd $project_name && git add . && git commit -a -m 'initial commit' )
+  ( cd "$project_name" && git add . && git commit -a -m 'initial commit' )
   ok
 }
 
@@ -87,11 +88,11 @@ cmd_python() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

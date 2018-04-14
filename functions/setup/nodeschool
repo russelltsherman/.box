@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup nodeschool"
@@ -14,64 +15,64 @@ main() {
       2) # Javascript 101
         bot "Javascript 101"
         bot "installing Nodeschool workshop javascripting"
-        mkdir -p $HOME/nodeschool/javascript101/javascripting
+        mkdir -p "$HOME/nodeschool/javascript101/javascripting"
         npm install -g javascripting
         bot "installing Nodeschool workshop count-to-6"
-        mkdir -p $HOME/nodeschool/javascript101/count-to-6
+        mkdir -p "$HOME/nodeschool/javascript101/count-to-6"
         npm install -g count-to-6
         bot "installing Nodeschool workshop planetproto"
-        mkdir -p $HOME/nodeschool/javascript101/planetproto
+        mkdir -p "$HOME/nodeschool/javascript101/planetproto"
         npm install -g planetproto
       ;;
       3) # Javascript 201
         bot "Javascript 201"
         bot "installing Nodeschool workshop esnext-generation"
-        mkdir -p $HOME/nodeschool/javascript201/esnext-generation
+        mkdir -p "$HOME/nodeschool/javascript201/esnext-generation"
         npm install -g esnext-generation
         bot "installing Nodeschool workshop learn-generators"
-        mkdir -p $HOME/nodeschool/javascript201/learn-generators
+        mkdir -p "$HOME/nodeschool/javascript201/learn-generators"
         npm install -g learn-generators
         bot "installing Nodeschool workshop promise-it-wont-hurt"
-        mkdir -p $HOME/nodeschool/javascript201/promise-it-wont-hurt
+        mkdir -p "$HOME/nodeschool/javascript201/promise-it-wont-hurt"
         npm install -g promise-it-wont-hurt
       ;;
       4) # JAVASCRIPT 301
         bot "Javascript 301"
         bot "installing Nodeschool workshop tower-of-babel"
-        mkdir -p $HOME/nodeschool/javascript301/tower-of-babel
+        mkdir -p "$HOME/nodeschool/javascript301/tower-of-babel"
         npm install -g tower-of-babel
         bot "installing Nodeschool workshop functional-javascript-workshop"
-        mkdir -p $HOME/nodeschool/javascript301/functional-javascript-workshop
+        mkdir -p "$HOME/nodeschool/javascript301/functional-javascript-workshop"
         npm install -g functional-javascript-workshop
         bot "installing Nodeschool workshop currying-workshopper"
-        mkdir -p $HOME/nodeschool/javascript301/currying-workshopper
+        mkdir -p "$HOME/nodeschool/javascript301/currying-workshopper"
         npm install -g currying-workshopper
       ;;
       5) # NodeJS and NPM
         bot "NodeJS and NPM"
         bot "installing Nodeschool workshop learnyounode"
-        mkdir -p $HOME/nodeschool/nodejsnpmkoa/learnyounode
+        mkdir -p "$HOME/nodeschool/nodejsnpmkoa/learnyounode"
         npm install -g learnyounode
         bot "installing Nodeschool workshop how-to-npm"
-        mkdir -p $HOME/nodeschool/nodejsnpmkoa/how-to-npm
+        mkdir -p "$HOME/nodeschool/nodejsnpmkoa/how-to-npm"
         npm install -g how-to-npm
         bot "installing Nodeschool workshop kick-off-koa"
-        mkdir -p $HOME/nodeschool/nodejsnpmkoa/kick-off-koa
+        mkdir -p "$HOME/nodeschool/nodejsnpmkoa/kick-off-koa"
         npm install -g kick-off-koa
       ;;
       6) # Git GitFlow Github
         bot "Git GitFlow Github"
         bot "installing Nodeschool workshop git-it"
-        mkdir -p $HOME/nodeschool/gitgitflowgithub/git-it
+        mkdir -p "$HOME/nodeschool/gitgitflowgithub/git-it"
         npm install -g git-it
       ;;
       7) # Thinking In React
         bot "Thinking In React"
         bot "installing Nodeschool workshop learnyoureact"
-        mkdir -p $HOME/nodeschool/react/learnyoureact
+        mkdir -p "$HOME/nodeschool/react/learnyoureact"
         npm install -g learnyoureact
         bot "installing Nodeschool workshop thinking-in-react"
-        mkdir -p $HOME/nodeschool/react/thinking-in-react
+        mkdir -p "$HOME/nodeschool/react/thinking-in-react"
         npm install -g thinking-in-react
       ;;
       *)
@@ -82,8 +83,8 @@ main() {
         echo "6. Git GitFlow and Github"
         echo "7. Thinking In React"
         bot "Select lesson to install then press enter"
-        read lesson
-        $BOXROOTDIR/bin/box nodeschool $lesson
+        read -r lesson
+        "${BOXROOTDIR}/bin/box" nodeschool "$lesson"
       ;;
   esac
 
@@ -129,11 +130,11 @@ cmd_nodeschool() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

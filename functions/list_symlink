@@ -19,25 +19,25 @@ remove_leading_dotslash() {
 
 list_symlinks() {
 	IFS=""
-	find $1 -maxdepth 1 -print0 |
+	find "$1" -maxdepth 1 -print0 |
 		sort -z |
 		remove_dot_and_dotdot_dirs |
 		remove_leading_dotslash |
 		while read -r -d "" filename; do
-			if [ -h $filename ]; then
-				echo "${filename} -> $(readlink $filename)"
+			if [ -h "$filename" ]; then
+				echo "${filename} -> $(readlink" $filename")"
 			fi
 		done
 }
 
 main() {
 	if [ "$#" -lt 1 ]; then
-		list_symlinks $(pwd); exit 0
+		list_symlinks "$(pwd)"; exit 0
 	elif [ "$#" -eq 1 ]; then
-		if [[ $1 == "help" ]]; then
+		if [[ "$1" == "help" ]]; then
 			usage; exit 0
 		fi
-		list_symlinks $1; exit 0
+		list_symlinks "$1"; exit 0
 	fi
 	usage; exit 1
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box john"
@@ -9,13 +10,14 @@ usage() {
 
 main() {
   container_name="john"
-  
+
   local file
   file=$(realpath "$1")
-  
+
   docker run --rm -it \
   -v "${file}:/root/$(basename "${file}")" \
-  ${DOCKER_REPO_PREFIX}/john "$@"
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/john" "$@"
 }
 
 # _cmd_john() {
@@ -24,18 +26,18 @@ main() {
 cmd_john() {
   if [ "$#" -lt 1 ]; then # called with no parameters
     usage; exit 0
-    
+
     elif [ "$#" -gt 1 ]; then # called with gt 1 parameters
     main "$@"; exit 0
-    
+
     elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
-    
-    main $1; exit 0
+
+    main "$1"; exit 0
   fi
-  
+
   usage; exit 1
 }
 

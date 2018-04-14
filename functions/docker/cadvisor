@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box cadvisor"
@@ -17,7 +18,7 @@ main() {
   -v /sys:/sys:ro  \
   -v /var/lib/docker/:/var/lib/docker:ro \
   -p 1234:8080 \
-  --name $container_name \
+  --name "$container_name" \
   google/cadvisor
 
   hostess add cadvisor "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' cadvisor)"
@@ -32,11 +33,11 @@ cmd_cadvisor() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

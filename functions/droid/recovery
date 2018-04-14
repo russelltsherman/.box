@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box recovery"
@@ -13,7 +14,7 @@ main() {
   bot "Place your device in FASTBOOT MODE!"
   warn "Power off your device"
   warn "Power on device while holding volume down"
-  read -p "Press enter to continue"
+  read -rp "Press enter to continue"
 
   select_droid
 
@@ -21,13 +22,15 @@ main() {
     echo "1. ClockWorkMod https://www.clockworkmod.com/rommanager"
     echo "2. TeamWinRecovery https://twrp.me/devices/"
     echo "Select then press enter"
-    read recovery
+    read -r recovery
 
-    if [ $recovery = 1 ] ; then
-      $BOXROOTDIR/bin/fastboot flash recovery $BOXROOTDIR/share/$clockwork
+    if [ "$recovery" = 1 ] ; then
+      # shellcheck disable=SC2154
+      "${BOXROOTDIR}/bin/fastboot" flash recovery "${BOXROOTDIR}/share/$clockwork"
     fi
-    if [ $recovery = 2 ] ; then
-      $BOXROOTDIR/bin/fastboot flash recovery $BOXROOTDIR/share/$teamwin
+    if [ "$recovery" = 2 ] ; then
+      # shellcheck disable=SC2154
+      "${BOXROOTDIR}/bin/fastboot" flash recovery "${BOXROOTDIR}/share/$teamwin"
     fi
 
   bot "Boot to recovery"
@@ -45,11 +48,11 @@ cmd_recovery() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

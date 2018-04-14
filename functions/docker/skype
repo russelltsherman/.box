@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box skype"
@@ -22,8 +23,8 @@ main() {
   --device /dev/video0 \
   --group-add video \
   --group-add audio \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/skype
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/skype"
 
 }
 
@@ -35,11 +36,11 @@ cmd_skype() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

@@ -1,25 +1,26 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 
 config=/boot/config.txt
 
-[ -e $config ] || touch $config
+[ -e "$config" ] || touch "$config"
 
 file_writeln /etc/modules 'i2c-dev'
 file_writeln /etc/modules 'i2c-bcm2708'
 
-if [ $1 = 'off' ] ; then
+if [ "$1" = 'off' ] ; then
   sed /etc/modules -i -e "s/^i2c-dev/#i2c-dev/"
   sed /etc/modules -i -e "s/^i2c-bcm2708/#i2c-bcm2708/"
 fi
 
-if [ $1 = 'on' ] ; then
+if [ "$1" = 'on' ] ; then
   sed /etc/modules -i -e "s/^#i2c-dev/i2c-dev/"
   sed /etc/modules -i -e "s/^#i2c-bcm2708/i2c-bcm2708/"
 fi
 
-set_config_var dtparam=i2c_arm $1 $config
+set_config_var dtparam=i2c_arm "$1" $config
 
 exit

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox rtc"
@@ -15,22 +16,22 @@ main() {
   echo " 1. RTC enable"
   echo " 2. RTC set time"
   echo "Select then press enter"
-  read rtc
+  read -r rtc
 
-  if [ $rtc = 0 ] ; then
+  if [ "$rtc" = 0 ] ; then
     die "RTC removal is incomplete"
     dir='off'
   fi
 
-  if [ $rtc = 1 ] ; then
+  if [ "$rtc" = 1 ] ; then
     dir='on'
     action "install ntpdate"
     sudo apt-get install -y ntpdate
     ok
-    sudo _PIBOX_ROOT=$_PIBOX_ROOT $BOXROOTDIR/lib/pibox/rtc-ds1307 $dir
+    sudo "_PIBOX_ROOT=$_PIBOX_ROOT" "${BOXROOTDIR}/lib/pibox/rtc-ds1307" "$dir"
   fi
 
-  if [ $rtc = 2 ] ; then
+  if [ "$rtc" = 2 ] ; then
     action "try get current date from NTP"
     sudo ntpdate
     ok
@@ -55,11 +56,11 @@ cmd_rtc() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

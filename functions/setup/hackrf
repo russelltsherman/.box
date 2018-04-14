@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup hackrf"
@@ -33,9 +34,9 @@ main() {
       require_brew gnuradio
     ok
 
-    mkdir $HOME/.gnuradio
-    profile_write '[grc]' $HOME/.gnuradio/config.conf
-    profile_write 'local_blocks_path=/usr/local/share/gnuradio/grc/blocks' $HOME/.gnuradio/config.conf
+    mkdir "$HOME/.gnuradio"
+    profile_write '[grc]' "$HOME/.gnuradio/config.conf"
+    profile_write 'local_blocks_path=/usr/local/share/gnuradio/grc/blocks' "$HOME/.gnuradio/config.conf"
 
     action "Install HackRF & RTL-SDR related blocks"
       brew install hackrf
@@ -54,9 +55,9 @@ main() {
     action "Installing Inspectrum"
     brew install qt5 fftw cmake pkg-config
     git clone https://github.com/miek/inspectrum.git
-    cd inspectrum
+    cd inspectrum || exit
     mkdir build
-    cd build
+    cd build || exit
     CMAKE_PREFIX_PATH=$(brew --prefix qt5)/lib/cmake cmake ..
     make install
 
@@ -79,9 +80,9 @@ main() {
     action "Installing Inspectrum"
     sudo apt-get install -y qt5-default libfftw3-dev cmake pkg-config
     git clone https://github.com/miek/inspectrum.git
-    cd inspectrum
+    cd inspectrum || exit
     mkdir build
-    cd build
+    cd build || exit
     cmake ..
     make
     sudo make install
@@ -105,11 +106,11 @@ cmd_hackrf() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

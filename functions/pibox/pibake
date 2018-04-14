@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox pibake"
@@ -33,12 +34,12 @@ main() {
       line
 
       # Loop over df -lh
-      while read disk; do
+      while read -r disk; do
           # Print with local mount only and add counter to select disk
           if [ "$i" -gt 0 ]; then
               echo "$i) $disk"
               # Asign first work (path) to array with corresponding counter
-              _mount[i]=$( echo $disk | awk '{print $1;}')
+              _mount[i]=$( echo "$disk" | awk '{print $1;}')
           else
               info "   $disk"
           fi
@@ -56,8 +57,9 @@ main() {
       echo "Select the disk to use by enetering the disk number."
       warn "*** MAKE SURE YOU SELECT THE CORRECT DISK ***"
       warn "*** Refer to the Readme if uncertain ***"
-      echo -n -e "\nUse disk [ $_opts ] #"
-      read ans
+      echo ""
+      echo -n -e "Use disk [ $_opts ] #"
+      read -r ans
 
       # Set selected disk
       _udisk=${_mount[$ans]}
@@ -81,19 +83,19 @@ main() {
   banner
 
   # Format disk name to raw format
-  _rawdisk=$( echo $_udisk | awk 'sub("..$", "")' | sed 's/disk/rdisk/')
+  _rawdisk=$( echo "$_udisk" | awk 'sub("..$", "")' | sed 's/disk/rdisk/')
 
   # Unmount Disk
   action "Unmounting Disk"
-  diskutil unmount $_udisk
+  diskutil unmount "$_udisk"
   ok
 
   action "Writing image"
-  pv ${DISTRO} | sudo dd bs=1m of=${_rawdisk}
+  pv "${DISTRO}" | sudo dd bs=1m of="${_rawdisk}"
 
   # Eject disk
   action "Ejecting Disk"
-  diskutil eject ${_rawdisk}
+  diskutil eject "${_rawdisk}"
   ok
 
 }
@@ -111,11 +113,11 @@ cmd_pibake() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

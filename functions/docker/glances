@@ -3,7 +3,8 @@
 # Glances is a cross-platform system monitoring tool written in Python.
 # https://nicolargo.github.io/glances/
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box glances"
@@ -15,7 +16,7 @@ main() {
   del_stopped $container_name
 
   docker run --rm -it \
-    --name $container_name \
+    --name "$container_name" \
     -v /var/run/docker.sock:/var/run/docker.sock:ro \
     --pid host \
     docker.io/nicolargo/glances
@@ -31,11 +32,11 @@ cmd_glances() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

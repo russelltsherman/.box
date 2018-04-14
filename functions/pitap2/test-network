@@ -4,10 +4,12 @@
 # Help:
 #
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 cmd_test-network() {
   ######################################################################
   # testing network throughput
   # http://williamknowles.co.uk/?p=68
+  echo "not implemented"
 }

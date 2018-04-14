@@ -4,7 +4,8 @@
 # Help:
 #
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 cmd_test-storage() {
   bot "PITAP2BOT!"

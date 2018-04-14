@@ -3,10 +3,11 @@
 BOXROOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # include my library helpers for colorized echo and require_brew, etc
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
-export BOXROOTDIR=$BOXROOTDIR
-export BOXFUNCDIR=$BOXROOTDIR/functions
+export BOXROOTDIR="${BOXROOTDIR}"
+export BOXFUNCDIR="${BOXROOTDIR}/functions"
 
 banner
 
@@ -14,7 +15,7 @@ get_platform
 
 DEVUSER=$(whoami)
 
-bot "Hi! $DEVUSER"
+bot "Hi! ${DEVUSER}"
 
 bot "I'm going to install tooling and tweak your system settings. Here I go..."
 
@@ -22,7 +23,7 @@ bot "I'm going to install tooling and tweak your system settings. Here I go..."
 ################################################################################
 # gitconfig
 ################################################################################
-grep 'path = ~/.gitconfig_global' $HOME/.gitconfig > /dev/null 2>&1
+grep 'path = ~/.gitconfig_global' "${HOME}/.gitconfig" > /dev/null 2>&1
 if [ ! "$?" == "0" ]; then
   read -r -p "What is your github.com username? " githubuser
 
@@ -129,7 +130,7 @@ source "$BOXFUNCDIR/setup/ssh"
 # Default wallpaper
 ################################################################################
 if [ "$NS_PLATFORM" == "darwin" ]; then
-  IMGDIR=$BOXROOTDIR/assets
+  IMGDIR=${BOXROOTDIR}/assets
   MD5_NEWWP=$(md5 $IMGDIR/wallpaper.jpg | awk '{print $4}')
   MD5_OLDWP=$(md5 /System/Library/CoreServices/DefaultDesktop.jpg | awk '{print $4}')
   if [[ "$MD5_NEWWP" == "$MD5_OLDWP" ]]; then
@@ -172,7 +173,7 @@ fi
 # homebrew
 ################################################################################
 if [ "$NS_PLATFORM" == "darwin" ]; then
-  brew_bin=$(which brew) 2>&1 > /dev/null
+  brew_bin=$(which brew) > /dev/null 2>&1
   if [[ $? != 0 ]]; then
     bot "Installing Homebrew"
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -199,14 +200,14 @@ fi
 # essential software
 ################################################################################
 bot "Installing essential software"
-source "$BOXROOTDIR/lib/essentials/_$NS_PLATFORM.sh"
+source "${BOXROOTDIR}/lib/essentials/_$NS_PLATFORM.sh"
 
 
 ################################################################################
 # system defaults
 ################################################################################
 bot "Setting System Defaults"
-source "$BOXROOTDIR/lib/defaults/_$NS_PLATFORM.sh"
+source "${BOXROOTDIR}/lib/defaults/_$NS_PLATFORM.sh"
 
 
 ################################################################################
@@ -226,7 +227,7 @@ source "$BOXFUNCDIR/setup/golang"
 # install appications
 ################################################################################
 bot "Install Applications"
-source "$BOXROOTDIR/lib/applications/_$NS_PLATFORM.sh"
+source "${BOXROOTDIR}/lib/applications/_$NS_PLATFORM.sh"
 
 
 ################################################################################
@@ -277,7 +278,7 @@ source "$BOXFUNCDIR/setup/visualstudiocode"
 bot "creating symlinks for project dotfiles..."
 
 now=$(date +"%Y.%m.%d.%H.%M.%S")
-pushd $BOXROOTDIR/dotfiles > /dev/null 2>&1
+pushd ${BOXROOTDIR}/dotfiles > /dev/null 2>&1
 for file in .*; do
   if [[ $file == "." || $file == ".." || $file == ".DS_Store" ]]; then
     continue
@@ -294,7 +295,7 @@ for file in .*; do
   unlink ~/$file > /dev/null 2>&1
 
   # create the link
-  ln -s $BOXROOTDIR/dotfiles/$file ~/$file
+  ln -s ${BOXROOTDIR}/dotfiles/$file ~/$file
   ok
 done
 
@@ -329,7 +330,7 @@ if [ "$SHELL" == "/bin/bash" ];then
 
   # implementing antigen for easier management of zsh plugins
   # https://joshldavis.com/2014/07/26/oh-my-zsh-is-a-disease-antigen-is-the-vaccine/
-  git_clone_or_update git://github.com/zsh-users/antigen.git "$BOXROOTDIR/.antigen"
+  git_clone_or_update git://github.com/zsh-users/antigen.git "${BOXROOTDIR}/.antigen"
 
   running "Set Zsh as your default shell:"
   if [ "$NS_PLATFORM" == "darwin" ]; then

@@ -7,12 +7,11 @@ usage() {
 }
 
 git_stats() {
-  local res
   for d in "$(pwd)"/*; do
     if [ -d "$d/.git" ]; then
       echo
-      echo $d
-      (cd $d && git status)
+      echo "$d"
+      (cd "$d" && git status)
     fi
   done
 }

@@ -7,7 +7,8 @@
 # Notes        :
 # Source       :
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box new [commandpath]"
@@ -20,15 +21,15 @@ main() {
   get_platform
   bot "Creating New Box Command"
 
-  command_file="$BOXROOTDIR/$1"
-
+  command_file="${BOXROOTDIR}/$1"
+  command_name="$(basename "$command_file")"
   if [ -s "$command_file" ]
   then
     die "$command_file EXISTS"
   else
     action "create $command_file"
-    sed "s/COMMANDNAME/`basename $command_file`/" $BOXROOTDIR/lib/command_template > $command_file
-    chmod a+x $command_file
+    sed "s/COMMANDNAME/$command_name/" "${BOXROOTDIR}/lib/command_template" > "$command_file"
+    chmod a+x "$command_file"
     ok
   fi
 }
@@ -44,11 +45,11 @@ cmd_new() {
 
   elif [ "$#" -eq 1 ]; then
     # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

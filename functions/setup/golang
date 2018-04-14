@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup golang [directory]"
@@ -32,16 +33,16 @@ if [ -d \$HOME/src/go ]; then
   alias gotour=\$GOPATH/bin/gotour
   export GOROOT=\$(go env GOROOT)
 fi"
-  if ! grep -q "# initialize GO" "$HOME/.profile" ; then
-    echo "$string" >> "$HOME/.profile"
+  if ! grep -q "# initialize GO""$HOME/.profile" ; then
+    echo "$string" >>"$HOME/.profile"
   fi
-  source $HOME/.profile
+  source"$HOME/.profile"
 
   # install the go tour code
   go get golang.org/x/tour/gotour
 
   # create a go test file
-  cat > $GOPATH/bin/gotest.go <<EOL
+  cat > "$GOPATH/bin/gotest.go" <<EOL
   package main
   import(
       "fmt"
@@ -60,7 +61,7 @@ fi"
 EOL
 
   # test go install
-  go run $GOPATH/bin/gotest.go
+  go run "$GOPATH/bin/gotest.go"
 }
 
 # _cmd_golang() {
@@ -72,11 +73,11 @@ cmd_golang() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

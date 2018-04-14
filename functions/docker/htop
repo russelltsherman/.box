@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box htop"
@@ -9,12 +10,12 @@ usage() {
 
 main() {
   local container_name="htop"
-  del_stopped $container_namelocal
+  del_stopped $container_name
   docker run --rm -it \
   --pid host \
   --net none \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/htop
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/htop"
 }
 
 # _cmd_htop() {
@@ -25,11 +26,11 @@ cmd_htop() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

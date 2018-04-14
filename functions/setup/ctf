@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup cft"
@@ -44,8 +45,8 @@ main() {
 
   if [ "$NS_PLATFORM" == "linux" ]; then
   	die 'implementation unfinished'
-    if [[ $1 != "--skip-gui" ]]; then
-    fi
+    # if [[ $1 != "--skip-gui" ]]; then
+    # fi
   fi
 
 }
@@ -60,11 +61,11 @@ cmd_cft() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

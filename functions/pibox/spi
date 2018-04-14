@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox spi"
@@ -15,23 +16,23 @@ main() {
   echo " 1. SPI enabled"
   echo " 3. SPI test"
   echo "Select then press enter"
-  read spi
+  read -r spi
 
-  if [ $spi = 0 ] ; then
+  if [ "$spi" = 0 ] ; then
     dir='off'
   fi
 
-  if [ $spi = 1 ] ; then
+  if [ "$spi" = 1 ] ; then
     dir='on'
   fi
 
-  if [ $spi = 3 ] ; then
+  if [ "$spi" = 3 ] ; then
     ls /dev/*spi*
     exit
   fi
 
   action "Writing Configuration"
-  sudo _PIBOX_ROOT=$_PIBOX_ROOT $BOXROOTDIR/lib/pibox/spi $dir
+  sudo "_PIBOX_ROOT=$_PIBOX_ROOT" "${BOXROOTDIR}/lib/pibox/spi" "$dir"
   ok
 
 }
@@ -49,11 +50,11 @@ cmd_spi() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

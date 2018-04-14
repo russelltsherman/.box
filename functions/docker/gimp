@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box gimp"
@@ -18,8 +19,8 @@ main() {
   -v "${HOME}/.gtkrc:/root/.gtkrc" \
   -e GDK_SCALE \
   -e GDK_DPI_SCALE \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/gimp
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/gimp"
 
 }
 
@@ -31,11 +32,11 @@ cmd_gimp() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

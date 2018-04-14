@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box torproxy"
@@ -15,8 +16,8 @@ main() {
   --restart always \
   -v /etc/localtime:/etc/localtime:ro \
   -p 9050:9050 \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/tor-proxy
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/tor-proxy"
 
   hostess add torproxy "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' torproxy)"
 
@@ -30,11 +31,11 @@ cmd_torproxy() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

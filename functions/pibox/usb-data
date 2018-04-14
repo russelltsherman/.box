@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox usb-data"
@@ -22,7 +23,7 @@ main() {
   ok
 
   echo "enter the path to the drive you wish to destroy ( most likely /dev/sda )"
-  read DISK
+  read -r DISK
 
   # to create the partitions programatically (rather than manually)
   # we're going to simulate the manual input to fdisk
@@ -41,7 +42,7 @@ main() {
   #   q # and we're done
   # EOF
 
-  sudo fdisk ${DISK} <<EOF
+  sudo fdisk "${DISK}" <<EOF
   o
   n
   p
@@ -50,7 +51,7 @@ main() {
 EOF
 
   action 'Formatting the partition'
-  sudo mkfs.ext4 -L DATA ${DISK}1
+  sudo mkfs.ext4 -L DATA "${DISK}1"
   ok
 
   action 'Make directory for the mount'
@@ -96,11 +97,11 @@ cmd_usb-data() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box tor"
@@ -13,8 +14,8 @@ main() {
 
   docker run -d \
   --net host \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/tor
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/tor"
 
   # set up the redirect iptables rules
   sudo setup-tor-iptables
@@ -32,11 +33,11 @@ cmd_tor() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

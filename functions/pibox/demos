@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox demos"
@@ -26,63 +27,63 @@ main() {
   echo "12. Hello Video Cube"
   echo "13. Hello DispManX"
   echo "Select then press enter"
-  read demo
+  read -r demo
 
-  if [ $demo = 'B' ] ; then
+  if [ "$demo" = 'B' ] ; then
     action "Compiling demos"
     ( cd /opt/vc/src/hello_pi && ./rebuild.sh 2>&1 )
-    $_PIBOX_ROOT/bin/pibox demos
+    "$_PIBOX_ROOT/bin/pibox" demos
   fi
 
-  if [ $demo = 1 ] ; then
+  if [ "$demo" = 1 ] ; then
     /opt/vc/src/hello_pi/hello_world/hello_world.bin
   fi
 
-  if [ $demo = 2 ] ; then
+  if [ "$demo" = 2 ] ; then
     /opt/vc/src/hello_pi/hello_video/hello_video.bin test.h264
   fi
 
-  if [ $demo = 3 ] ; then
+  if [ "$demo" = 3 ] ; then
     /opt/vc/src/hello_pi/hello_triangle/hello_triangle.bin
   fi
 
-  if [ $demo = 4 ] ; then
+  if [ "$demo" = 4 ] ; then
     /opt/vc/src/hello_pi/hello_triangle2/hello_triangle2.bin
   fi
 
-  if [ $demo = 5 ] ; then
+  if [ "$demo" = 5 ] ; then
     /opt/vc/src/hello_pi/hello_teapot/hello_teapot.bin
   fi
 
-  if [ $demo = 6 ] ; then
+  if [ "$demo" = 6 ] ; then
     /opt/vc/src/hello_pi/hello_audio/hello_audio.bin
   fi
 
-  if [ $demo = 7 ] ; then
+  if [ "$demo" = 7 ] ; then
     /opt/vc/src/hello_pi/hello_fft/hello_fft.bin
   fi
 
-  if [ $demo = 8 ] ; then
+  if [ "$demo" = 8 ] ; then
     /opt/vc/src/hello_pi/hello_font/hello_font.bin
   fi
 
-  if [ $demo = 9 ] ; then
+  if [ "$demo" = 9 ] ; then
     /opt/vc/src/hello_pi/hello_tiger/hello_tiger.bin
   fi
 
-  if [ $demo = 10 ] ; then
+  if [ "$demo" = 10 ] ; then
     /opt/vc/src/hello_pi/hello_encode/hello_encode.bin
   fi
 
-  if [ $demo = 11 ] ; then
+  if [ "$demo" = 11 ] ; then
     /opt/vc/src/hello_pi/hello_jpeg/hello_jpeg.bin
   fi
 
-  if [ $demo = 12 ] ; then
+  if [ "$demo" = 12 ] ; then
     /opt/vc/src/hello_pi/hello_videocube/hello_videocube.bin
   fi
 
-  if [ $demo = 13 ] ; then
+  if [ "$demo" = 13 ] ; then
     /opt/vc/src/hello_pi/hello_dispmanx/hello_dispmanx.bin
   fi
 
@@ -101,11 +102,11 @@ cmd_demos() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box rstudio"
@@ -19,23 +20,23 @@ main() {
   -e "DISPLAY=${DISPLAY}" \
   -e QT_DEVICE_PIXEL_RATIO \
   --device /dev/dri \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/rstudio
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/rstudio"
 }
 
-_cmd_rstudio() {
-}
+# _cmd_rstudio() {
+# }
 
 cmd_rstudio() {
   if [ "$#" -lt 1 ]; then # called with no parameters
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

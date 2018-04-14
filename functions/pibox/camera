@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox camera"
@@ -15,17 +16,17 @@ main() {
   echo " 0. Disable camera"
   echo " 1. Enable camera"
   echo "Select then press enter"
-  read up
+  read -r up
 
-  if [ $up = 0 ] ; then
+  if [ "$up" = 0 ] ; then
     dir='off'
   fi
-  if [ $up = 1 ] ; then
+  if [ "$up" = 1 ] ; then
     dir='on'
   fi
 
   action "Writing configuration"
-  sudo _PIBOX_ROOT=$_PIBOX_ROOT $BOXROOTDIR/lib/pibox/camera $dir
+  sudo "_PIBOX_ROOT=$_PIBOX_ROOT" "${BOXROOTDIR}/lib/pibox/camera" "$dir"
   ok
 
 }
@@ -43,11 +44,11 @@ cmd_camera() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

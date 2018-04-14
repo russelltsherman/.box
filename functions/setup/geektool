@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup geektool"
@@ -14,7 +15,7 @@ main() {
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
     require_cask geektool
-    $BOXROOTDIR/lib/geektool/install.sh
+    "${BOXROOTDIR}/lib/geektool/install.sh"
   fi
 
   if [ "$NS_PLATFORM" == "linux" ]; then
@@ -23,11 +24,11 @@ main() {
     ok
 
     running "copying config"
-    cp $BOXROOTDIR/lib/conky/_conkyrc ~/.conkyrc
+    cp "${BOXROOTDIR}/lib/conky/_conkyrc" ~/.conkyrc
     ok
 
     action "adding conky to autostart"
-    cp $BOXROOTDIR/lib/conky/conky.desktop ~/.config/autostart
+    cp "${BOXROOTDIR}/lib/conky/conky.desktop" ~/.config/autostart
     ok
   fi
 }
@@ -40,11 +41,11 @@ cmd_geektool() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

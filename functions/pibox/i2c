@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox i2c"
@@ -14,9 +15,9 @@ main() {
   echo " 0. I2C disabled"
   echo " 1. I2C enabled"
   echo "Select then press enter"
-  read i2c
+  read -r i2c
 
-  if [ $i2c = 0 ] ; then
+  if [ "$i2c" = 0 ] ; then
     dir='off'
 
     action "removing python-smbus"
@@ -27,7 +28,7 @@ main() {
     sudo apt-get remove -y i2c-tools
     ok
   fi
-  if [ $i2c = 1 ] ; then
+  if [ "$i2c" = 1 ] ; then
     dir='on'
 
     action "installing python-smbus"
@@ -40,7 +41,7 @@ main() {
   fi
 
   action "Writing Configuration"
-  sudo _PIBOX_ROOT=$_PIBOX_ROOT $BOXROOTDIR/lib/pibox/i2c $dir
+  sudo "_PIBOX_ROOT=$_PIBOX_ROOT" "${BOXROOTDIR}/lib/pibox/i2c" "$dir"
   ok
 
 }
@@ -58,11 +59,11 @@ cmd_i2c() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box proj node [project_name] [node_version]"
@@ -13,26 +14,26 @@ main() {
   local version=$2
 
   running "create project directory"
-  mkdir -p $project_name
+  mkdir -p "$project_name"
   ok
 
   running "initialize git"
-  ( cd $project_name && git init &>/dev/null )
-  gibo node > $project_name/.gitignore
+  ( cd "$project_name" && git init &>/dev/null )
+  gibo node > "$project_name/.gitignore"
   echo "
 # ignore contents of .direnv
 .direnv
-" >> $project_name/.gitignore
-  cp $BOXROOTDIR/lib/gitattributes_template $project_name/.gitattributes
+" >> "$project_name/.gitignore"
+    cp "${BOXROOTDIR}/lib/gitattributes_template" "$project_name/.gitattributes"
   ok
 
   running "write .editorconfig"
-  cp $BOXROOTDIR/lib/editorconfig_template $project_name/.editorconfig
+  cp "${BOXROOTDIR}/lib/editorconfig_template" "$project_name/.editorconfig"
   ok
 
   running "write .eslintconfig"
-  cp $BOXROOTDIR/lib/eslintrc_template $project_name/.eslintrc.json
-  gibo node > $project_name/.eslintignore
+  cp "${BOXROOTDIR}/lib/eslintrc_template" "$project_name/.eslintrc.json"
+  gibo node > "$project_name/.eslintignore"
   ok
 
   running "write README.md"
@@ -55,43 +56,43 @@ main() {
 [vulnerability-url]: https://snyk.io/test/github/BurnerDev/$project_name
 [style-badge]: https://img.shields.io/badge/code%20style-google-brightgreen.svg?style=flat-square
 [style-url]: https://google.github.io/styleguide/jsguide.html
-" > $project_name/README.md
+" > "$project_name/README.md"
   ok
 
   running "write TODO.md"
-  echo "# $project_name" > $project_name/TODO.md
+  echo "# $project_name" > "$project_name/TODO.md"
   ok
 
   running "write .node-version"
-  touch $project_name/.node-version
-  echo "$version" > $project_name/.node-version
+  touch "$project_name/.node-version"
+  echo "$version" > "$project_name/.node-version"
   ok
 
   running "write .envrc"
-  touch $project_name/.envrc
+  touch "$project_name/.envrc"
   echo "
 use node
 layout node
 # read from .vars file to load env vars. this file ix excluded from github to keep secrets secrets
 # see the contents of .vars.example for a list of expected content for the .vars file
 source .vars
-" > $project_name/.envrc
+" > "$project_name/.envrc"
   ok
 
   running "gitignoring .vars"
   echo "
   # ignore .vars file
   .vars
-  " > $project_name/.gitignore
+  " > "$project_name/.gitignore"
   ok
 
   running "write .vars and .vars.example"
-  touch $project_name/.vars
-  touch $project_name/.vars.example
+  touch "$project_name/.vars"
+  touch "$project_name/.vars.example"
   ok
 
   running "write .travis.yml"
-  touch $project_name/.travis.yml
+  touch "$project_name/.travis.yml"
   echo "
 language: node_js
 node_js:
@@ -100,25 +101,25 @@ after_script:
   - npm install codecov
   - NODE_ENV=test ./node_modules/.bin/nyc report --reporter=lcov > coverage.lcov
   - ./node_modules/.bin/codecov
-" > $project_name/.travis.yml
+" > "$project_name/.travis.yml"
   ok
 
   running "initialize app"
-  ( cd $project_name && mkdir test )
-  ( cd $project_name && touch test/$project_name.spec.js )
-  ( cd $project_name && touch index.js )
+  ( cd "$project_name" && mkdir test )
+  ( cd "$project_name" && touch "test/$project_name.spec.js" )
+  ( cd "$project_name" && touch index.js )
   ok
 
   running "initialize yarn"
-  ( cd $project_name && yarn init )
+  ( cd "$project_name" && yarn init )
   ok
 
   running "initialize dev dependencies"
-  ( cd $project_name && yarn add mocha chai supertest nyc sinon sinon-chai eslint eslint-config-google )
+  ( cd "$project_name" && yarn add mocha chai supertest nyc sinon sinon-chai eslint eslint-config-google )
   ok
 
   running "initial git commit"
-  ( cd $project_name && git add . && git commit -a -m 'initial commit' )
+  ( cd "$project_name" && git add . && git commit -a -m 'initial commit' )
   ok
 }
 

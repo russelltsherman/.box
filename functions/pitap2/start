@@ -8,7 +8,8 @@
 # therefore, each capture is individually timestamped.
 # This is mainly being used for future development work, but some readers may find in useful in the intermittent period.
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 cmd_start() {
   ### PATH SETUP
@@ -29,28 +30,28 @@ cmd_start() {
   ### PACKET CAPTURE
   sessionTimestamp=$(date +"session-%d-%m-%y-at-%H-%M")
 
-  if [ $1 = "mode1" ]; then
+  if [ "$1" = "mode1" ]; then
 
-  	echo "Starting dump mode at $sessionTimestamp. Captures stored the base directory." >> $_PITAP2_LOGFILE
+  	echo "Starting dump mode at $sessionTimestamp. Captures stored the base directory." >> "$_PITAP2_LOGFILE"
   	# MODE 1: WITHOUT sessions.
   	# Start capture in the base capture directory.
-  	tcpdump -i bridge0 -w $_PITAP2_CAPTURE_DIR/$sessionTimestamp-$RANDOM.pcapng
+  	tcpdump -i bridge0 -w "$_PITAP2_CAPTURE_DIR/$sessionTimestamp-$RANDOM.pcapng"
 
-  elif [ $1 = "mode2" ]; then
+  elif [ "$1" = "mode2" ]; then
 
   	# MODE 2: WITH sessions.
   	# Create session-specific directory (with timestamp of session start).
   	# Captures are rotated every x seconds, and each capture is given a filename based upon the Unix timestamp of when it was created.
   	# Used for future development work within the PiTap project.
   	# Create session-specific folder based upon tiemstamp.
-  	timestampedDirectory=$sessionTimestamp-$RANDOM
-  	mkdir $_PITAP2_CAPTURE_DIR/$timestampedDirectory
+  	timestampedDirectory="$sessionTimestamp-$RANDOM"
+  	mkdir "$_PITAP2_CAPTURE_DIR/$timestampedDirectory"
   	# Start rotating captures in session-specific folder.
-  	tcpdump -i bridge0 -w $_PITAP2_CAPTURE_DIR/$timestampedDirectory/dump-at-%s.pcapng -G 3600
+  	tcpdump -i bridge0 -w "$_PITAP2_CAPTURE_DIR/$timestampedDirectory/dump-at-%s.pcapng" -G 3600
 
   else
 
-  	echo "PiTap2 has been configured to use an unknown mode!" >> $_PITAP2_LOGFILE
+  	echo "PiTap2 has been configured to use an unknown mode!" >> "$_PITAP2_LOGFILE"
 
   fi
 }

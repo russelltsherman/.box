@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box scudcloud"
@@ -30,8 +31,8 @@ main() {
   -v /etc/machine-id:/etc/machine-id:ro \
   -v "${HOME}/.scudcloud:/home/jessie/.config/scudcloud" \
   --device /dev/snd \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/scudcloud
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/scudcloud"
 
   # exit current shell
   exit 0
@@ -45,11 +46,11 @@ cmd_scudcloud() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup hashicorp"
@@ -17,9 +18,12 @@ main() {
   fi
 
   if [ "$NS_PLATFORM" == "linux" ]; then
-    url=$(curl -s https://releases.hashicorp.com/index.json | jq '{vault}' | egrep "linux.*64" | sort -r | head -1 | awk -F[\"] '{print $4}')
+    url=$(
+      curl -s https://releases.hashicorp.com/index.json \
+      | jq '{vault}' | grep "linux.*64" \
+      | sort -r | head -1 | awk -F[\"] '{print $4}')
     # Download Vault. URI: https://www.hashicorp.io/downloads.html
-    curl -o hashicorp.zip $url && unzip hashicorp.zip -d ~/bin
+    curl -o hashicorp.zip "$url" && unzip hashicorp.zip -d ~/bin
     rm -rf hashicorp.zip
   fi
 }
@@ -32,11 +36,11 @@ cmd_vault() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

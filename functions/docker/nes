@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box nes"
@@ -17,8 +18,8 @@ main() {
   -e "DISPLAY=${DISPLAY}" \
   --device /dev/dri \
   --device /dev/snd \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/nes "/games/${game}.rom"
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/nes" "/games/${game}.rom"
 }
 
 # _cmd_nes() {
@@ -29,11 +30,11 @@ cmd_nes() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

@@ -5,7 +5,8 @@
 # you may have to run the set time command a couple of times to kickstart the process
 #
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 cmd_rtc() {
   bot "Trying to get time and set RTC time"

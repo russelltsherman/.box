@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup scapy"
@@ -21,22 +22,19 @@ main() {
     action "Install libdnet and its Python wrapper"
     wget http://libdnet.googlecode.com/files/libdnet-1.12.tgz
     tar xfz libdnet-1.12.tgz &>/dev/null
-    cd libdnet-1.12
-    ./configure &>/dev/null
+    cd libdnet-1.12 && ./configure &>/dev/null
     make &>/dev/null
     sudo make install &>/dev/null
-    cd python
-    python setup.py install &>/dev/null
-    cd ../../
+    cd python && python setup.py install &>/dev/null
+    cd ../../ || exit
     sudo rm -rf libdnet-1.12*
     ok
 
     action "Install libpcap and its Python wrapper"
     wget http://dfn.dl.sourceforge.net/sourceforge/pylibpcap/pylibpcap-0.6.2.tar.gz
     tar xfz pylibpcap-0.6.2.tar.gz &>/dev/null
-    cd pylibpcap-0.6.2
-    sudo python setup.py install &>/dev/null
-    cd ../
+    cd pylibpcap-0.6.2 && sudo python setup.py install &>/dev/null
+    cd ../ || exit
     sudo rm -rf pylibpcap-0.6.2*
     ok
 
@@ -50,8 +48,7 @@ main() {
   unzip scapy-latest.zip &>/dev/null
   rm scapy-latest.zip
 
-  cd scapy-2.*
-  sudo python setup.py install &>/dev/null
+  cd scapy-2.* && sudo python setup.py install &>/dev/null
   cd ..
   sudo rm -rf scapy-2*
   ok
@@ -65,11 +62,11 @@ cmd_scapy() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

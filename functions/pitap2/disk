@@ -4,7 +4,8 @@
 # Help: will destroy all data on the drive, will create a single primary partition using all available drive space
 #
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 cmd_disk() {
   bot "provisioning data storage"
@@ -20,7 +21,7 @@ cmd_disk() {
   ok
 
   echo "enter the path to the drive you wish to destroy ( most likely /dev/sda )"
-  read DISK
+  read -r DISK
 
   # to create the partitions programatically (rather than manually)
   # we're going to simulate the manual input to fdisk
@@ -39,18 +40,18 @@ cmd_disk() {
   #   q # and we're done
   # EOF
 
-  sudo fdisk ${DISK} <<EOF
-  o
-  n
-  p
-  1
+  sudo fdisk "${DISK}" <<-EOF
+o
+n
+p
+1
 
 
-  w
-  EOF
+w
+EOF
 
   action 'Formatting the partition'
-  sudo mkfs.ext4 -L DATA ${DISK}1
+  sudo mkfs.ext4 -L DATA "${DISK}1"
   ok
 
   action 'Make directory for the mount'

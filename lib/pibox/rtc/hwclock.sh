@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+# shellcheck disable=SC1117
+
 # hwclock.sh	Set and adjust the CMOS clock.
 #
 # Version:	@(#)hwclock.sh  2.00  14-Dec-1998  miquels@cistron.nl
@@ -49,15 +52,16 @@ init_rtc_device()
 
   # iterate over every i2c bus as we're supporting Raspberry Pi rev. 1 and 2
   # (different I2C busses on GPIO header!)
-  for bus in $(ls -d /sys/bus/i2c/devices/i2c-*);
+  list=$(ls -d /sys/bus/i2c/devices/i2c-*)
+  for bus in $list;
   do
-    echo ds1307 0x68 >> $bus/new_device;
+    echo ds1307 0x68 >> "$bus/new_device";
     if [ -e /dev/rtc0 ];
     then
-      log_action_msg "RTC found on bus `cat $bus/name`";
+      log_action_msg "RTC found on bus $(cat "$bus/name")";
       break; # RTC found, bail out of the loop
     else
-      echo 0x68 >> $bus/delete_device
+      echo 0x68 >> "$bus/delete_device"
     fi
   done
 }
@@ -65,10 +69,10 @@ init_rtc_device()
 hwclocksh()
 {
     [ ! -x /sbin/hwclock ] && return 0
-    [ ! -r /etc/default/rcS ] || . /etc/default/rcS
-    [ ! -r /etc/default/hwclock ] || . /etc/default/hwclock
+    [ ! -r /etc/default/rcS ] || source /etc/default/rcS
+    [ ! -r /etc/default/hwclock ] || source /etc/default/hwclock
 
-    . /lib/lsb/init-functions
+    source /lib/lsb/init-functions
     verbose_log_action_msg() { [ "$VERBOSE" = no ] || log_action_msg "$@"; }
 
     case "$BADYEAR" in
@@ -104,9 +108,9 @@ hwclocksh()
         # timezone. DO NOT REMOVE.
         if /sbin/hwclock --rtc=/dev/$HCTOSYS_DEVICE --hctosys $HWCLOCKPARS $BADYEAR; then
           #	Announce the local time.
-          verbose_log_action_msg "System Clock set to: `date $UTC`"
+          verbose_log_action_msg "System Clock set to: $(date $UTC)"
         else
-          log_warning_msg "Unable to set System Clock to: `date $UTC`"
+          log_warning_msg "Unable to set System Clock to: $(date $UTC)"
         fi
       else
         verbose_log_action_msg "Not setting System Clock"
@@ -124,7 +128,7 @@ hwclocksh()
       if [ "$HWCLOCKACCESS" != no ]; then
         log_action_msg "Saving the system clock"
         if /sbin/hwclock --rtc=/dev/$HCTOSYS_DEVICE --systohc $HWCLOCKPARS $BADYEAR; then
-          verbose_log_action_msg "Hardware Clock updated to `date`"
+          verbose_log_action_msg "Hardware Clock updated to $(date)"
         fi
       else
         verbose_log_action_msg "Not saving System Clock"

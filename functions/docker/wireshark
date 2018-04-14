@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box wireshark"
@@ -16,9 +17,8 @@ main() {
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -e "DISPLAY=${DISPLAY}" \
   --net host \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/wireshark
-
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/wireshark"
 }
 
 # _cmd_wireshark() {
@@ -29,11 +29,11 @@ cmd_wireshark() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

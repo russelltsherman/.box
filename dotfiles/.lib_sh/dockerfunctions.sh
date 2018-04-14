@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Bash wrappers for docker run commands
 
 export DOCKER_REPO_PREFIX=jess
@@ -8,44 +8,44 @@ export DOCKER_REPO_PREFIX=jess
 #
 dcleanup(){
 	local containers
-	containers=( $(docker ps -aq 2>/dev/null) )
+	containers=( "$(docker ps -aq 2>/dev/null)" )
 	docker rm "${containers[@]}" 2>/dev/null
 
   local volumes
-	volumes=( $(docker ps --filter status=exited -q 2>/dev/null) )
+	volumes=( "$(docker ps --filter status=exited -q 2>/dev/null)" )
 	docker rm -v "${volumes[@]}" 2>/dev/null
 
   local images
-	images=( $(docker images --filter dangling=true -q 2>/dev/null) )
+	images=( "$(docker images --filter dangling=true -q 2>/dev/null)" )
 	docker rmi "${images[@]}" 2>/dev/null
 }
 
 del_stopped(){
-	local name=$1
+	local name="$1"
 	local state
-	state=$(docker inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
+	state=$(docker inspect --format "{{.State.Running}}" "${name}" 2>/dev/null)
 
-	if [[ "$state" == "false" ]]; then
-		docker rm "$name"
+	if [[ "${state}" == "false" ]]; then
+		docker rm "${name}"
 	fi
 }
 
 relies_on(){
 	for container in "$@"; do
 		local state
-		state=$(docker inspect --format "{{.State.Running}}" "$container" 2>/dev/null)
+		state=$(docker inspect --format "{{.State.Running}}" "${container}" 2>/dev/null)
 
-		if [[ "$state" == "false" ]] || [[ "$state" == "" ]]; then
-			echo "$container is not running, starting it for you."
-			$container
+		if [[ "${state}" == "false" ]] || [[ "${state}" == "" ]]; then
+			echo "${container} is not running, starting it for you."
+			${container}
 		fi
 	done
 }
 
 # creates an nginx config for a local route
 nginx_config(){
-	server=$1
-	route=$2
+	server="$1"
+	route="$2"
 
 	cat >"${HOME}/.nginx/conf.d/${server}.conf" <<-EOF
 	upstream ${server} { server ${route}; }
@@ -70,7 +70,7 @@ nginx_config(){
 	docker restart nginx
 
 	# add host to /etc/hosts
-	hostess add "$server" 127.0.0.1
+	hostess add "${server}" 127.0.0.1
 
 	# open browser
 	browser-exec "http://${server}"
@@ -99,7 +99,7 @@ command_not_found_handle () {
 		return
 	fi
 
-	docker run -ti -u "$(whoami)" -w "$HOME" \
+	docker run -ti -u "$(whoami)" -w "${HOME}" \
 		"$(env | cut -d= -f1 | awk '{print "-e", $1}')" \
 		--device /dev/snd \
 		-v /etc/passwd:/etc/passwd:ro \

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box bees"
@@ -14,7 +15,7 @@ main() {
   -v "${HOME}/.boto:/root/.boto" \
   -v "${HOME}/.dev:/root/.ssh:ro" \
   --log-driver none \
-  ${DOCKER_REPO_PREFIX}/beeswithmachineguns "$@"
+  "${DOCKER_REPO_PREFIX}/beeswithmachineguns" "$@"
 }
 
 # _cmd_bees() {
@@ -25,11 +26,11 @@ cmd_bees() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

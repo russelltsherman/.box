@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup docker"
@@ -46,7 +47,7 @@ main() {
     running "install linux-image-extra kernel package"
       # For Ubuntu Trusty, Vivid, and Wily, it’s recommended to install the linux-image-extra kernel package.
       # The linux-image-extra package allows you use the aufs storage driver.
-      sudo apt-get -y install linux-image-extra-$(uname -r) > /dev/null 2>&1
+      sudo apt-get -y install "linux-image-extra-$(uname -r)" > /dev/null 2>&1
     ok
 
     running "install docker engine"
@@ -71,8 +72,8 @@ main() {
       # Change the user name to match your preferred user.
       # You may have to logout and log back in again for
       # this to take effect.
-      DEV=`whoami`
-      sudo gpasswd -a $DEV docker
+      DEV=$(whoami)
+      sudo gpasswd -a "$DEV" docker
       # Restart the Docker daemon.
       sudo service docker restart
     ok
@@ -92,10 +93,10 @@ cmd_docker() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

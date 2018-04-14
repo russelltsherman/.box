@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box download"
@@ -16,59 +17,62 @@ main() {
   echo "2. Android 5.1.1 (lmy48x)"
   echo "3. Android 6.0.1 (mob30x)"
   echo "Select then press enter"
-  read version
+  read-r version
 
   # 2012 Nexus 7 Wifi Only Model (grouper)
-  if [ $device = 1 ] ; then
+  # shellcheck disable=SC2154
+  if [ "$device" = 1 ] ; then
     # 4.4   (ktu84x)
-    if [ $version = 1 ] ; then
+    if [ "$version" = 1 ] ; then
       image_archive='nakasi-ktu84p-factory-9482e892.zip'
       image_sha256='9482e892e274e27cc18028e82e206b2e9de82f17cd29ea6ab526592e997112d9'
     fi
     # 5.1.1 (lmy47x)
-    if [ $version = 2 ] ; then
+    if [ "$version" = 2 ] ; then
       image_archive='nakasi-lmy47v-factory-5a0bb059.zip'
       image_sha256='5a0bb0593ee9867bee61d59e94462e681c050da9db1397db98616e8887034614'
     fi
     # 6.0.1
-    if [ $version = 3 ] ; then
+    if [ "$version" = 3 ] ; then
       die "Android 6.0.1 not available for this model"
     fi
   fi
 
   # 2013 Nexus 7 Wifi Only Model (flo)
-  if [ $device = 2 ] ; then
+  # shellcheck disable=SC2154
+  if [ "$device" = 2 ] ; then
     # 4.4   (ktu84x)
-    if [ $version = 1 ] ; then
+    if [ "$version" = 1 ] ; then
       image_archive='razor-ktu84p-factory-2482a7d5.zip'
       image_sha256='2482a7d5d363da6c4beeb2ca35d05934ccc32e70484dd089d81f79438d908e91'
     fi
     # 5.1.1 (lmy48x)
-    if [ $version = 2 ] ; then
+    if [ "$version" = 2 ] ; then
       image_archive='razor-lmy48t-factory-0db13100.zip'
       image_sha256='0db131001ec2a7af3633a0eb12756000032095d5c6314dec2b5d9e916e70980a'
     fi
     # 6.0.1 (mob30x)
-    if [ $version = 3 ] ; then
+    if [ "$version" = 3 ] ; then
       image_archive='razor-mob30x-factory-52684dff.zip'
       image_sha256='52684dffb1683ac1f012083e3476f2aad285ca937eaae1a88024ebaec1137339'
     fi
   fi
 
   # 2013 Nexus 7 LTE Model (deb)
-  if [ $device = 3 ] ; then
+  # shellcheck disable=SC2154
+  if [ "$device" = 3 ] ; then
     # 4.4   (ktu84x)
-    if [ $version = 1 ] ; then
+    if [ "$version" = 1 ] ; then
       image_archive='razorg-ktu84p-factory-d0c428e1.zip'
       image_sha256='d0c428e1592fa6bbe252ba07dbacc65c8951106d1759bf4384b97c5f1b8ae460'
     fi
     # 5.1.1 (lmy48z)
-    if [ $version = 2 ] ; then
+    if [ "$version" = 2 ] ; then
       image_archive='razorg-lmy48z-factory-9a4845b2.zip'
       image_sha256='9a4845b2481e1ee24403c77c90daeee04d71ee3233ebed98972b9e23dfb953ce'
     fi
     # 6.0.1 (mob30x)
-    if [ $version = 3 ] ; then
+    if [ "$version" = 3 ] ; then
       image_archive='razorg-mob30x-factory-10b7ca08.zip'
       image_sha256='10b7ca083e4c0ce193904faca8841594f680e61b63da7ec38bf1e970f7375f04'
     fi
@@ -84,24 +88,25 @@ main() {
 
   bot "Download Factory Image"
   running "https://dl.google.com/dl/android/aosp/$image_archive"
-  wget -nc https://dl.google.com/dl/android/aosp/$image_archive -P $BOXROOTDIR/share/
-
+  wget -nc "https://dl.google.com/dl/android/aosp/$image_archive" -P "${BOXROOTDIR}/share/"
   bot "Checking Download Integrity"
-  downloaded=`$sha_cmd $BOXROOTDIR/share/$image_archive | awk '{ print $1 }'`
+  downloaded=$("$sha_cmd" "${BOXROOTDIR}/share/$image_archive" | awk '{ print $1 }')
   warn "expected: $image_sha256"
   warn "     got: $downloaded"
 
-  if [ $downloaded == $image_sha256 ]; then
+  if [ "$downloaded" == "$image_sha256" ]; then
     bot "Unpacking Factory Image"
-    unzip $BOXROOTDIR/share/$image_archive -d $BOXROOTDIR/share/
+    unzip "${BOXROOTDIR}/share/$image_archive" -d "${BOXROOTDIR}/share/"
   else
     error "downloaded file did not verify"
-    # rm -rf $BOXROOTDIR/share/$image_archive
+    # rm -rf ${BOXROOTDIR}/share/$image_archive
   fi
 
   bot "Download Recovery Images"
-  wget -nc http://download2.clockworkmod.com/recoveries/$clockwork -P $BOXROOTDIR/share/
-  wget -nc https://dl.twrp.me/$product/$teamwin -P $BOXROOTDIR/share/
+  # shellcheck disable=SC2154
+  wget -nc "http://download2.clockworkmod.com/recoveries/$clockwork" -P "${BOXROOTDIR}/share/"
+  # shellcheck disable=SC2154
+  wget -nc "https://dl.twrp.me/$product/$teamwin" -P "${BOXROOTDIR}/share/"
 }
 
 # for examples of providing tab completion suggestions see:
@@ -114,11 +119,11 @@ cmd_download() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

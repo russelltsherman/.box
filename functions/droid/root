@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box root"
@@ -13,13 +14,13 @@ main() {
   bot "Place your device in FASTBOOT MODE!"
   warn "Power off your device"
   warn "Power on device while holding volume down"
-  read -p "Press enter to continue"
+  read -rp "Press enter to continue"
 
   select_droid
 
   action "Unlocking Bootloader"
-    $BOXROOTDIR/bin/fastboot oem unlock
-    $BOXROOTDIR/bin/fastboot reboot
+    "${BOXROOTDIR}/bin/fastboot" oem unlock
+    "${BOXROOTDIR}/bin/fastboot" reboot
     ok
 
 
@@ -32,12 +33,13 @@ main() {
     echo "If you don't have Developer options use this guide: http://goo.gl/wu0cN"
     echo "Connect the USB cable"
     warn "IMPORTANT: After turning on USB debugging allow access to USB debugging requests!"
-    read -p "Press enter to continue"
+    read -rp "Press enter to continue"
 
 
   bot "Pushing UPDATE-SuperSU-v2.46.zip"
-    $BOXROOTDIR/bin/adb push $BOXROOTDIR/share/$suzip /sdcard/
-    $BOXROOTDIR/bin/adb reboot bootloader
+    # shellcheck disable=SC2154
+    "${BOXROOTDIR}/bin/adb" push "${BOXROOTDIR}/share/$suzip" /sdcard/
+    "${BOXROOTDIR}/bin/adb" reboot bootloader
     sleep 7
 
 
@@ -45,13 +47,15 @@ main() {
     echo "1. ClockWorkMod https://www.clockworkmod.com/rommanager"
     echo "2. TeamWinRecovery https://twrp.me/devices/"
     echo "Select then press enter"
-    read recovery
+    read -r recovery
 
-    if [ $recovery = 1 ] ; then
-      $BOXROOTDIR/bin/fastboot flash recovery $BOXROOTDIR/share/$clockwork
+    if [ "$recovery" = 1 ] ; then
+      # shellcheck disable=SC2154
+      "${BOXROOTDIR}/bin/fastboot" flash recovery "${BOXROOTDIR}/share/$clockwork"
     fi
-    if [ $recovery = 2 ] ; then
-      $BOXROOTDIR/bin/fastboot flash recovery $BOXROOTDIR/share/$teamwin
+    if [ "$recovery" = 2 ] ; then
+      # shellcheck disable=SC2154
+      "${BOXROOTDIR}/bin/fastboot" flash recovery "${BOXROOTDIR}/share/$teamwin"
     fi
 
 
@@ -77,11 +81,11 @@ cmd_root() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box timurs"
@@ -17,24 +18,24 @@ main() {
     echo "2. Android 5.1.1 (lmy47)"
     echo "3. Android 6.0.1 (mob30j)"
     echo "Select then press enter"
-    read version
+    read -r version
 
-    if [ $version = 1 ] ; then
+    if [ "$version" = 1 ] ; then
       services='timur-services-N7-2-511e-v3-2015-10-06.zip'
       usbhost='timur-usbhost-flo511-v3-R7-2015-10-12.zip'
     fi
-    if [ $version = 2 ] ; then
+    if [ "$version" = 2 ] ; then
       services='timur-services-N7-2-444-v2-2014-06-20.zip'
       usbhost='timur-usbhost-flo444-v2-russellsherman-2015-02-02.zip'
     fi
-    if [ $version = 3 ] ; then
+    if [ "$version" = 3 ] ; then
       services='timur-services-N7-2-601-MOB30J-v4-2016-05-11.zip'
       usbhost='timur-usbhost-flo601-v4-beta3-russellsherman-2016-06-22.zip'
     fi
 
-    $BOXROOTDIR/bin/adb push $BOXROOTDIR/share/TimursKernel/$services /sdcard/
-    $BOXROOTDIR/bin/adb push $BOXROOTDIR/share/TimursKernel/$usbhost /sdcard/
-    $BOXROOTDIR/bin/adb reboot bootloader
+    "${BOXROOTDIR}/bin/adb" push "${BOXROOTDIR}/share/TimursKernel/$services" /sdcard/
+    "${BOXROOTDIR}/bin/adb" push "${BOXROOTDIR}/share/TimursKernel/$usbhost" /sdcard/
+    "${BOXROOTDIR}/bin/adb" reboot bootloader
     sleep 7
 
   bot "Boot to recovery and Install Timurs Kernel"
@@ -59,11 +60,11 @@ cmd_timurs() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

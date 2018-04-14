@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box bootloader"
@@ -13,28 +14,28 @@ main() {
   bot "Place your device in FASTBOOT MODE!"
   warn "Power off your device"
   warn "Power on device while holding volume down"
-  read -p "Press enter to continue"
+  read -rp "Press enter to continue"
 
   bot "Tell me what you want to do with the Bootloader"
   echo "1. Unlock"
   echo "2. Lock"
   echo "Select then press enter"
-  read selection
+  read -r selection
 
   selection=${selection:-None}
-  if [ $selection = 'None' ] ; then
+  if [ "$selection" = 'None' ] ; then
     die
   fi
 
-  if [ $selection = 1 ] ; then
+  if [ "$selection" = 1 ] ; then
     action "Unlocking Bootloader"
-    $BOXROOTDIR/bin/fastboot oem unlock
+    "${BOXROOTDIR}/bin/fastboot" oem unlock
     ok
   fi
 
-  if [ $selection = 2 ] ; then
+  if [ "$selection" = 2 ] ; then
     action "Locking Bootloader"
-    $BOXROOTDIR/bin/fastboot oem lock
+    "${BOXROOTDIR}/bin/fastboot" oem lock
     ok
   fi
 
@@ -50,11 +51,11 @@ cmd_bootloader() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

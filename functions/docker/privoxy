@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box privoxy"
@@ -17,8 +18,8 @@ main() {
   --link torproxy:torproxy \
   -v /etc/localtime:/etc/localtime:ro \
   -p 8118:8118 \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/privoxy
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/privoxy"
 
   hostess add privoxy "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' privoxy)"
 }
@@ -31,11 +32,11 @@ cmd_privoxy() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

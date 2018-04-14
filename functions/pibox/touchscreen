@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox touchscreen"
@@ -16,10 +17,10 @@ main() {
   echo " 2. Rotate 180 degrees"
   echo " 3. Rotate 270 degrees"
   echo "Select then press enter"
-  read orientation
+  read -r orientation
 
   action "Writing Configuration"
-  sudo _PIBOX_ROOT=$_PIBOX_ROOT $BOXROOTDIR/lib/pibox/touchscreen $orientation
+  sudo "_PIBOX_ROOT=$_PIBOX_ROOT" "${BOXROOTDIR}/lib/pibox/touchscreen" "$orientation"
   ok
 
 }
@@ -37,11 +38,11 @@ cmd_touchscreen() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 require_cask 1password
 
 require_cask adium

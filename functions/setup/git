@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup git"
@@ -12,37 +13,38 @@ main() {
   get_platform
   bot "Installing Git"
 
-  GITCONFIG=$BOXROOTDIR/dotfiles/.gitconfig
-  grep 'user = GITHUBUSER' $GITCONFIG > /dev/null 2>&1
-  if [[ $? = 0 ]]; then
+  GITCONFIG="${BOXROOTDIR}/dotfiles/.gitconfig"
+  grep 'user = GITHUBUSER' "$GITCONFIG" > /dev/null 2>&1
+  # shellcheck disable=SC2181
+  if [[ "$?" = "0" ]]; then
     read -r -p "What is your github.com username? " githubuser
 
     if [ "$NS_PLATFORM" == "darwin" ]; then
-      fullname=`osascript -e "long user name of (system info)"`
+      fullname=$(osascript -e "long user name of (system info)")
 
       if [[ -n "$fullname" ]];then
-        lastname=$(echo $fullname | awk '{print $2}');
-        firstname=$(echo $fullname | awk '{print $1}');
+        lastname=$(echo "$fullname" | awk '{print $2}');
+        firstname=$(echo "$fullname" | awk '{print $1}');
       fi
-      if [[ -z $lastname ]]; then
-        lastname=`dscl . -read /Users/$(whoami) | grep LastName | sed "s/LastName: //"`
+      if [[ -z "$lastname" ]]; then
+        lastname=$(dscl . -read "/Users/$(whoami)" | grep LastName | sed "s/LastName: //")
       fi
-      if [[ -z $firstname ]]; then
-        firstname=`dscl . -read /Users/$(whoami) | grep FirstName | sed "s/FirstName: //"`
+      if [[ -z "$firstname" ]]; then
+        firstname=$(dscl . -read "/Users/$(whoami)" | grep FirstName | sed "s/FirstName: //")
       fi
-      email=`dscl . -read /Users/$(whoami)  | grep EMailAddress | sed "s/EMailAddress: //"`
+      email=$(dscl . -read "/Users/$(whoami)"  | grep EMailAddress | sed "s/EMailAddress: //")
 
       if [[ ! "$firstname" ]];then
         response='n'
       else
-        echo -e "I see that your full name is $COL_YELLOW$firstname $lastname$COL_RESET"
+        echo -e "I see that your full name is ${C_YELLOW}${firstname} ${lastname}${C_RESET}"
         read -r -p "Is this correct? [Y|n] " response
       fi
     else
       response='n'
     fi
 
-    if [[ $response =~ ^(no|n|N) ]];then
+    if [[ "$response" =~ ^(no|n|N) ]];then
       read -r -p "What is your first name? " firstname
       read -r -p "What is your last name? " lastname
     fi
@@ -50,14 +52,14 @@ main() {
 
     bot "Great $fullname, "
 
-    if [[ ! $email ]];then
+    if [[ ! "$email" ]];then
       response='n'
     else
       echo -e "The best I can make out, your email address is $COL_YELLOW$email$COL_RESET"
       read -r -p "Is this correct? [Y|n] " response
     fi
 
-    if [[ $response =~ ^(no|n|N) ]];then
+    if [[ "$response" =~ ^(no|n|N) ]];then
       read -r -p "What is your email? " email
       if [[ ! $email ]];then
         error "you must provide an email to configure .gitconfig"
@@ -67,18 +69,18 @@ main() {
 
     running "replacing items in .gitconfig with your info ($COL_YELLOW$fullname, $email, $githubuser$COL_RESET)"
 
-    sed -i "s/GITHUBFULLNAME/$firstname $lastname/" $GITCONFIG > /dev/null 2>&1 | true
-    if [[ ${PIPESTATUS[0]} != 0 ]]; then
+    sed -i "s/GITHUBFULLNAME/$firstname $lastname/" "$GITCONFIG" > /dev/null 2>&1 | true
+    if [[ "${PIPESTATUS[0]}" != 0 ]]; then
       echo
       running "looks like you are using MacOS sed rather than gnu-sed, accommodating"
-      sed -i '' "s/GITHUBFULLNAME/$firstname $lastname/" $GITCONFIG;
-      sed -i '' 's/GITHUBEMAIL/'$email'/' $GITCONFIG;
-      sed -i '' 's/GITHUBUSER/'$githubuser'/' $GITCONFIG;
+      sed -i '' "s/GITHUBFULLNAME/$firstname $lastname/" "$GITCONFIG"
+      sed -i '' "s/GITHUBEMAIL/$email/" "$GITCONFIG"
+      sed -i '' "s/GITHUBUSER/$githubuser/" "$GITCONFIG"
     else
       echo
       bot "looks like you are already using gnu-sed. woot!"
-      sed -i 's/GITHUBEMAIL/'$email'/' $GITCONFIG;
-      sed -i 's/GITHUBUSER/'$githubuser'/' $GITCONFIG;
+      sed -i "s/GITHUBEMAIL/$email/" "$GITCONFIG"
+      sed -i "s/GITHUBUSER/$githubuser/" "$GITCONFIG"
     fi
   fi
 
@@ -102,6 +104,7 @@ main() {
     action "Install Tower git GUI"
       require_cask tower
 
+      # shellcheck disable=SC1117
       echo "
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <\!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
@@ -124,7 +127,7 @@ main() {
       if [ ! -d "$HOME/bin" ]; then
         mkdir "$HOME/bin"
       fi
-      curl -L https://raw.github.com/simonwhitaker/gibo/master/gibo -so $HOME/bin/gibo && chmod +x $HOME/bin/gibo && gibo -u
+      curl -L https://raw.github.com/simonwhitaker/gibo/master/gibo -so "$HOME/bin/gibo" && chmod +x "$HOME/bin/gibo" && gibo -u
     ok
 
     action "Writing OS Specific .gitignore_global"
@@ -132,7 +135,7 @@ main() {
         mv "$HOME/.gitignore_global" "$HOME/.gitignore_global_bak"
       fi
       # use gibo to populate a sensible global gitignore
-      $HOME/bin/gibo Linux >> "$HOME/.gitignore_global"
+      "$HOME/bin/gibo" Linux >> "$HOME/.gitignore_global"
     ok
 
     action "Install gitKraken git GUI"
@@ -151,11 +154,11 @@ cmd_git() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

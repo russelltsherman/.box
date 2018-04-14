@@ -1,20 +1,13 @@
 #!/usr/bin/env bash
 
-#test if aptitude exists and default to using that if possible
-if command -v aptitude >/dev/null 2>&1 ; then
-  pm="aptitude"
-else
-  pm="apt-get"
-fi
-
 action "Update apt cache"
-  (sudo $pm update > /dev/null 2>&1)
+  (sudo "$PM" update > /dev/null 2>&1)
 ok
 
 #########################################################
 action "Installing build tools"
   (
-    sudo $pm -y install \
+    sudo "$PM" -y install \
       autoconf \
       automake \
       bison \

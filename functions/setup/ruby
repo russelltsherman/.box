@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup ruby"
@@ -28,10 +29,10 @@ main() {
   fi
 
   running "Check for RVM Installation"
-  if [ ! $(command -v rvm) == "" ]; then
-    echo -e "\n=> RVM Installed"
+  if [ ! "$(command -v rvm)" == "" ]; then
+    echo -e "=> RVM Installed"
   else
-    echo -e "\n=> Install RVM"
+    echo -e "=> Install RVM"
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
     curl -sSL https://get.rvm.io | bash -s stable --ruby
     # echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
@@ -48,7 +49,7 @@ main() {
   rvm use --latest
 
   running "install bundler into global gemset"
-  rvm @global do gem install bundler
+  rvm "@global do gem install bundler"
 }
 
 # _cmd_ruby() {
@@ -59,11 +60,11 @@ cmd_ruby() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

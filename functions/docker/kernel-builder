@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box kernel-builder"
@@ -12,7 +13,7 @@ main() {
   -v /usr/src:/usr/src \
   --cpu-shares=512 \
   --name kernel-builder \
-  ${DOCKER_REPO_PREFIX}/kernel-builder
+  "${DOCKER_REPO_PREFIX}/kernel-builder"
 }
 
 # _cmd_kernel-builder() {
@@ -23,11 +24,11 @@ cmd_kernel-builder() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

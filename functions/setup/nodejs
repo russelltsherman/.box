@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box setup nodejs"
@@ -11,22 +12,23 @@ main() {
   banner
   get_platform
 
-  if [ -d $HOME/.nvm ]; then
+  if [ -d "$HOME/.nvm" ]; then
     bot "NodeJS Version Manager found... updating"
     (cd ~/.nvm && ./install.sh)
   else
     bot "Installing NodeJS Version Manager"
 
     latest=$(curl https://api.github.com/repos/creationix/nvm/releases/latest -s | jq .name -r)
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/$latest/install.sh | bash
+    curl -o- "https://raw.githubusercontent.com/creationix/nvm/$latest/install.sh" | bash
 
-    profile_write "# initialize NVM" $HOME/.profile
-    profile_write "export NVM_DIR=\$HOME/.nvm" $HOME/.profile
-    profile_write '[ -s $NVM_DIR/nvm.sh ] && source $NVM_DIR/nvm.sh' $HOME/.profile
+    profile_write "# initialize NVM" "$HOME/.profile"
+    profile_write "export NVM_DIR=\$HOME/.nvm" "$HOME/.profile"
+    # shellcheck disable=SC2016
+    profile_write '[ -s $NVM_DIR/nvm.sh ] && source $NVM_DIR/nvm.sh' "$HOME/.profile"
 
     # immediately load nvm so we can install node and npm
     # for some reason this causes setup to stall
-    # source $HOME/.profile
+    # source "$HOME/.profile"
     # require_nvm 4.4.7
 
     # npm config set save=true
@@ -49,10 +51,10 @@ cmd_nodejs() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

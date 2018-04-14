@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 config=/boot/config.txt
 
-[ -e $config ] || touch $config
+[ -e "$config" ] || touch "$config"
 
-set_config_var dtparam=spi $1 $config
+set_config_var dtparam=spi "$1" "$config"
 
 exit

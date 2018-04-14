@@ -4,3 +4,4 @@
 # source ~/.profile
 
 eval "$(direnv hook bash)"
+PATH="$PATH:/Users/coderonin/.mos/bin"

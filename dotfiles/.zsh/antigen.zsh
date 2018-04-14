@@ -1,8 +1,8 @@
 
 #set this value so that antigen realizes it's in a nonstandard location
-export ADOTDIR=$BOXROOTDIR/.antigen
+export ADOTDIR="${BOXROOTDIR}/.antigen"
 
-source $BOXROOTDIR/.antigen/antigen.zsh
+source "${BOXROOTDIR}/.antigen/antigen.zsh"
 
 # Antigen - zsh plugin manager
 # https://github.com/zsh-users/antigen

@@ -1,18 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ------------------------------------
 # Docker alias and function
 # ------------------------------------
 
 dlaunch() {
-  local name=$1
+  local name="$1"
   local state
-  state=$(docker inspect --format "{{.State.Running}}" "$name" > /dev/null 2>&1)
+  state=$(docker inspect --format "{{.State.Running}}" "${name}" > /dev/null 2>&1)
 
-  if [[ "$state" == "true" ]]; then
-    docker attach $name
+  if [[ "${state}" == "true" ]]; then
+    docker attach "${name}"
   else
-    box docker $name
+    box docker "${name}"
   fi
 }
 
@@ -30,7 +30,9 @@ alias di="docker images"
 
 # Get container IP
 # alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
-dip() { docker inspect $1 | grep IPAddress | awk '{print $2}' | tr -d 'null",\n\r' }
+dip() {
+  docker inspect "$1" | grep IPAddress | awk '{print $2}' | tr -d 'null",\n\r'
+}
 
 # Run deamonized container, e.g., $dkd base /bin/echo hello
 alias dkd="docker run -d -P"
@@ -42,22 +44,32 @@ alias dki="docker run -i -t -P"
 alias dex="docker exec -i -t"
 
 # Stop all containers
-dstop() { docker stop $(docker ps -a -q) }
+dstop() {
+  docker stop "$(docker ps -a -q)"
+}
 
 # Remove all containers
-drm() { docker rm $(docker ps -a -q) }
+drm() {
+  docker rm "$(docker ps -a -q)"
+}
 
 # Stop and Remove all containers
 alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 
 # Remove all images
-dri() { docker rmi $(docker images -q) }
+dri() {
+  docker rmi "$(docker images -q)"
+}
 
 # Dockerfile build, e.g., $dbu tcnksm/test
-dbu() { docker build -t=$1 . }
+dbu() {
+  docker build -t="$1" .
+}
 
 # Show all alias related docker
-dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
+dalias() {
+  alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort
+}
 
 # Bash into running container
 # dbash() { docker exec -it $(docker ps -aqf "name=$1") bash; }

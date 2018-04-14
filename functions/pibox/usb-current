@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pibox usb-current"
@@ -14,10 +15,10 @@ main() {
   echo " 0. Normal current"
   echo " 1. Maximum current"
   echo "Select then press enter"
-  read current
+  read -r current
 
   action "Writing Configuration"
-  sudo _PITAP2_ROOT=$_PITAP2_ROOT $_PITAP2_ROOT/lib/max-usb-current $current
+  sudo "_PITAP2_ROOT=$_PITAP2_ROOT" "$_PITAP2_ROOT/lib/max-usb-current" "$current"
   ok
 }
 
@@ -34,11 +35,11 @@ cmd_usb-current() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

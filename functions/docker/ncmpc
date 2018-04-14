@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box ncmpc"
@@ -14,8 +15,8 @@ main() {
   docker run --rm -it \
   -v "${HOME}/.mpd/socket:/var/run/mpd/socket" \
   -e MPD_HOST=/var/run/mpd/socket \
-  --name $container_name \
-  ${DOCKER_REPO_PREFIX}/ncmpc "$@"
+  --name "$container_name" \
+  "${DOCKER_REPO_PREFIX}/ncmpc" "$@"
 }
 
 # _cmd_ncmpc() {
@@ -26,11 +27,11 @@ cmd_ncmpc() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

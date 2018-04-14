@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box pandoc"
@@ -19,7 +20,7 @@ main() {
   -v "${lfile}:${rfile}" \
   -v /tmp:/tmp \
   --name pandoc \
-  ${DOCKER_REPO_PREFIX}/pandoc "${args}" "${rfile}"
+  "${DOCKER_REPO_PREFIX}/pandoc" "${args}" "${rfile}"
 
 }
 
@@ -31,11 +32,11 @@ cmd_pandoc() {
     main; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

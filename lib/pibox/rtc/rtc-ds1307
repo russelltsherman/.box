@@ -1,19 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 file_writeln '/etc/modules' 'rtc-ds1307'
 
-if [ $1 = 'off' ] ; then
+if [ "$1" = 'off' ] ; then
   die "RTC removal is incomplete"
   sed /etc/modules -i -e "s/^rtc-ds1307/#rtc-ds1307/"
 fi
 
-if [ $1 = 'on' ] ; then
+if [ "$1" = 'on' ] ; then
   sed /etc/modules -i -e "s/^#rtc-ds1307/rtc-ds1307/"
 
   rm /etc/init.d/hwclock.sh
-  cp $BOXROOTDIR/lib/pibox/hwclock.sh /etc/init.d/
+  cp "${BOXROOTDIR}/lib/pibox/hwclock.sh" /etc/init.d/
 
   apt-get remove -y fake-hwclock
   rm /etc/cron.hourly/fake-hwclock

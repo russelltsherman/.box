@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "${BOXROOTDIR}/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box proj polymer [project_name]"
@@ -9,27 +10,27 @@ usage() {
 
 main() {
   # banner
-  local project_name=$1
+  local project_name="$1"
 
   ###########################################################
   bot "Cloning Polymer Project Skeleton"
-  git clone https://github.com/russelltsherman/proj-polymer.git $project_name
+  git clone https://github.com/russelltsherman/proj-polymer.git "$project_name"
   ok
 
   running "purging upstream git history"
-  ( cd $project_name && rm -rf .git )
+  ( cd "$project_name" && rm -rf .git )
   ok
 
   running "initialize new git repo"
-  ( cd $project_name && git init &>/dev/null )
+  ( cd "$project_name" && git init &>/dev/null )
   ok
 
   running "initial git commit"
-  ( cd $project_name && git add . && git commit -a -m 'initial commit' )
+  ( cd "$project_name" && git add . && git commit -a -m 'initial commit' )
   ok
 
   running "initialize dev dependencies"
-  ( cd $project_name && npm install )
+  ( cd "$project_name" && npm install )
   ok
 }
 

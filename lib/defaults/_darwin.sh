@@ -588,7 +588,7 @@ running "Use a modified version of the Solarized Dark theme by default in Termin
 TERM_PROFILE='Solarized Dark xterm-256color';
 CURRENT_PROFILE="$(defaults read com.apple.terminal 'Default Window Settings')";
 if [ "${CURRENT_PROFILE}" != "${TERM_PROFILE}" ]; then
-  open "$BOXROOTDIR/lib/box-defaults/config/${TERM_PROFILE}.terminal";
+  open "${BOXROOTDIR}/lib/box-defaults/config/${TERM_PROFILE}.terminal";
   sleep 1; # Wait a bit to make sure the theme is loaded
   defaults write com.apple.terminal 'Default Window Settings' -string "${TERM_PROFILE}";
   defaults write com.apple.terminal 'Startup Window Settings' -string "${TERM_PROFILE}";
@@ -601,7 +601,7 @@ ok
 #defaults write org.x.X11 wm_ffm -bool TRUE
 
 running "Installing the Solarized Dark theme for iTerm (opening file)"
-open "$BOXROOTDIR/assets/Solarized Dark.itermcolors"
+open "${BOXROOTDIR}/assets/Solarized Dark.itermcolors"
 
 running "Don't display the annoying prompt when quitting iTerm"
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
