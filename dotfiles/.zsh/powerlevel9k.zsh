@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2034
+# shellcheck disable=SC1117
+
 ################################################################################
 # use the command spectrum_ls to see available zsh color codes
 ################################################################################

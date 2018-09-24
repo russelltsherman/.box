@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # add my local bin to start of path
 export PATH=$HOME/bin:$PATH
 # export PATH=$PATH:.

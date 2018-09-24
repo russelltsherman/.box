@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+
 # add .box/bin to the path
 if [ -d "${HOME}/.box/" ]; then
   export PATH="${PATH}:${HOME}/.box/bin"
@@ -5,7 +8,7 @@ fi
 
 # load iterm2 shell integration if present
 if [ -f "${HOME}/.iterm2_shell_integration.$(basename "${SHELL}")" ];then
-  source $HOME/.iterm2_shell_integration.$(basename $SHELL)
+  source "$HOME/.iterm2_shell_integration.$(basename "$SHELL")"
 fi
 
 # initialize other shell agnostic customizations

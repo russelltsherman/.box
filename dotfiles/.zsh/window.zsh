@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1117
+
 # From http://dotfiles.org/~_why/.zshrc
 # Sets the window title nicely no matter where you are
 title() {

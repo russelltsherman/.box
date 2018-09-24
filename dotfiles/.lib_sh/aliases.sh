@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1117
 
 #################################
 # Simple Program Name Shortening
@@ -91,6 +92,8 @@ alias spoton="sudo mdutil -a -i on"
 alias sha256sum="shasum -a 256"
 
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+#!/usr/bin/env bash
+
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; mas upgrade; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 
 alias vtop="vtop --theme wizard"

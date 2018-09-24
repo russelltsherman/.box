@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 autoload colors && colors
 
 # The variables are wrapped in %{%}. This should be the case for every

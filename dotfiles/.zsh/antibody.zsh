@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
 
 # antibody() {
   source <(antibody init)

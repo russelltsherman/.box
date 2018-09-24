@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
 
 #set this value so that antigen realizes it's in a nonstandard location
 export ADOTDIR="${BOXROOTDIR}/.antigen"

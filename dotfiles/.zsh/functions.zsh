@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+# shellcheck disable=SC2086
+
 function zsh_recompile {
   autoload -U zrecompile
   rm -f ~/.zsh/*.zwc

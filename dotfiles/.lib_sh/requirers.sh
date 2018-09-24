@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+# shellcheck disable=SC2068
+
 ###
 # convienience methods for requiring installed software
 # @author Adam Eivy

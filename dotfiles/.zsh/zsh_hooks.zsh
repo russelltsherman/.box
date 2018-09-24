@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function precmd {
   ##############################################################################
   # antigen bundle rupa/z - https://github.com/rupa/z

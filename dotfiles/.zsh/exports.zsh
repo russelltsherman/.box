@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2155
+
 # Setup terminal, and turn on colors
 export TERM='xterm-256color'
 export CLICOLOR='1'
