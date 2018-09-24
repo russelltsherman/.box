@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1090
 
 BOXROOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
