@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2167
 # shellcheck disable=SC1117
-
 # shellcheck disable=SC1090
+
 source "${BOXROOTDIR}/dotfiles/.lib_sh/echos.sh"
 source "${BOXROOTDIR}/dotfiles/.lib_sh/requirers.sh"
 source "${BOXROOTDIR}/dotfiles/.lib_sh/dockerfunctions.sh"
