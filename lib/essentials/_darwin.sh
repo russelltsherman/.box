@@ -73,6 +73,9 @@ require_brew imagemagick
 # Tool to capture still images from an iSight or other video source http://iharder.sourceforge.net/current/macosx/imagesnap/
 require_brew imagesnap
 
+# CLI wrapper for basic network utilities on Mac OS X inspired with iproute2 on Linux systems https://github.com/brona/iproute2mac
+require_brew iproute2mac
+
 # Lightweight and flexible command-line JSON processor https://stedolan.github.io/jq/
 require_brew jq
 

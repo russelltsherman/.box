@@ -18,6 +18,7 @@ action "Installing build tools"
       direnv \
       git \
       jq \
+      iproute2 \
       most \
       libxslt1.1 \
       libssl-dev \
