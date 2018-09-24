@@ -16,11 +16,11 @@ export LIB_SH_DIR="${BOXROOTDIR}/dotfiles/.lib_sh"
 [ -s "${LIB_SH_DIR}/paths.sh" ] && source "${LIB_SH_DIR}/paths.sh"
 
 # initialize GO
-if [ -d "$HOME/src/go" ]; then
-  export GOPATH="${HOME}/src/go"
+if [ -d "$HOME/go" ]; then
+  export GOPATH="${HOME}/go"
   export PATH="${PATH}:${GOPATH}/bin"
   alias gotour="${GOPATH}/bin/gotour"
-  export GOROOT=$(go env GOROOT)
+  export GOROOT="$(go env GOROOT)"
 fi
 
 # lazily initialize NVM
