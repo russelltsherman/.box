@@ -40,7 +40,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
 # Installation
 
 Note: I recommend forking this repo in case you don't like anything I do and want to set your own preferences (and pull request them!)
@@ -52,43 +51,46 @@ cd ~/.box;
 # run this using terminal (not iTerm, lest iterm settings get discarded on exit)
 ./install.sh
 ```
+
 * When it finishes, open Iterm and press `Command + ,` to open preferences. Under Profiles > Colors, select "Load Presets" and choose the `Solarized Dark Patch` scheme. If it isn't there for some reason, import it from `~/.dotfiles/configs`
 
 > Note: running install.sh is idempotent. You can run it again and again as you add new features or software to the scripts! I'll regularly add new configurations so keep an eye on this repo as it grows and optimizes.
-
-
 
 ## Restoring Dotfiles
 
 If you have existing dotfiles for configuring git, zsh, vim, etc, these will be backed-up into `~/.dotfiles_backup/$(date +"%Y.%m.%d.%H.%M.%S")` and replaced with the files from this project. You can restore your original dotfiles by using `./restore.sh $RESTOREDATE` where `$RESTOREDATE` is the date folder name you want to restore.
 
-
-
 # Additional
 
 ## VIM as IDE
+
 I am moving away from using `Atom` and instead using `vim` as my IDE. I use Vundle to manage vim plugins (instead of pathogen). Vundle is better in many ways and is compatible with pathogen plugins. Additionally, vundle will manage and install it's own plugins so we don't have to use git submodules for all of them.
 
 ## Crontab
+
 You can `cron ~/.crontab` if you want to add my nightly cron software updates.
 
 > \\[0_0]/ - Note that this may wake you in the morning to compatibility issues so use only if you like being on the edge
 
 ## Remap Caps-Lock
+
 - I highly recommend remapping your Caps Lock key to Control per [Dr. Bunsen](http://www.drbunsen.org/remapping-caps-lock/):
 ![Remap Caps Lock](https://raw.githubusercontent.com/russelltsherman/.box2/master/assets/remap_capslock.png)
 
 # Settings
+
 This project changes a number of settings and configures software on MacOS.
 Here is the current list:
 
 ## Configuring General System UI/UX
+
 - Disable local Time Machine snapshots
 - Disable hibernation (speeds up entering sleep mode)
 - Remove the sleep image file to save disk space
 - Set a custom wallpaper image
 
 ## Standard System Changes
+
 - always boot in verbose mode (not MacOS GUI mode)
 - allow 'locate' command
 - Set standby delay to 24 hours (default is 1 hour)
@@ -118,6 +120,7 @@ Here is the current list:
 - Disable smart dashes as they’re annoying when typing code
 
 ## Security
+
 - Enable firewall
 - Enable firewall stealth mode (no response to ICMP / ping requests)
 - Disable remote apple events
@@ -127,6 +130,7 @@ Here is the current list:
 - Disable guest account login
 
 ## Trackpad, mouse, keyboard, Bluetooth accessories, and input
+
 - Trackpad: enable tap to click for this user and for the login screen
 - Trackpad: map bottom right corner to right-click
 - Disable “natural” (Lion-style) scrolling
@@ -140,6 +144,7 @@ Here is the current list:
 - Disable auto-correct
 
 ## Configuring the Screen
+
 - Require password immediately after sleep or screen saver begins
 - Save screenshots to the desktop
 - Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
@@ -148,6 +153,7 @@ Here is the current list:
 - Enable HiDPI display modes (requires restart)
 
 ## Finder Configs
+
 - Keep folders on top when sorting by name (Sierra only)
 - Allow quitting via ⌘ + Q; doing so will also hide desktop icons
 - Disable window animations and Get Info animations
@@ -173,6 +179,7 @@ Here is the current list:
 - Expand the following File Info panes: “General”, “Open with”, and “Sharing & Permissions”
 
 ## Dock & Dashboard
+
 - Enable highlight hover effect for the grid view of a stack (Dock)
 - Set the icon size of Dock items to 36 pixels
 - Change minimize/maximize window effect to scale
@@ -193,11 +200,13 @@ Here is the current list:
 - Reset Launchpad, but keep the desktop wallpaper intact
 
 ## Configuring Hot Corners
+
 - Top left screen corner → Mission Control
 - Top right screen corner → Desktop
 - Bottom right screen corner → Start screen saver
 
 ## Configuring Safari & WebKit
+
 - Set Safari’s home page to ‘about:blank’ for faster loading
 - Prevent Safari from opening ‘safe’ files automatically after downloading
 - Allow hitting the Backspace key to go to the previous page in history
@@ -211,6 +220,7 @@ Here is the current list:
 - Add a context menu item for showing the Web Inspector in web views
 
 ## Configuring Mail
+
 - Disable send and reply animations in Mail.app
 - Copy email addresses as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app
 - Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
@@ -219,12 +229,14 @@ Here is the current list:
 - Disable automatic spell checking
 
 ## Spotlight
+
 - Disable Spotlight indexing for any volume that gets mounted and has not yet been indexed
 - Change indexing order and disable some file types from being indexed
 - Load new settings before rebuilding the index
 - Make sure indexing is enabled for the main volume
 
 ## iTerm2
+
 - Installing the Solarized Dark theme for iTerm
 - Don’t display the annoying prompt when quitting iTerm
 - Hide tab title bars
@@ -233,16 +245,19 @@ Here is the current list:
 - Set non-ascii font to Roboto Mono for Powerline 12pt
 
 ## Time Machine
+
 - Prevent Time Machine from prompting to use new hard drives as backup volume
 - Disable local Time Machine backups
 
 ## Activity Monitor
+
 - Show the main window when launching Activity Monitor
 - Visualize CPU usage in the Activity Monitor Dock icon
 - Show all processes in Activity Monitor
 - Sort Activity Monitor results by CPU usage
 
 ## Address Book, Dashboard, iCal, TextEdit, and Disk Utility
+
 - Enable the debug menu in Address Book
 - Enable Dashboard dev mode (allows keeping widgets on the desktop)
 - Use plain text mode for new TextEdit documents
@@ -250,15 +265,18 @@ Here is the current list:
 - Enable the debug menu in Disk Utility
 
 ## Mac App Store
+
 - Enable the WebKit Developer Tools in the Mac App Store
 - Enable Debug Menu in the Mac App Store
 
 ## Messages
+
 - Disable automatic emoji substitution (i.e. use plain text smileys)
 - Disable smart quotes as it’s annoying for messages that contain code
 - Disable continuous spell checking
 
 ## SizeUp.app
+
 - Start SizeUp at login
 - Don’t show the preferences window on next start
 
@@ -366,23 +384,24 @@ the following are all installed inside the `install.sh` as foundational software
 -->
 
 # License
+
 This project is licensed under ISC. Please fork, contribute and share.
 
 # Contributions
+
 Contributions are always welcome in the form of pull requests with explanatory comments.
 
 Please refer to the [Contributor Covenant](https://github.com/russelltsherman/.box2/blob/master/CODE_OF_CONDUCT.md)
 
-
-
 # Loathing, Mehs and Praise
+
 1. Loathing should be directed into pull requests that make it better. woot.
 2. Bugs with the setup should be put as GitHub issues.
 3. Mehs should be > /dev/null
 4. Praise should be directed to ![@BurnerDev](https://img.shields.io/twitter/follow/BurnerDev.svg?style=social&label=@BurnerDev)
 
-
 # ¯\\_(ツ)_/¯ Warning / Liability
+
 > Warning:
 The creator of this repo is not responsible if your machine ends up in a state you are not happy with.
 If you are concerned, look at the code to review everything this will do to your machine :)
