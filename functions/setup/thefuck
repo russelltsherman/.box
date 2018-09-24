@@ -26,7 +26,7 @@ main() {
   running "adding the fucking alias"
     profile_write '# initialize thefuck'"$HOME/.profile"
     # shellcheck disable=SC2016
-    profile_write 'eval "$(thefuck --alias)"'"$HOME/.profile"
+    profile_write 'type thefuck &>/dev/null && eval "$(thefuck --alias)"'"$HOME/.profile"
     source"$HOME/.profile"
   ok
 }
