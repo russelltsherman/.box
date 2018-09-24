@@ -22,7 +22,7 @@ require_cask firefox
 
 require_cask growlnotify
 
-require_cask gpgtools
+require_cask gpg-suite
 
 require_cask iterm2
 
