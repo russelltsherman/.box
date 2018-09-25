@@ -18,14 +18,6 @@ export LIB_SH_DIR="${BOXROOTDIR}/dotfiles/.lib_sh"
 [ -s "${LIB_SH_DIR}/dockerfunctions.sh" ] && source "${LIB_SH_DIR}/dockerfunctions.sh"
 [ -s "${LIB_SH_DIR}/paths.sh" ] && source "${LIB_SH_DIR}/paths.sh"
 
-# initialize GO
-if [ -d "$HOME/go" ]; then
-  export GOPATH="${HOME}/go"
-  export PATH="${PATH}:${GOPATH}/bin"
-  alias gotour="${GOPATH}/bin/gotour"
-  export GOROOT="$(go env GOROOT)"
-fi
-
 # lazily initialize NVM
 export NVM_DIR="${HOME}/.nvm"
 [ -s "${NVM_DIR}/nvm.sh" ] && source "${NVM_DIR}/nvm.sh"
@@ -56,3 +48,14 @@ type thefuck &>/dev/null && eval "$(thefuck --alias)" # || echo "thefuck() not f
 # initialize pyenv
 type pyenv &>/dev/null && eval "$(pyenv init -)"
 type pyenv &>/dev/null && eval "$(pyenv virtualenv-init -)"
+
+# initialize GO
+if [ -d "$HOME/go" ]; then
+  GOPATH="${HOME}/go"
+  PATH="${PATH}:${GOPATH}/bin"
+  GOROOT="$(go env GOROOT)"
+  alias gotour="${GOPATH}/bin/gotour"
+  export GOPATH
+  export PATH
+  export GOROOT
+fi

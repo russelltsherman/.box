@@ -11,36 +11,45 @@ usage() {
 main() {
   banner
   get_platform
-  bot "Installing Golang"
+  bot "Installing Golang & dep"
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
-    require_brew hg
     require_brew go
+    require_brew dep
   fi
 
   if [ "$NS_PLATFORM" == "linux" ]; then
   	sudo apt-get install -y golang
+    # TODO: test this
+    # curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   fi
 
+  action "create $HOME/go directory"
   mkdir -p "$HOME/go"
 
   # initialize GO
-  local string="
+  local go_init="
 # initialize GO
-if [ -d \$HOME/go ]; then
-  export GOPATH=\"\${HOME}/go\"
-  export PATH=\"\${PATH}:\${GOPATH}/bin\"
+if [ -d \"\$HOME/go\" ]; then
+  GOPATH=\"\${HOME}/go\"
+  PATH=\"\${PATH}:\${GOPATH}/bin\"
+  GOROOT=\"\$(go env GOROOT)\"
   alias gotour=\"\${GOPATH}/bin/gotour\"
-  export GOROOT=\"\$(go env GOROOT)\"
+  export GOPATH
+  export PATH
+  export GOROOT
 fi"
-  if ! grep -q "# initialize GO""$HOME/.profile" ; then
-    echo "$string" >>"$HOME/.profile"
+  if ! grep -q "# initialize GO" "$HOME/.profile" ; then
+    echo "$go_init" >>"$HOME/.profile"
   fi
-  source"$HOME/.profile"
+
+  source "$HOME/.profile"
 
   # install the go tour code
+  action "install gotour"
   go get golang.org/x/tour/gotour
 
+  action "create go test"
   # create a go test file
   cat > "$GOPATH/bin/gotest.go" <<EOL
   package main
