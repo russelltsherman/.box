@@ -54,7 +54,7 @@ if [ -d "$HOME/go" ]; then
   GOPATH="${HOME}/go"
   PATH="${PATH}:${GOPATH}/bin"
   GOROOT="$(go env GOROOT)"
-  alias gotour="${GOPATH}/bin/gotour"
+  alias gotour="\${GOPATH}/bin/gotour"
   export GOPATH
   export PATH
   export GOROOT
