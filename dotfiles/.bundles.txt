@@ -1,5 +1,17 @@
 
 
+antibody bundle russelltsherman/zsh-jvm
+antibody bundle russelltsherman/zsh-async
+antibody bundle russelltsherman/zsh-pure
+antibody bundle russelltsherman/zsh-ports # kind:path
+antibody bundle russelltsherman/zsh-bd
+antibody bundle russelltsherman/zsh-git-add-remote # kind:path
+antibody bundle russelltsherman/zsh-git-fetch-merge # kind:path
+antibody bundle russelltsherman/zsh-git-sync # kind:path
+antibody bundle russelltsherman/zsh-mkc
+antibody bundle russelltsherman/zsh-open-pr # kind:path
+antibody bundle russelltsherman/zsh-wakatime
+
 antibody bundle rupa/z
 antibody bundle robbyrussell/oh-my-zsh
 
@@ -8,15 +20,3 @@ antibody bundle robbyrussell/oh-my-zsh
 # antibody bundle zsh-users/zsh-completions
 # antibody bundle zsh-users/zsh-syntax-highlighting
 # antibody bundle zsh-users/zsh-history-substring-search
-
-antibody bundle russelltsherman/zsh-jvm
-antibody bundle russelltsherman/zsh-pure
-antibody bundle russelltsherman/zsh-ports # kind:path
-antibody bundle russelltsherman/zsh-async
-antibody bundle russelltsherman/zsh-bd
-antibody bundle russelltsherman/zsh-git-add-remote # kind:path
-antibody bundle russelltsherman/zsh-git-fetch-merge # kind:path
-antibody bundle russelltsherman/zsh-git-sync # kind:path
-antibody bundle russelltsherman/zsh-mkc
-antibody bundle russelltsherman/zsh-open-pr # kind:path
-antibody bundle russelltsherman/zsh-wakatime

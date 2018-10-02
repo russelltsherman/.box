@@ -113,6 +113,9 @@ function get_osx_version() {
       13)
         export OSX_VERSION="High Sierra"
         ;;
+      14)
+        export OSX_VERSION="Mojave"
+        ;;
       *)
         export OSX_VERSION="Unknown"
         ;;
