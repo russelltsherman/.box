@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $BOXROOTDIR/dotfiles/.lib_sh/functions.sh
+# shellcheck disable=SC1090
+source "$BOXROOTDIR/dotfiles/.lib_sh/functions.sh"
 
 usage() {
   echo "usage: box proj serverless [project_name]"
@@ -13,22 +14,22 @@ main() {
 
   ###########################################################
   bot "Cloning Serverless Project Skeleton"
-  git clone https://github.com/russelltsherman/proj-serverless.git $project_name
+  git clone https://github.com/russelltsherman/proj-serverless.git "$project_name"
   ok
 
-  sed --in-place "s/<service-name>/$project_name/" $project_name/serverless.yml
-  sed --in-place "s/<service-name>/$project_name/" $project_name/package.json
+  sed --in-place "s/<service-name>/$project_name/" "$project_name/serverless.yml"
+  sed --in-place "s/<service-name>/$project_name/" "$project_name/package.json"
 
   running "purging upstream git history"
-  ( cd $project_name && rm -rf .git )
+  ( cd "$project_name" && rm -rf .git )
   ok
 
   running "initialize new git repo"
-  ( cd $project_name && git init &>/dev/null )
+  ( cd "$project_name" && git init &>/dev/null )
   ok
 
   running "initial git commit"
-  ( cd $project_name && git add . && git commit -a -m 'initial commit' )
+  ( cd "$project_name" && git add . && git commit -a -m 'initial commit' )
   ok
 
 }
@@ -46,11 +47,11 @@ cmd_serverless() {
     main "$@"; exit 0
 
   elif [ "$#" -eq 1 ]; then # called with 1 parameters
-    if [[ $1 == "help" ]]; then
+    if [[ "$1" == "help" ]]; then
       usage; exit 0
     fi
 
-    main $1; exit 0
+    main "$1"; exit 0
   fi
 
   usage; exit 1

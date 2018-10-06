@@ -27,20 +27,23 @@ export PATH="${PATH}:${HOME}/.rvm/bin" # Add RVM to PATH for scripting
 [ -s "${HOME}/.rvm/scripts/rvm" ] && source "${HOME}/.rvm/scripts/rvm"
 export PATH="${GEM_HOME}/bin:${PATH}" # RVM demands ruby bin is first in path
 
-# attempt to detect which is the active netwrok interface
+# attempt to detect which is the active network interface
 ifconfig en0 &>/dev/null && nterface="en0"  # running on my macbook
 ifconfig enp0s3 &>/dev/null && nterface="enp0s3" # running in virtualbox virtualmachine
 
 # all this for container based GUI apps
 export DISPLAY=":0"
-export IP=$(ifconfig ${nterface} | grep inet | awk '$1=="inet" {print $2}' | tr -d 'addr:' )
+# shellcheck disable=SC2020
+IP=$(ifconfig ${nterface} | grep inet | awk '$1=="inet" {print $2}' | tr -d 'addr:' )
+export IP
 export DOCKER_DISPLAY="${IP}:0"
 xhost_path="$(which xhost)"
 "${xhost_path}" "${IP}"
 "${xhost_path}" -
 
 # add yarn to path
-export PATH="${PATH}:$(yarn global bin)"
+PATH="${PATH}:$(yarn global bin)"
+export PATH
 
 # initialize thefuck
 type thefuck &>/dev/null && eval "$(thefuck --alias)" # || echo "thefuck() not found."

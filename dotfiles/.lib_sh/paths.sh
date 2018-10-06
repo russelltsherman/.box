@@ -19,5 +19,5 @@ export PATH=/usr/local/bin:$PATH
 #source "/Users/$(whoami)/Downloads/google-cloud-sdk/completion.zsh.inc"
 
 # Currently this path is appendend to dynamically when picking a ruby version
-export PATH=node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/share/npm/bin:~/.cabal/bin:~/.local/bin:$PATH
-export PATH=$PATH:/opt/boxen/homebrew/opt/go/libexec/bin
+# export PATH=node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/local/share/npm/bin:~/.cabal/bin:~/.local/bin:$PATH
+# export PATH=$PATH:/opt/boxen/homebrew/opt/go/libexec/bin

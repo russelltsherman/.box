@@ -31,6 +31,7 @@ alias di="docker images"
 # Get container IP
 # alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 dip() {
+  # shellcheck disable=SC2020
   docker inspect "$1" | grep IPAddress | awk '{print $2}' | tr -d 'null",\n\r'
 }
 
@@ -68,6 +69,7 @@ dbu() {
 
 # Show all alias related docker
 dalias() {
+  # shellcheck disable=SC1117
   alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort
 }
 

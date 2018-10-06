@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
+# shellcheck disable=SC2181
 
 BOXROOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -29,64 +30,64 @@ if [ ! "$?" == "0" ]; then
   read -r -p "What is your github.com username? " githubuser
 
   if [ "$NS_PLATFORM" == "darwin" ]; then
-    fullname=`osascript -e "long user name of (system info)"`
+    fullname=$(osascript -e "long user name of (system info)")
 
     if [[ -n "$fullname" ]];then
-      lastname=$(echo $fullname | awk '{print $2}');
-      firstname=$(echo $fullname | awk '{print $1}');
+      lastname=$(echo "$fullname" | awk '{print $2}');
+      firstname=$(echo "$fullname" | awk '{print $1}');
     fi
-    if [[ -z $lastname ]]; then
-      lastname=`dscl . -read /Users/$(whoami) | grep LastName | sed "s/LastName: //"`
+    if [[ -z "$lastname" ]]; then
+      lastname=$(dscl . -read "/Users/$(whoami)" | grep LastName | sed "s/LastName: //")
     fi
-    if [[ -z $firstname ]]; then
-      firstname=`dscl . -read /Users/$(whoami) | grep FirstName | sed "s/FirstName: //"`
+    if [[ -z "$firstname" ]]; then
+      firstname=$(dscl . -read "/Users/$(whoami)" | grep FirstName | sed "s/FirstName: //")
     fi
-    email=`dscl . -read /Users/$(whoami)  | grep EMailAddress | sed "s/EMailAddress: //"`
+    email=$(dscl . -read "/Users/$(whoami)"  | grep EMailAddress | sed "s/EMailAddress: //")
 
     if [[ ! "$firstname" ]];then
       response='n'
     else
-      echo -e "I see that your full name is $COL_YELLOW$firstname $lastname$COL_RESET"
+      echo -e "I see that your full name is ${COL_YELLOW}${firstname} ${lastname}${COL_RESET}"
       read -r -p "Is this correct? [Y|n] " response
     fi
   else
     response='n'
   fi
 
-  if [[ $response =~ ^(no|n|N) ]];then
+  if [[ "$response" =~ ^(no|n|N) ]];then
     read -r -p "What is your first name? " firstname
     read -r -p "What is your last name? " lastname
   fi
-  fullname="$firstname $lastname"
+  fullname="${firstname} ${lastname}"
 
-  bot "Great $fullname, "
+  bot "Great ${fullname}, "
 
-  if [[ ! $email ]];then
+  if [[ ! "$email" ]];then
     response='n'
   else
-    echo -e "The best I can make out, your email address is $COL_YELLOW$email$COL_RESET"
+    echo -e "The best I can make out, your email address is ${COL_YELLOW}${email}${COL_RESET}"
     read -r -p "Is this correct? [Y|n] " response
   fi
 
-  if [[ $response =~ ^(no|n|N) ]];then
+  if [[ "$response" =~ ^(no|n|N) ]];then
     read -r -p "What is your email? " email
-    if [[ ! $email ]];then
+    if [[ ! "$email" ]];then
       error "you must provide an email to configure .gitconfig"
       exit 1
     fi
   fi
 
-  running "creating .gitconfig with your info ($COL_YELLOW$fullname, $email, $githubuser$COL_RESET)"
-  git config --global user.name $fullname
-  git config --global user.email $email
-  git config --global github.user $githubuser
+  running "creating .gitconfig with your info (${COL_YELLOW}${fullname}, ${email}, ${githubuser}${COL_RESET})"
+  git config --global user.name "$fullname"
+  git config --global user.email "$email"
+  git config --global github.user "$githubuser"
 
   echo "# https://github.com/blog/180-local-github-config
 
 [include]
   path = ~/.gitconfig_global
 
-  " >> $HOME/.gitconfig
+  " >> "$HOME/.gitconfig"
 fi
 touch ~/.gh_api_token
 
@@ -107,10 +108,11 @@ if [ -d "/etc/sudoers.d/" ]; then
     # Keep-alive: update existing sudo time stamp until the script has finished
     while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+    # shellcheck disable=SC1117
     bot "Do you want me to setup this machine to allow you to run sudo without a password?\nPlease read here to see what I am doing:\nhttp://wiki.summercode.com/sudo_without_a_password_in_mac_os_x \n"
 
     read -r -p "Make sudo passwordless? [y|N] " response
-    if [[ $response =~ (yes|y|Y) ]];then
+    if [[ "$response" =~ (yes|y|Y) ]];then
       sudo "$BASH" -c "touch /etc/sudoers.d/$DEVUSER"
       sudo "$BASH" -c "chmod 640 /etc/sudoers.d/$DEVUSER"
       sudo "$BASH" -c "echo \"$DEVUSER ALL=(ALL) NOPASSWD: ALL\" > \"/etc/sudoers.d/$DEVUSER\""
@@ -132,7 +134,7 @@ source "$BOXFUNCDIR/setup/ssh"
 ################################################################################
 if [ "$NS_PLATFORM" == "darwin" ]; then
   IMGDIR=${BOXROOTDIR}/assets
-  MD5_NEWWP=$(md5 $IMGDIR/wallpaper.jpg | awk '{print $4}')
+  MD5_NEWWP=$(md5 "$IMGDIR/wallpaper.jpg" | awk '{print $4}')
   MD5_OLDWP=$(md5 /System/Library/CoreServices/DefaultDesktop.jpg | awk '{print $4}')
   if [[ "$MD5_NEWWP" == "$MD5_OLDWP" ]]; then
     bot "It looks like you are already using our project wallpaper image."
@@ -149,9 +151,9 @@ if [ "$NS_PLATFORM" == "darwin" ]; then
       sudo rm -f /System/Library/CoreServices/DefaultDesktop.jpg > /dev/null 2>&1
       sudo rm -f /Library/Desktop\ Pictures/El\ Capitan.jpg > /dev/null 2>&1
       sudo rm -f /Library/Desktop\ Pictures/Sierra.jpg > /dev/null 2>&1
-      sudo cp $IMGDIR/wallpaper.jpg /System/Library/CoreServices/DefaultDesktop.jpg;
-      sudo cp $IMGDIR/wallpaper.jpg /Library/Desktop\ Pictures/Sierra.jpg;
-      sudo cp $IMGDIR/wallpaper.jpg /Library/Desktop\ Pictures/El\ Capitan.jpg;ok
+      sudo cp "$IMGDIR/wallpaper.jpg" /System/Library/CoreServices/DefaultDesktop.jpg;
+      sudo cp "$IMGDIR/wallpaper.jpg" /Library/Desktop\ Pictures/Sierra.jpg;
+      sudo cp "$IMGDIR/wallpaper.jpg" /Library/Desktop\ Pictures/El\ Capitan.jpg;ok
     fi
   fi
 fi
@@ -161,8 +163,7 @@ fi
 # xCode
 ################################################################################
 if [ "$NS_PLATFORM" == "darwin" ]; then
-  xcode_tools=$(xcode-select --install 2>&1 > /dev/null)
-  if [[ $? == 0 ]]; then
+  if [[ $(xcode-select --install 2>&1 > /dev/null) == 0 ]]; then
     die "Looks like you need to install Xcode cli tools"
   else
     bot "Looks like Xcode cli tools are already installed"
@@ -174,11 +175,9 @@ fi
 # homebrew
 ################################################################################
 if [ "$NS_PLATFORM" == "darwin" ]; then
-  brew_bin=$(which brew) > /dev/null 2>&1
-  if [[ $? != 0 ]]; then
+  if [[ $(command -v brew > /dev/null 2>&1) != 0 ]]; then
     bot "Installing Homebrew"
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    if [[ $? != 0 ]]; then
+    if [[ $(ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)") != 0 ]]; then
       error "unable to install homebrew, script $0 abort!"
       exit 2
     fi
@@ -186,8 +185,7 @@ if [ "$NS_PLATFORM" == "darwin" ]; then
     bot "Looks like Homebrew is already installed"
   fi
 
-  output=$(brew tap | grep cask)
-  if [[ $? != 0 ]]; then
+  if [[ $(brew tap | grep cask > /dev/null 2>&1) != 0 ]]; then
     bot "Installing Homebrew Cask"
     require_brew caskroom/cask/brew-cask
     brew tap caskroom/versions > /dev/null 2>&1
@@ -279,28 +277,26 @@ source "$BOXFUNCDIR/setup/visualstudiocode"
 bot "creating symlinks for project dotfiles..."
 
 now=$(date +"%Y.%m.%d.%H.%M.%S")
-pushd ${BOXROOTDIR}/dotfiles > /dev/null 2>&1
-for file in .*; do
+
+for file in "${BOXROOTDIR}/dotfiles/".*; do
   if [[ $file == "." || $file == ".." || $file == ".DS_Store" ]]; then
     continue
   fi
-  running "~/$file"
+  running "$HOME/$file"
 
   # if the file exists:
-  if [[ -e ~/$file ]]; then
-    mkdir -p ~/.dotfiles_backup/$now
-    mv ~/$file ~/.dotfiles_backup/$now/$file
+  if [[ -e "$HOME/$file" ]]; then
+    mkdir -p "$HOME/.dotfiles_backup/$now"
+    mv "$HOME/$file" "$HOME/.dotfiles_backup/$now/$file"
   fi
 
   # symlink might still exist
-  unlink ~/$file > /dev/null 2>&1
+  unlink "$HOME/$file" > /dev/null 2>&1
 
   # create the link
-  ln -s ${BOXROOTDIR}/dotfiles/$file ~/$file
+  ln -s "${BOXROOTDIR}/dotfiles/$file" "$HOME/$file"
   ok
 done
-
-popd > /dev/null 2>&1
 
 
 ################################################################################
@@ -325,7 +321,7 @@ if [ "$SHELL" == "/bin/bash" ];then
 
   running "ensure that zsh exists in /etc/shells"
     if ! grep -q "/usr/local/bin/zsh" "/etc/shells" ; then
-      sudo echo "/usr/local/bin/zsh" >> "/etc/shells"
+      echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
     fi
   ok
 

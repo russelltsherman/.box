@@ -78,11 +78,11 @@ alias port-forward-list="sudo pfctl -s nat"
 # push git repo, but first, use git-up to make sure you are in sync and rebased with the remote
 alias pushup="git-up && git push"
 # Set the extended MacOS attributes on a file such that Quicklook will open it as text
-alias qltext='xattr -wx com.apple.FinderInfo "54 45 58 54 21 52 63 68 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" $1'
+# alias qltext='xattr -wx com.apple.FinderInfo "54 45 58 54 21 52 63 68 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" $1'
 #alias qltext2='osascript -e tell application "Finder" to set file type of ((POSIX file "$1") as alias) to "TEXT"'
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reload="exec ${SHELL} -l"
+alias reload="exec \${SHELL} -l"
 
 # Disable Spotlight
 alias spotoff="sudo mdutil -a -i off"
@@ -99,4 +99,8 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 alias vtop="vtop --theme wizard"
 
 # recursively show recently changed file
-alias changed="find ${1} -type f | xargs stat --format '%Y :%y %n' 2>/dev/null | sort -nr | cut -d: -f2-"
+function changed() {
+  find "$1" -type f -print0 | xargs -0 stat --format '%Y :%y %n' 2>/dev/null | sort -nr | cut -d: -f2-
+}
+
+alias edit='docker run -ti --rm -v $(pwd):/home/developer/workspace jare/vim-bundle'

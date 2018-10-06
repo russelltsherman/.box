@@ -9,12 +9,12 @@
 # - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
 # - '.' matches "regular files"
 # - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
-autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-	compinit;
-else
-	compinit -C;
-fi;
+# autoload -Uz compinit
+# if [[ -n ${ZDOTDIR}/.zcompdump("#qN.mh+24") ]]; then
+# 	compinit;
+# else
+# 	compinit -C;
+# fi;
 
 zmodload -i zsh/complist
 
@@ -25,7 +25,7 @@ zstyle ':vcs_info:*' enable git #svn cvs
 
 # Enable completion caching, use rehash to clear
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path ~/.zsh/cache/$HOST
+zstyle ':completion::complete:*' cache-path ~/.zsh/cache/"$HOST"
 
 # Fallback to built in ls colors
 zstyle ':completion:*' list-colors ''
