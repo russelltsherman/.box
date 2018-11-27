@@ -2,7 +2,7 @@
 
 if [ "$(uname -s)" == "Darwin" ] # if this is OSX host
 then
-  if ! command xcode-select -p > /dev/null # if xCode CLI tools are not present
+  if ! command xcode-select -p > /dev/null 2>&1 # if xCode CLI tools are not present
   then # install Xcode Command Line Tools
     # https://github.com/timsutton/osx-vm-templates/blob/master/scripts/xcode-cli-tools.sh
     # Get and install Xcode CLI tools
@@ -14,6 +14,7 @@ then
         # in Apple's SUS catalog
         touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
         # find the CLI Tools update
+        # shellcheck disable=SC1117
         PROD=$(softwareupdate -l |
           grep "\*.*Command Line" |
           tail -n 1 |
