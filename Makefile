@@ -21,23 +21,30 @@ all: \
 bootstrap: \
 	all
 
-brew: \
-	/usr/local/bin/brew
-	# upgrade all installed packages
-	brew upgrade
+ifeq ($(detected_OS),Darwin)
+# OSX Specific targets
 
-ifeq ($(detected_OS),Darwin) # Mac OS X
 /usr/local/bin/brew:
 	ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	brew analytics off
+
+brew: /usr/local/bin/brew
+	brew bundle --file=Brewfile.osx
+
 endif
 
 ifeq ($(detected_OS),Linux)
+# TODO: shits all broke camp - fix this
+
 /usr/local/bin/brew:
 	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 	# test -d ~/.linuxbrew && PATH="$$HOME/.linuxbrew/bin:$$HOME/.linuxbrew/sbin:$$PATH"
 	# test -d /home/linuxbrew/.linuxbrew && PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$$PATH"
 	# test -r ~/.bash_profile && echo "export PATH='$$(brew --prefix)/bin:$$(brew --prefix)/sbin'":'"$$PATH"' >>~/.bash_profile
 	# echo "export PATH='$$(brew --prefix)/bin:$$(brew --prefix)/sbin'":'"$$PATH"' >>~/.profile
+
+brew: /usr/local/bin/brew
+	brew bundle --file=Brewfile.lin
+
 endif
 
