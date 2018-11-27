@@ -4,6 +4,7 @@ if [ "$(uname -s)" == "Darwin" ] # if this is OSX host
 then
   if ! command xcode-select -p > /dev/null # if xCode CLI tools are not present
   then # install Xcode Command Line Tools
+    # https://github.com/timsutton/osx-vm-templates/blob/master/scripts/xcode-cli-tools.sh
     # Get and install Xcode CLI tools
     OSX_VERS=$(sw_vers -productVersion | awk -F "." '{print $2}')
 
