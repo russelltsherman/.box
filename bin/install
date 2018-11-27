@@ -21,7 +21,6 @@ bot "Hi! ${DEVUSER}"
 
 bot "I'm going to install tooling and tweak your system settings. Here I go..."
 
-
 ################################################################################
 # gitconfig
 ################################################################################
@@ -96,7 +95,7 @@ touch ~/.gh_api_token
 # passwordless sudo
 ################################################################################
 if [ -d "/etc/sudoers.d/" ]; then
-  if [ -f "/etc/sudoers.d/coderonin" ];then
+  if [ -f "/etc/sudoers.d/$DEVUSER" ];then
     bot "It looks like you are already set up to sudo without a password."
   else
     ################################################################################
