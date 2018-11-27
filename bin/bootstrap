@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-if [ "$(uname -s)" == "Darwin" ] # if this is OSX host
+# if this is OSX host ensure xCode CLI tools are installed
+if [ "$(uname -s)" == "Darwin" ]
 then
-  if ! command xcode-select -p > /dev/null 2>&1 # if xCode CLI tools are not present
-  then # install Xcode Command Line Tools
+  if ! command xcode-select -p > /dev/null 2>&1
+  then
     # https://github.com/timsutton/osx-vm-templates/blob/master/scripts/xcode-cli-tools.sh
-    # Get and install Xcode CLI tools
     OSX_VERS=$(sw_vers -productVersion | awk -F "." '{print $2}')
 
     # on 10.9+, we can leverage SUS to get the latest CLI tools
@@ -52,7 +52,17 @@ then
   fi
 fi
 
-# make directory for repo
-mkdir -p ~/src/github.com/russelltsherman
-git clone https://github.com/russelltsherman/.box ~/src/github.com/russelltsherman
-make -C ~/src/github.com/russelltsherman bootstrap
+# TODO: if this is linux host ensure git is installed
+
+# clone or update .box repo
+REPO_DIR=~/src/github.com/russelltsherman
+mkdir -p "$REPO_DIR"
+if [ -d  "${REPO_DIR}/.box" ]
+then
+  ( cd "${REPO_DIR}/.box" || exit; git pull --rebase )
+else
+  git clone https://github.com/russelltsherman/.box "${REPO_DIR}/.box"
+fi
+
+# run .box bootstrap
+make -C "${REPO_DIR}/.box" bootstrap
