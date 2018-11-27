@@ -5,15 +5,27 @@ root = true
 
 # Unix-style newlines with a newline ending every file
 [*]
-indent_style = space
-indent_size = 2
+# The files are utf-8 encoded
+charset = utf-8
+# Use Unix line endings
 end_of_line = lf
+# Use spaces for indentation
+indent_style = space
+# Each indent should contain 2 spaces
+indent_size = 2
+# A file must end with an empty line - this is good for version control systems
 insert_final_newline = true
+# A line should not have more than this amount of chars (not supported by all plugins)
+max_line_length = 100
+# No whitespace at the end of line
 trim_trailing_whitespace = true
 
 # Matches multiple files with brace expansion notation
 # Set default charset
 [*.{js,rb,py,json,yml}]
-charset = utf-8
 indent_style = space
 indent_size = 2
+
+[{Makefile,**.mk}]
+# Use tabs for indentation (Makefiles require tabs)
+indent_style = tab
