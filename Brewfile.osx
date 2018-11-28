@@ -227,6 +227,13 @@ cask "docker"
 # https://www.dropbox.com/
 cask "dropbox"
 
+cask "font-consolas-for-powerline"
+cask "font-fira-code"
+cask "font-inconsolata"
+cask "font-inconsolata-for-powerline"
+cask "font-roboto-mono"
+cask "font-roboto-mono-for-powerline"
+
 # https://www.gimp.org/
 cask "gimp"
 
