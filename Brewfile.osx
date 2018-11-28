@@ -49,9 +49,9 @@ brew "fdupes"
 
 # Collection of GNU find, xargs, and locate https://www.gnu.org/software/findutils/
 brew "findutils"
-
 # PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
 # MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
+
 # GNU awk utility https://www.gnu.org/software/gawk/
 brew "gawk"
 

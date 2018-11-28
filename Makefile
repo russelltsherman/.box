@@ -11,17 +11,12 @@ current_dir = $(shell pwd)
 DOTFILE_NAMES := $(subst ./dotfiles/, , $(shell find ./dotfiles -maxdepth 1 -name ".*"))
 DOTFILES := $(addprefix ~/, $(DOTFILE_NAMES))
 
-# everything, geared towards to be run for setup and maintenance
 all: \
 	brew \
 	clean \
 	dotfiles \
 	vscode
 
-# bootstrap only, add one-time bootstrap tasks here
-# setups everything
-# restore .gnupg and thus decrypt the secrets from this repository
-# setup ssh config (relies on decrypted repository)
 bootstrap: \
 	all
 
