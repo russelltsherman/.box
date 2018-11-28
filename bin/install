@@ -159,115 +159,10 @@ fi
 
 
 ################################################################################
-# xCode
-################################################################################
-if [ "$NS_PLATFORM" == "darwin" ]; then
-  if [[ $(xcode-select --install 2>&1 > /dev/null) == 0 ]]; then
-    die "Looks like you need to install Xcode cli tools"
-  else
-    bot "Looks like Xcode cli tools are already installed"
-  fi
-fi
-
-
-################################################################################
-# homebrew
-################################################################################
-if [ "$NS_PLATFORM" == "darwin" ]; then
-  if [[ $(command -v brew > /dev/null 2>&1) != 0 ]]; then
-    bot "Installing Homebrew"
-    if [[ $(ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)") != 0 ]]; then
-      error "unable to install homebrew, script $0 abort!"
-      exit 2
-    fi
-  else
-    bot "Looks like Homebrew is already installed"
-  fi
-
-  if [[ $(brew tap | grep cask > /dev/null 2>&1) != 0 ]]; then
-    bot "Installing Homebrew Cask"
-    require_brew caskroom/cask/brew-cask
-    brew tap caskroom/versions > /dev/null 2>&1
-  else
-    bot "Looks like Homebrew Cask is already installed"
-  fi
-fi
-
-
-################################################################################
-# essential software
-################################################################################
-bot "Installing essential software"
-source "${BOXROOTDIR}/lib/essentials/_$NS_PLATFORM.sh"
-
-
-################################################################################
 # system defaults
 ################################################################################
 bot "Setting System Defaults"
 source "${BOXROOTDIR}/lib/defaults/_$NS_PLATFORM.sh"
-
-
-################################################################################
-# NodeJS Version Manager
-################################################################################
-source "$BOXFUNCDIR/setup/nodejs"
-(cmd_nodejs)
-
-
-################################################################################
-# GoLang
-################################################################################
-source "$BOXFUNCDIR/setup/golang"
-(cmd_golang)
-
-################################################################################
-# install appications
-################################################################################
-bot "Install Applications"
-source "${BOXROOTDIR}/lib/applications/_$NS_PLATFORM.sh"
-
-
-################################################################################
-# Git GIBO Git-Flow and Git GUI
-################################################################################
-source "$BOXFUNCDIR/setup/git"
-(cmd_git)
-
-
-################################################################################
-# atom
-################################################################################
-source "$BOXFUNCDIR/setup/atom"
-(cmd_atom)
-
-
-################################################################################
-# chrome
-################################################################################
-source "$BOXFUNCDIR/setup/chrome"
-(cmd_chrome)
-
-
-################################################################################
-# docker
-################################################################################
-source "$BOXFUNCDIR/setup/docker"
-(cmd_docker)
-
-
-################################################################################
-# yarn
-################################################################################
-source "$BOXFUNCDIR/setup/yarn"
-(cmd_yarn)
-
-
-################################################################################
-# visualstudiocode
-################################################################################
-source "$BOXFUNCDIR/setup/visualstudiocode"
-(cmd_visualtudiocode)
 
 
 ################################################################################
@@ -323,10 +218,6 @@ if [ "$SHELL" == "/bin/bash" ];then
       echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
     fi
   ok
-
-  # implementing antigen for easier management of zsh plugins
-  # https://joshldavis.com/2014/07/26/oh-my-zsh-is-a-disease-antigen-is-the-vaccine/
-  git_clone_or_update git://github.com/zsh-users/antigen.git "${BOXROOTDIR}/.antigen"
 
   running "Set Zsh as your default shell:"
   if [ "$NS_PLATFORM" == "darwin" ]; then
