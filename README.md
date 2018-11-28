@@ -13,8 +13,10 @@ curl https://raw.githubusercontent.com/russelltsherman/.box/master/bin/bootstrap
 
 Enter the `~/src/github.com/russelltsherman/.box` directory, make changes and `make` it:
 
-    cd ~/src/github.com/russelltsherman/.box
-    make
+```sh
+cd ~/src/github.com/russelltsherman/.box
+make
+```
 
 ## License
 
