@@ -6,6 +6,6 @@ if [ ! -d ~/.gitshots ]; then
   mkdir -p ~/.gitshots
 fi
 
-/usr/local/bin/imagesnap -q -w 3 ~/.gitshots/"$(date +%Y-%m-%d-%H%M%S).$(basename `pwd`)".jpg &
+/usr/local/bin/imagesnap -q -w 3 ~/.gitshots/"$(date +%Y-%m-%d-%H%M%S).$(basename "$(pwd)")".jpg &
 
 fi

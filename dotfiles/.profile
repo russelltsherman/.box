@@ -37,7 +37,7 @@ export DISPLAY=":0"
 IP=$(ifconfig ${nterface} | grep inet | awk '$1=="inet" {print $2}' | tr -d 'addr:' )
 export IP
 export DOCKER_DISPLAY="${IP}:0"
-xhost_path="$(which xhost)"
+xhost_path="$(command -v xhost)"
 "${xhost_path}" "${IP}"
 "${xhost_path}" -
 
