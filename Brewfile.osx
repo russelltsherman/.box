@@ -8,7 +8,7 @@ brew "ack"
 brew "ansible"
 
 # The fastest shell plugin manager http://getantibody.github.io
-brew "antibody"
+brew "getantibody/tap/antibody"
 
 # Official Amazon AWS command-line interface https://aws.amazon.com/cli/
 brew "awscli"

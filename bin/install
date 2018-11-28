@@ -197,9 +197,7 @@ done
 # antibody (antigen ported to go for much faster load time)
 ################################################################################
 if [ "$NS_PLATFORM" == "darwin" ]; then
-  brew untap -q getantibody/homebrew-antibody || true
-  brew tap -q getantibody/homebrew-antibody
-  brew install antibody
+  brew install getantibody/tap/antibody
 fi
 if [ "$NS_PLATFORM" == "linux" ]; then
   curl -sL https://git.io/antibody | sh -s
