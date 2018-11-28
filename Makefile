@@ -13,9 +13,10 @@ DOTFILES := $(addprefix ~/, $(DOTFILE_NAMES))
 
 # everything, geared towards to be run for setup and maintenance
 all: \
-	brew
-	clean
-	dotfiles
+	brew \
+	clean \
+	dotfiles \
+	vscode
 
 # bootstrap only, add one-time bootstrap tasks here
 # setups everything
@@ -63,3 +64,23 @@ dotfiles: $(DOTFILES) # iterate our list of dotfiles and ensure they are symlink
 
 ~/.%: # create symlink form ~/.dotfile and ./dotfiles/.dotfile
 	cd ~ && ln -sv $(current_dir)/dotfiles/$(notdir $@) $@
+
+.PHONY: vscode
+vscode:
+	code --install-extension coolbear.systemd-unit-file
+	code --install-extension cssho.vscode-svgviewer
+	code --install-extension DavidAnson.vscode-markdownlint
+	code --install-extension dbaeumer.vscode-eslint
+	code --install-extension EditorConfig.EditorConfig
+	code --install-extension esbenp.prettier-vscode
+	code --install-extension idleberg.applescript
+	code --install-extension jaysonsantos.vscode-flake8
+	code --install-extension mauve.terraform
+	code --install-extension ms-python.python
+	code --install-extension ms-vscode.Go
+	code --install-extension msjsdiag.debugger-for-chrome
+	code --install-extension PeterJausovec.vscode-docker
+	code --install-extension PKief.material-icon-theme
+	code --install-extension timonwong.shellcheck
+	code --install-extension WakaTime.vscode-wakatime
+	code --install-extension wholroyd.jinja
