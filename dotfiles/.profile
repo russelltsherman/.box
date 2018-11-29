@@ -55,8 +55,8 @@ type pyenv &>/dev/null && eval "$(pyenv init -)"
 type pyenv &>/dev/null && eval "$(pyenv virtualenv-init -)"
 
 # initialize GO
-if [ -d "$HOME/go" ]; then
-  GOPATH="${HOME}/go"
+if [ -d "$HOME/src" ]; then
+  GOPATH="${HOME}/src"
   PATH="${PATH}:${GOPATH}/bin"
   GOROOT="$(go env GOROOT)"
   alias gotour="\${GOPATH}/bin/gotour"
