@@ -6,6 +6,8 @@ if [ -d "${HOME}/.box/" ]; then
   export PATH="${PATH}:${HOME}/.box/bin"
 fi
 
+# iTerm2 may be integrated with the unix shell so that it can keep track of your command history,
+# current working directory, host name, and more--even over ssh.
 # load iterm2 shell integration if present
 if [ -f "${HOME}/.iterm2_shell_integration.$(basename "${SHELL}")" ];then
   source "$HOME/.iterm2_shell_integration.$(basename "$SHELL")"
