@@ -13,7 +13,6 @@ DOTFILES := $(addprefix ~/, $(DOTFILE_NAMES))
 
 all: \
 	brew \
-	clean \
 	defaults \
 	dotfiles \
 	vscode
@@ -64,7 +63,8 @@ clean: # if there are existing symlinks for our dotfiles in ~/ remove them
 	for file in $(DOTFILE_NAMES) ; do if [ -L ~/$$file ];then rm ~/$$file; fi; done
 
 .PHONY: dotfiles
-dotfiles: $(DOTFILES) # iterate our list of dotfiles and ensure they are symlinked
+dotfiles: clean \
+	$(DOTFILES) # iterate our list of dotfiles and ensure they are symlinked
 
 ~/.%: # create symlink form ~/.dotfile and ./dotfiles/.dotfile
 	cd ~ && ln -sv $(current_dir)/dotfiles/$(notdir $@) $@
