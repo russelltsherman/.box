@@ -47,9 +47,6 @@ xhost_path="$(command -v xhost)"
 PATH="${PATH}:$(yarn global bin)"
 export PATH
 
-# initialize thefuck
-type thefuck &>/dev/null && eval "$(thefuck --alias)" # || echo "thefuck() not found."
-
 # initialize pyenv
 type pyenv &>/dev/null && eval "$(pyenv init -)"
 type pyenv &>/dev/null && eval "$(pyenv virtualenv-init -)"
