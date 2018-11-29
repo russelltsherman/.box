@@ -14,6 +14,7 @@ DOTFILES := $(addprefix ~/, $(DOTFILE_NAMES))
 all: \
 	brew \
 	clean \
+	defaults \
 	dotfiles \
 	vscode
 
@@ -31,6 +32,10 @@ ifeq ($(detected_OS),Darwin)
 brew: /usr/local/bin/brew
 	brew bundle --file=Brewfile.osx
 
+.PHONY: defaults
+defaults:
+	./lib/defaults/_darwin.sh
+
 endif
 
 # Linux specific targets
@@ -47,6 +52,10 @@ ifeq ($(detected_OS),Linux)
 .PHONY: brew
 brew: /usr/local/bin/brew
 	brew bundle --file=Brewfile.lin
+
+.PHONY: defaults
+defaults:
+	./lib/defaults/_linux.sh
 
 endif
 
