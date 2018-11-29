@@ -2,8 +2,8 @@
 # shellcheck disable=SC1090
 
 # add .box/bin to the path
-if [ -d "${HOME}/.box/" ]; then
-  export PATH="${PATH}:${HOME}/.box/bin"
+if [ -d "${BOXROOTDIR}" ]; then
+  export PATH="${PATH}:${BOXROOTDIR}/bin"
 fi
 
 # iTerm2 may be integrated with the unix shell so that it can keep track of your command history,
