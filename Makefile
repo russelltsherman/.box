@@ -71,6 +71,7 @@ dotfiles: clean \
 
 .PHONY: vscode
 vscode:
+	code --install-extension bungcip.better-toml
 	code --install-extension coolbear.systemd-unit-file
 	code --install-extension cssho.vscode-svgviewer
 	code --install-extension DavidAnson.vscode-markdownlint
