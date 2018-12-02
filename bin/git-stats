@@ -7,13 +7,7 @@ usage() {
 }
 
 git_stats() {
-  for d in "$(pwd)"/*; do
-    if [ -d "$d/.git" ]; then
-      echo
-      echo "$d"
-      (cd "$d" && git status)
-    fi
-  done
+    find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} status \;
 }
 
 # _git_stats() {
