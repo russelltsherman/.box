@@ -7,7 +7,19 @@ usage() {
 }
 
 git_stats() {
-    find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} status \;
+  local DIR="${1:-$(pwd)}"
+  for d in "$DIR"/*; do
+    if [ -d "$d/.git" ]; then
+      echo "########################################"
+      echo "# $d"
+      echo "########################################"
+      (cd "$d" && git status)
+      echo ""
+      echo ""
+    fi
+  done
+
+  # find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} status \;
 }
 
 # _git_stats() {

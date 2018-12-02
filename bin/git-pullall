@@ -7,7 +7,19 @@ usage() {
 }
 
 git_pullall() {
-  find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;
+  local DIR="${1:-$(pwd)}"
+  for d in "$DIR"/*; do
+    if [ -d "$d/.git" ]; then
+      echo "########################################"
+      echo "# $d"
+      echo "########################################"
+      (cd "$d" && git pull origin master)
+      echo ""
+      echo ""
+    fi
+  done
+
+  # find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;
 }
 
 # _git_pullall() {
