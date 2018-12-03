@@ -244,7 +244,7 @@ cask "google-chrome"
 cask "growlnotify"
 
 # https://gpgtools.org/
-cask gpg-suite
+cask "gpg-suite"
 
 # itsycal is a nice menu bar clock replacement that features a calendar with events from iCal https://www.mowglii.com/itsycal/
 cask "itsycal"
