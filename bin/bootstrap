@@ -54,15 +54,15 @@ fi
 
 # TODO: if this is linux host ensure git is installed
 
-# clone or update .box repo
+# clone or update dot_box repo
 REPO_DIR=~/src/github.com/russelltsherman
 mkdir -p "$REPO_DIR"
-if [ -d  "${REPO_DIR}/.box" ]
+if [ -d  "${REPO_DIR}/dot_box" ]
 then
-  ( cd "${REPO_DIR}/.box" || exit; git pull --rebase )
+  ( cd "${REPO_DIR}/dot_box" || exit; git pull --rebase )
 else
-  git clone https://github.com/russelltsherman/.box "${REPO_DIR}/.box"
+  git clone https://github.com/russelltsherman/dot_box "${REPO_DIR}/dot_box"
 fi
 
-# run .box bootstrap
-make -C "${REPO_DIR}/.box" bootstrap
+# run dot_box bootstrap
+make -C "${REPO_DIR}/dot_box" bootstrap
