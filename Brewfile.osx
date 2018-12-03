@@ -19,7 +19,6 @@ brew "automake"
 
 # Install Bash 4
 brew "bash"
-# Note: don't forget to add `/usr/local/bin/bash` to `/etc/shells` before running `chsh`.
 
 # Programmable completion for Bash 3.2 https://bash-completion.alioth.debian.org/
 brew "bash-completion"
@@ -29,8 +28,6 @@ brew "cli53"
 
 # GNU File, Shell, and Text utilities https://www.gnu.org/software/coreutils
 brew "coreutils"
-# Don't forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-# sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
 
 # Go dependency management tool https://github.com/golang/dep
 brew "dep"
@@ -50,8 +47,6 @@ brew "fdupes"
 
 # Collection of GNU find, xargs, and locate https://www.gnu.org/software/findutils/
 brew "findutils"
-# PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
-# MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
 
 # GNU awk utility https://www.gnu.org/software/gawk/
 brew "gawk"

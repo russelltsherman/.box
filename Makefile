@@ -13,7 +13,7 @@ DOTFILES := $(addprefix ~/, $(DOTFILE_NAMES))
 
 all: \
 	brew \
-	defaults \
+	postbrew \
 	dotfiles \
 	vscode
 
@@ -31,6 +31,13 @@ ifeq ($(detected_OS),Darwin)
 brew: /usr/local/bin/brew
 	brew bundle --file=Brewfile.osx
 
+.PHONY: postbrew
+postbrew:
+	if ! grep -q "/usr/local/bin/bash" "/etc/shells"; then echo "/usr/local/bin/bash" | sudo tee -a /etc/shells; fi
+	if [ ! -f /usr/local/bin/sha256sum ]; then sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum; fi
+	if ! grep -q "/usr/local/bin/zsh" "/etc/shells"; then echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells; fi
+	chsh -s /usr/local/bin/zsh
+	
 .PHONY: defaults
 defaults:
 	./lib/defaults/_darwin.sh
