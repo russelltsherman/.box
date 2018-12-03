@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Description  : Initialize .box
+# Description  : Initialize dot_box
 # Usage        : box new [command]
 # Dependencies :
 # Example      :

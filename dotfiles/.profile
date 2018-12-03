@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
 
-# add .box/bin to the path
+# add dot_box/bin to the path
 if [ -d "${BOXROOTDIR}" ]; then
   export PATH="${PATH}:${BOXROOTDIR}/bin"
 fi

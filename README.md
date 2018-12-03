@@ -6,7 +6,7 @@
 On a new mac, open a Terminal and run:
 
 ```sh
-curl https://raw.githubusercontent.com/russelltsherman/.box/master/bin/bootstrap | bash
+curl https://raw.githubusercontent.com/russelltsherman/dot_box/master/bin/bootstrap | bash
 ```
 
 ## Maintenance
@@ -26,7 +26,7 @@ This project is licensed under ISC. Please fork, contribute and share.
 
 Contributions are always welcome in the form of pull requests with explanatory comments.
 
-Please refer to the [Contributor Covenant](https://github.com/russelltsherman/.box/blob/master/CODE_OF_CONDUCT.md)
+Please refer to the [Contributor Covenant](https://github.com/russelltsherman/dot_box/blob/master/CODE_OF_CONDUCT.md)
 
 ## Loathing, Mehs and Praise
 
