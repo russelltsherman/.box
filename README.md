@@ -11,10 +11,10 @@ curl https://raw.githubusercontent.com/russelltsherman/.box/master/bin/bootstrap
 
 ## Maintenance
 
-Enter the `~/src/github.com/russelltsherman/.box` directory, make changes and `make` it:
+Enter the `~/src/github.com/russelltsherman/dot_box` directory, make changes and `make` it:
 
 ```sh
-cd ~/src/github.com/russelltsherman/.box
+cd ~/src/github.com/russelltsherman/dot_box
 make
 ```
 
