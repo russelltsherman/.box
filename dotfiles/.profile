@@ -6,6 +6,17 @@ if [ -d "${BOXROOTDIR}" ]; then
   export PATH="${PATH}:${BOXROOTDIR}/bin"
 fi
 
+# add core utils to path https://www.gnu.org/software/coreutils
+if [ -d "$(brew --prefix coreutils)" ]; then
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
+fi
+
+# add findutils to path https://www.gnu.org/software/findutils
+if [ -d "$(brew --prefix findutils)" ]; then
+  export PATH="$(brew --prefix findutils)/libexec/gnubin:${PATH}"
+  export MANPATH="$(brew --prefix findutils)/libexec/gnuman:${MANPATH}"
+fi
+
 # iTerm2 may be integrated with the unix shell so that it can keep track of your command history,
 # current working directory, host name, and more--even over ssh.
 # load iterm2 shell integration if present
