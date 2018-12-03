@@ -1,7 +1,6 @@
 
-antibody bundle chrissicool/zsh-256color
-antibody bundle rupa/z
 antibody bundle robbyrussell/oh-my-zsh
+antibody bundle russelltsherman/zsh-256color
 antibody bundle russelltsherman/zsh-async
 antibody bundle russelltsherman/zsh-bd
 antibody bundle russelltsherman/zsh-docker-aliases
@@ -13,8 +12,9 @@ antibody bundle russelltsherman/zsh-mkc
 antibody bundle russelltsherman/zsh-open-pr # kind:path
 antibody bundle russelltsherman/zsh-ports # kind:path
 antibody bundle russelltsherman/zsh-pure
+antibody bundle russelltsherman/solarized-man
+antibody bundle russelltsherman/z
 antibody bundle russelltsherman/zsh-wakatime
-antibody bundle zlsun/solarized-man
 antibody bundle zsh-users/zaw
 antibody bundle zsh-users/zsh-autosuggestions
 antibody bundle zsh-users/zsh-completions
