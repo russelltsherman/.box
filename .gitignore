@@ -9,3 +9,6 @@
 
 # ignore the share dir
 share/*
+
+# ignore installed vscode extensions
+dotfiles/.vscode/extensions

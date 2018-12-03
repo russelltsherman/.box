@@ -77,9 +77,11 @@ vscode:
 	code --install-extension DavidAnson.vscode-markdownlint
 	code --install-extension dbaeumer.vscode-eslint
 	code --install-extension EditorConfig.EditorConfig
+	code --install-extension eamodio.gitlens
 	code --install-extension esbenp.prettier-vscode
+	code --install-extension formulahendry.auto-close-tag
+	code --install-extension HookyQR.beautify
 	code --install-extension idleberg.applescript
-	code --install-extension jaysonsantos.vscode-flake8
 	code --install-extension mauve.terraform
 	code --install-extension ms-python.python
 	code --install-extension ms-vscode.Go
@@ -89,3 +91,4 @@ vscode:
 	code --install-extension timonwong.shellcheck
 	code --install-extension WakaTime.vscode-wakatime
 	code --install-extension wholroyd.jinja
+
