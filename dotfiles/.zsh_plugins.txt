@@ -12,9 +12,9 @@ antibody bundle russelltsherman/zsh-mkc
 antibody bundle russelltsherman/zsh-open-pr # kind:path
 antibody bundle russelltsherman/zsh-ports # kind:path
 antibody bundle russelltsherman/zsh-pure
-antibody bundle russelltsherman/solarized-man
-antibody bundle russelltsherman/z
+antibody bundle russelltsherman/zsh-solarized-man
 antibody bundle russelltsherman/zsh-wakatime
+antibody bundle russelltsherman/zsh-z
 antibody bundle zsh-users/zaw
 antibody bundle zsh-users/zsh-autosuggestions
 antibody bundle zsh-users/zsh-completions
