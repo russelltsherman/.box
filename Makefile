@@ -37,7 +37,7 @@ postbrew:
 	if [ ! -f /usr/local/bin/sha256sum ]; then sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum; fi
 	if ! grep -q "/usr/local/bin/zsh" "/etc/shells"; then echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells; fi
 	chsh -s /usr/local/bin/zsh
-	
+
 .PHONY: defaults
 defaults:
 	./lib/defaults/_darwin.sh
@@ -85,7 +85,6 @@ vscode:
 	code --install-extension dbaeumer.vscode-eslint
 	code --install-extension EditorConfig.EditorConfig
 	code --install-extension eamodio.gitlens
-	code --install-extension esbenp.prettier-vscode
 	code --install-extension formulahendry.auto-close-tag
 	code --install-extension HookyQR.beautify
 	code --install-extension idleberg.applescript
@@ -99,3 +98,5 @@ vscode:
 	code --install-extension WakaTime.vscode-wakatime
 	code --install-extension wholroyd.jinja
 
+	mkdir -p ~/Library/Application\ Support/Code/User/
+	ln -sv ~/.vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json

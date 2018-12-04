@@ -1,110 +1,113 @@
 {
-  "auto-close-tag.activationOnLanguage": [
-    "xml",
-    "php",
-    "jinja",
-    "javascriptreact",
-    "typescriptreact",
-    "markdown",
-    "vue",
-    "HTML (Eex)"
-  ],
-  "cSpell.language": "en,ru,en-GB,en-US",
-  "cSpell.showStatus": false,
-  "debug.allowBreakpointsEverywhere": true,
-  "editor.accessibilitySupport": "off",
-  "editor.codeLens": true,
-  "editor.colorDecorators": true,
-  "editor.dragAndDrop": false,
-  "editor.folding": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "editor.formatOnType": true,
-  "editor.glyphMargin": true,
-  "editor.minimap.enabled": false,
-  "editor.rulers": [
-    80
-  ],
-  "editor.scrollBeyondLastLine": false,
-  "editor.snippetSuggestions": "none",
-  "editor.tabCompletion": true,
-  "editor.wordWrap": "on",
-  "editor.wordWrapColumn": 80,
-  "emmet.showExpandedAbbreviation": "never",
-  "emmet.triggerExpansionOnTab": false,
-  "explorer.confirmDelete": false,
-  "explorer.decorations.badges": false,
-  "extensions.ignoreRecommendations": true,
-  "files.associations": {
-    ".babelrc": "jsonc",
-    ".eslintrc": "jsonc"
-  },
-  "files.autoSave": "onFocusChange",
-  "files.exclude": {
-    "**/.DS_Store": true,
-    "**/__pycache__": true,
-    "**/.cache": true,
-    "**/.idea": true,
-    "**/.pytest_cache": true,
-    "**/.mypy_cache": true,
-    "**/.venv": true,
-    "**/.coverage": true,
-    "**/*.py[co]": true
-  },
-  "git.autofetch": false,
-  "python.formatting.provider": "none",
-  "python.pythonPath": "${workspaceFolder}/.venv/bin/python3",
-  "python.terminal.activateEnvironment": true,
-  "python.workspaceSymbols.enabled": true,
-  "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
-  "terminal.integrated.env.osx": {
-    "SOBOLE_THEME_MODE": "dark"
-  },
-  "terminal.integrated.enableBell": true,
-  "window.zoomLevel": 0,
-  "workbench.colorCustomizations": {
-    "gitDecoration.modifiedResourceForeground": "#d4cb68"
-  },
-  "workbench.colorTheme": "Better Solarized Dark",
-  "workbench.editor.labelFormat": "short",
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.statusBar.feedback.visible": false,
-  "workbench.tips.enabled": false,
-  "python.linting.enabled": false,
-  "gitlens.menus": {
-    "editor": {
-      "blame": false,
-      "clipboard": true,
-      "compare": true,
-      "details": true,
-      "history": false,
-      "remote": true
+    "auto-close-tag.activationOnLanguage": [
+        "xml",
+        "php",
+        "jinja",
+        "javascriptreact",
+        "typescriptreact",
+        "markdown",
+        "vue",
+        "HTML (Eex)"
+    ],
+    "debug.allowBreakpointsEverywhere": true,
+    "editor.accessibilitySupport": "off",
+    "editor.codeLens": true,
+    "editor.colorDecorators": true,
+    "editor.dragAndDrop": false,
+    "editor.folding": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.glyphMargin": true,
+    "editor.minimap.enabled": false,
+    "editor.rulers": [
+        80
+    ],
+    "editor.scrollBeyondLastLine": false,
+    "editor.snippetSuggestions": "none",
+    "editor.tabCompletion": true,
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 80,
+    "eslint.autoFixOnSave": true,
+    "eslint.alwaysShowStatus": true,
+    "emmet.showExpandedAbbreviation": "never",
+    "emmet.triggerExpansionOnTab": false,
+    "explorer.confirmDelete": false,
+    "explorer.decorations.badges": false,
+    "extensions.ignoreRecommendations": true,
+    "files.associations": {
+        ".babelrc": "jsonc",
+        ".eslintrc": "jsonc"
     },
-    "editorGroup": {
-      "blame": true,
-      "compare": true,
-      "history": false,
-      "remote": false
+    "files.autoSave": "onFocusChange",
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/__pycache__": true,
+        "**/.cache": true,
+        "**/.idea": true,
+        "**/.pytest_cache": true,
+        "**/.mypy_cache": true,
+        "**/.venv": true,
+        "**/.coverage": true,
+        "**/*.py[co]": true
     },
-    "editorTab": {
-      "compare": false,
-      "history": false,
-      "remote": true
-    }
-  },
-  "gitlens.codeLens.recentChange.enabled": false,
-  "gitlens.codeLens.authors.enabled": false,
-  "gitlens.codeLens.enabled": false,
-  "gitlens.currentLine.enabled": false,
-  "gitlens.hovers.currentLine.over": "line",
-  "gitlens.keymap": "alternate",
-  "gitlens.mode.statusBar.enabled": false,
-  "gitlens.mode.active": "zen",
-  "gitlens.statusBar.enabled": false,
-  "gitlens.advanced.messages": {
-    "suppressShowKeyBindingsNotice": true
-  },
-  "git.showInlineOpenFileAction": false
+    "git.autofetch": false,
+    "[javascript]": {
+        "editor.formatOnSave": false
+    },
+    "python.formatting.provider": "none",
+    "python.pythonPath": "${workspaceFolder}/.venv/bin/python3",
+    "python.terminal.activateEnvironment": true,
+    "python.workspaceSymbols.enabled": true,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "terminal.integrated.env.osx": {
+        "SOBOLE_THEME_MODE": "dark"
+    },
+    "terminal.integrated.enableBell": true,
+    "window.zoomLevel": 0,
+    "workbench.colorCustomizations": {
+        "gitDecoration.modifiedResourceForeground": "#d4cb68"
+    },
+    "workbench.colorTheme": "Better Solarized Dark",
+    "workbench.editor.labelFormat": "short",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.statusBar.feedback.visible": false,
+    "workbench.tips.enabled": false,
+    "python.linting.enabled": false,
+    "gitlens.menus": {
+        "editor": {
+            "blame": false,
+            "clipboard": true,
+            "compare": true,
+            "details": true,
+            "history": false,
+            "remote": true
+        },
+        "editorGroup": {
+            "blame": true,
+            "compare": true,
+            "history": false,
+            "remote": false
+        },
+        "editorTab": {
+            "compare": false,
+            "history": false,
+            "remote": true
+        }
+    },
+    "gitlens.codeLens.recentChange.enabled": false,
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.keymap": "alternate",
+    "gitlens.mode.statusBar.enabled": false,
+    "gitlens.mode.active": "zen",
+    "gitlens.statusBar.enabled": false,
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "git.showInlineOpenFileAction": false
 }
