@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+
+set -eou pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+[[ -n ${DEBUG:-} ]] && bot "Enabling debug mode" && set -x
+
+function usage() {
+  cat <<- EOF
+
+  mirror files between two locations
+
+  usage: $0 <source> <destination>
+
+EOF
+}
+
+function main() {
+
+  if [ ! -r "$SRC" ]; then
+    echo "Source $SRC not readable - Cannot start the sync process"
+    exit 1;
+  fi
+
+  if [ ! -w "$DST" ]; then
+    echo "Destination $DST not writeable - Cannot start the sync process"
+    exit 1;
+  fi
+
+  echo "Starting rsync"
+
+  # --acls                   update the destination ACLs to be the same as the source ACLs
+  # --archive                turn on archive mode (recursive copy + retain attributes)
+  # --delete                 delete any files that have been deleted locally
+  # --delete-excluded        delete any files (on DST) that are part of the list of excluded files
+  # --exclude-from           reference a list of files to exclude
+  # --hard-links             preserve hard-links
+  # --one-file-system        don't cross device boundaries (ignore mounted volumes)
+  # --sparse                 handle spare files efficiently
+  # --verbose                increase verbosity
+  # --xattrs                 update the remote extended attributes to be the same as the local ones
+
+  $RSYNC --acls \
+        --archive \
+        --delete \
+        --delete-excluded \
+        --exclude-from=$EXCLUDE \
+        --hard-links \
+        --one-file-system \
+        --sparse \
+        --verbose \
+        --xattrs \
+        "$SRC" "$DST"
+
+  echo "End rsync"
+
+  # # Make the backup bootable
+  # bless -folder "$DST"/System/Library/CoreServices
+
+  exit 0
+}
+
+DST="${2:-}"
+EXCLUDE="${3:-"${DIR}/mirror.exclude"}"
+RSYNC="/usr/local/bin/rsync"
+SRC="${1:-}"
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"; usage; exit 1
+fi
+
+if [ -z "$DST" ]; then
+   echo "You must specify destination path"; usage; exit 1
+fi
+
+if [ -z "$SRC" ]; then
+   echo "You must specify source path"; usage; exit 1
+fi
+
+main "$@"
