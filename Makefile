@@ -73,6 +73,9 @@ clean: # if there are existing symlinks for our dotfiles in ~/ remove them
 dotfiles: clean \
 	$(DOTFILES) # iterate our list of dotfiles and ensure they are symlinked
 
+/etc/hosts:
+	sudo wget -O /etc/hosts https://someonewhocares.org/hosts/hosts
+
 ~/.%: # create symlink form ~/.dotfile and ./dotfiles/.dotfile
 	cd ~ && ln -sv $(current_dir)/dotfiles/$(notdir $@) $@
 
