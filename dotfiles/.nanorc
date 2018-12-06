@@ -4,13 +4,7 @@
 
 # Editor:
 set morespace
-
 set tabstospaces
-set trimblanks
-
-set softwrap
-set atblanks
-set constantshow
 
 # UX:
 set smooth
