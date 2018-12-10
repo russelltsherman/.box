@@ -98,6 +98,7 @@ vscode:
 	code --install-extension PeterJausovec.vscode-docker
 	code --install-extension PKief.material-icon-theme
 	code --install-extension timonwong.shellcheck
+	code --install-extension tomoki1207.pdf
 	code --install-extension WakaTime.vscode-wakatime
 	code --install-extension wholroyd.jinja
 
