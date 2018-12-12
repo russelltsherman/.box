@@ -30,8 +30,8 @@ main() {
   # initialize GO
   local go_init="
 # initialize GO
-if [ -d \"\$HOME/go\" ]; then
-  GOPATH=\"\${HOME}/go\"
+if [ -d \"\$HOME/src\" ]; then
+  GOPATH=\"\$HOME\"
   PATH=\"\${PATH}:\${GOPATH}/bin\"
   GOROOT=\"\$(go env GOROOT)\"
   alias gotour=\"\${GOPATH}/bin/gotour\"
