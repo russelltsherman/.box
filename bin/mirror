@@ -42,11 +42,20 @@ function main() {
   # --verbose                increase verbosity
   # --xattrs                 update the remote extended attributes to be the same as the local ones
 
+  # $RSYNC --acls \
+  #       --archive \
+  #       --delete \
+  #       --delete-excluded \
+  #       --exclude-from=$EXCLUDE \
+  #       --hard-links \
+  #       --one-file-system \
+  #       --sparse \
+  #       --verbose \
+  #       --xattrs \
+  #       "$SRC" "$DST"
+
   $RSYNC --acls \
         --archive \
-        --delete \
-        --delete-excluded \
-        --exclude-from=$EXCLUDE \
         --hard-links \
         --one-file-system \
         --sparse \
