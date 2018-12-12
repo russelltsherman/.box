@@ -20,11 +20,11 @@ list sessions:
 
     tmux ls
 
-<a name="killSessions"></a>kill session:
+kill session:
 
     tmux kill-session -t myname
 
-<a name="killAllSessions"></a>Kill all the tmux sessions:
+Kill all the tmux sessions:
 
     tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs kill
 
@@ -36,7 +36,7 @@ In tmux, hit the prefix `ctrl+b` (my modified prefix is ctrl+a) and then:
     s  list sessions
     $  name session
 
-## <a name="WindowsTabs"></a>Windows (tabs)
+## Windows (tabs)
 
     c  create window
     w  list windows
@@ -46,7 +46,7 @@ In tmux, hit the prefix `ctrl+b` (my modified prefix is ctrl+a) and then:
     ,  name window
     &  kill window
 
-## <a name="PanesSplits"></a>Panes (splits)
+## Panes (splits)
 
     %  vertical split
     "  horizontal split
@@ -62,7 +62,7 @@ In tmux, hit the prefix `ctrl+b` (my modified prefix is ctrl+a) and then:
     <prefix> } (Move the current pane right)
     <prefix> z toggle pane zoom
 
-## <a name="syncPanes"></a>Sync Panes
+## Sync Panes
 
 You can do this by switching to the appropriate window, typing your Tmux prefix (commonly Ctrl-B or Ctrl-A) and then a colon to bring up a Tmux command line, and typing:
 
@@ -71,7 +71,6 @@ You can do this by switching to the appropriate window, typing your Tmux prefix 
 ```
 
 You can optionally add on or off to specify which state you want; otherwise the option is simply toggled. This option is specific to one window, so it won’t change the way your other sessions or windows operate. When you’re done, toggle it off again by repeating the command. [tip source](http://blog.sanctum.geek.nz/sync-tmux-panes/)
-
 
 ## Resizing Panes
 
@@ -88,8 +87,7 @@ You can also resize panes if you don’t like the layout defaults. I personally 
     PREFIX : resize-pane -t 2 20 (Resizes the pane with the id of 2 down by 20 cells)
     PREFIX : resize-pane -t -L 20 (Resizes the pane with the id of 2 left by 20 cells)
 
-
-## Copy mode:
+## Copy mode
 
 Pressing PREFIX [ places us in Copy mode. We can then use our movement keys to move our cursor around the screen. By default, the arrow keys work. we set our configuration file to use Vim keys for moving between windows and resizing panes so we wouldn’t have to take our hands off the home row. tmux has a vi mode for working with the buffer as well. To enable it, add this line to .tmux.conf:
 
@@ -140,7 +138,7 @@ For example, we can use "w" to jump to the next word and "b" to jump back one wo
     ?  list shortcuts
     :  prompt
 
-## Configurations Options:
+## Configurations Options
 
     # Mouse support - set to on if you want to use the mouse
     * setw -g mode-mouse off
@@ -163,23 +161,19 @@ For example, we can use "w" to jump to the next word and "b" to jump back one wo
     unbind Down
     bind Down last-window \; swap-pane -s tmp.1 \; kill-window -t tmp
 
-## Resources:
+## Resources
 
 * [tmux: Productive Mouse-Free Development](http://pragprog.com/book/bhtmux/tmux)
 * [How to reorder windows](http://superuser.com/questions/343572/tmux-how-do-i-reorder-my-windows)
 
-## Notes:
-
-*
-
-## Changelog:
+## Changelog
 
 * 1411143833002 - Added [toggle zoom](#PanesSplits) under Panes (splits) section.
 * 1411143833002 - [Added Sync Panes](#syncPanes)
 * 1414276652677 - [Added Kill all tmux sessions ](#killAllSessions)
 * 1438585211173 - [corrected create and add next and previus thanks to @justinjhendrick](#WindowsTabs)
 
-## Request an Update:
+## Request an Update
 
 We Noticed that our Cheatsheet is growing and people are coloberating to add new tips and tricks, so please tweet to me what would you like to add and let's make it better!
 
