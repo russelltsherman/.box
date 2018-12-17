@@ -261,6 +261,9 @@ cask "kindle"
 # a markdown editor https://macdown.uranusjr.com/
 cask "macdown"
 
+# https://signal.org/
+cask "signal"
+
 # slack team chat https://slack.com/
 cask "slack"
 
