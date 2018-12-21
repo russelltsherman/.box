@@ -67,37 +67,29 @@ function main() {
   local user=false
 
   bot "searching github for $NAME"
+  selection="none"
+
+  if [ "$(is_user)" = "200" ]
+  then
+    selection=1
+  fi
 
   if [ "$(is_org)" = "200" ]
   then
-    echo "found organization account for $NAME"
-    org=true
-    selection=1
-  fi
-  if [ "$(is_user)" = "200" ]
-  then
-    echo "found user account for $NAME"
-    user=true
     selection=2
   fi
 
-  if [ $org = true ] && [ $user = true ]
-  then
-    echo "Found both Org and User accounts for $NAME"
-    echo "1. Organization Repos"
-    echo "2. User Repos"
-    echo "Select then press enter"
-    read -r selection
-  fi
-
   case "$selection" in
-    1|org)
+    1|user)
+      action "cloning user repos"
+      clone_repos "users" "$NAME"
+      ;;
+    2|org)
       action "cloning org repos"
       clone_repos "orgs" "$NAME"
       ;;
-    2|user)
-      action "cloning user repos"
-      clone_repos "users" "$NAME"
+    *)
+      die "I did not find a github account for $NAME"
       ;;
   esac
 }
