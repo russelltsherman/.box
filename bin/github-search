@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+
+set -eou pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${DIR}/../dotfiles/.lib_sh/echos.sh"
+
+[[ -n ${UNION_DEBUG:-} ]] && bot "Enabling debug mode" && set -x
+
+function usage() {
+  cat <<- EOF
+
+  search public repos from a organization or user
+
+  usage: $0 <name> <term>
+
+EOF
+}
+
+function is_user() {
+  curl -I -X GET "${API_URL}/users/${NAME}" \
+    -H "Authorization: token ${GH_TOKEN}" \
+    --compressed | grep Status: | awk '{print $2}'
+}
+
+function is_org() {
+  curl -I -X GET "${API_URL}/orgs/${NAME}" \
+    -H "Authorization: token ${GH_TOKEN}" \
+    --compressed | grep Status: | awk '{print $2}'
+}
+
+function query_repos() {
+  local query="$1"
+  local page="${2:-1}"
+
+  curl -X GET "${API_URL}/search/repositories?q=${query}&per_page=${PER_PAGE}&page=${page}" \
+    -H "Authorization: token ${GH_TOKEN}" \
+    --compressed
+}
+
+function search_repos() {
+  local name="$1"
+  local term="$2"
+
+  count=$PER_PAGE
+  page=1
+  while [ "$count" -eq "$PER_PAGE" ]
+  do
+    repos=$(query_repos "${term}+org:${name}" "$page" | jq '.items[].name')
+    count=$(echo "$repos" | wc -l)
+    if [ "$count" = "$PER_PAGE" ]
+    then
+      page=$((page + 1))
+    fi
+    echo "$repos"
+  done
+}
+
+function main() {
+  bot "searching github for $NAME"
+}
+
+banner
+
+if [ "$#" -lt 2 ]; then usage; die; fi # if no parameters show usage and die
+
+GH_TOKEN="$(head -n 1 $HOME/.github_token)"
+API_URL="https://api.github.com"
+NAME="$1"
+TERM="$2"
+PER_PAGE=100
+
+search_repos "$NAME" "$TERM"
+
+# main "$@"
