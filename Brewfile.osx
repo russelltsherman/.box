@@ -75,6 +75,9 @@ brew "gnu-which"
 # Open source programming language to build simple/reliable/efficient software https://golang.org
 brew "go"
 
+# Command-line Golang template processor https://gomplate.hairyhenderson.ca/
+brew "gomplate"
+
 # GNU grep, egrep and fgrep https://www.gnu.org/software/grep/
 brew "grep"
 
@@ -210,6 +213,9 @@ brew "zsh-completions"
 #########################
 # CLI Applications
 #########################
+
+# https://github.com/99designs/aws-vault
+cask "aws-vault"
 
 # https://btcarmory.com/
 cask "armory"
