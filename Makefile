@@ -101,6 +101,9 @@ vscode:
 	code --install-extension tomoki1207.pdf
 	code --install-extension WakaTime.vscode-wakatime
 	code --install-extension wholroyd.jinja
+	code --install-extension xaver.clang-format
+	code --install-extension zxh404.vscode-proto3
+
 
 	mkdir -p ~/Library/Application\ Support/Code/User/
 	ln -sv ~/.vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json

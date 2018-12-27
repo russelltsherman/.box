@@ -23,6 +23,9 @@ brew "bash"
 # Programmable completion for Bash 3.2 https://bash-completion.alioth.debian.org/
 brew "bash-completion"
 
+# Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript https://clang.llvm.org/docs/ClangFormat.html
+brew "clang-format"
+
 # Command-line tool for Amazon Route 53 https://github.com/barnybug/cli53
 brew "cli53"
 
@@ -137,6 +140,9 @@ brew "openvpn"
 
 # Tool for creating identical machine images for multiple platforms https://packer.io
 brew "packer"
+
+# Protocol buffers (Google's data interchange format) https://github.com/protocolbuffers/protobuf/
+brew "protobuf"
 
 # Show ps output as a tree http://www.thp.uni-duisburg.de/pstree/
 brew "pstree"
