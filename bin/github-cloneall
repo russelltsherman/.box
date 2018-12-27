@@ -63,9 +63,6 @@ function clone_repos() {
 }
 
 function main() {
-  local org=false
-  local user=false
-
   bot "searching github for $NAME"
   selection="none"
 
