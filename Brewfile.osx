@@ -41,6 +41,10 @@ brew "direnv"
 # Convert text between DOS, UNIX, and Mac formats https://waterlan.home.xs4all.nl/dos2unix.html
 brew "dos2unix"
 
+# Evans: more expressive universal gRPC client https://evans.syfm.me
+tap "ktr0731/evans"
+brew "evans"
+
 # XML-based font configuration API for X Windows https://wiki.freedesktop.org/www/Software/fontconfig/
 brew "fontconfig"
 
