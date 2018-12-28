@@ -271,6 +271,9 @@ cask "iterm2"
 # https://keybase.io/
 cask "keybase"
 
+# http://kicad-pcb.org/
+cask "kicad"
+
 # https://www.amazon.com/gp/digital/fiona/kcp-landing-page
 cask "kindle"
 
