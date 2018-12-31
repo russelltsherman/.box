@@ -97,6 +97,7 @@ vscode:
 	code --install-extension msjsdiag.debugger-for-chrome
 	code --install-extension PeterJausovec.vscode-docker
 	code --install-extension PKief.material-icon-theme
+	code --install-extension redhat.vscode-yaml
 	code --install-extension timonwong.shellcheck
 	code --install-extension tomoki1207.pdf
 	code --install-extension WakaTime.vscode-wakatime
