@@ -4,9 +4,6 @@ brew "ag"
 # Search tool like grep, but optimized for programmers http://beyondgrep.com/
 brew "ack"
 
-# Automate deployment, configuration, and upgrading https://www.ansible.com/
-brew "ansible"
-
 # The fastest shell plugin manager http://getantibody.github.io
 tap "getantibody/tap"
 brew "getantibody/tap/antibody"
