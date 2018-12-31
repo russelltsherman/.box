@@ -91,6 +91,7 @@ vscode:
 	code --install-extension formulahendry.auto-close-tag
 	code --install-extension HookyQR.beautify
 	code --install-extension idleberg.applescript
+	code --install-extension marcostazi.vs-code-vagrantfile
 	code --install-extension mauve.terraform
 	code --install-extension ms-python.python
 	code --install-extension ms-vscode.Go
@@ -104,6 +105,7 @@ vscode:
 	code --install-extension wholroyd.jinja
 	code --install-extension xaver.clang-format
 	code --install-extension zxh404.vscode-proto3
+
 
 
 	mkdir -p ~/Library/Application\ Support/Code/User/
