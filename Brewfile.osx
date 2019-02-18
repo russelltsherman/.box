@@ -82,6 +82,10 @@ brew "go"
 # Command-line Golang template processor https://gomplate.hairyhenderson.ca/
 brew "gomplate"
 
+# release automation tool for Go projects https://goreleaser.com/
+tap "goreleaser/tap"
+brew "goreleaser/tap/goreleaser"
+
 # GNU grep, egrep and fgrep https://www.gnu.org/software/grep/
 brew "grep"
 
