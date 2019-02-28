@@ -85,6 +85,7 @@ vscode:
 	code --install-extension coolbear.systemd-unit-file
 	code --install-extension cssho.vscode-svgviewer
 	code --install-extension DavidAnson.vscode-markdownlint
+	code --install-extension davidwang.ini-for-vscode
 	code --install-extension dbaeumer.vscode-eslint
 	code --install-extension EditorConfig.EditorConfig
 	code --install-extension eamodio.gitlens
@@ -101,11 +102,11 @@ vscode:
 	code --install-extension redhat.vscode-yaml
 	code --install-extension timonwong.shellcheck
 	code --install-extension tomoki1207.pdf
+	code --install-extension vscodevim.vim
 	code --install-extension WakaTime.vscode-wakatime
 	code --install-extension wholroyd.jinja
 	code --install-extension xaver.clang-format
 	code --install-extension zxh404.vscode-proto3
-
 
 
 	mkdir -p ~/Library/Application\ Support/Code/User/
