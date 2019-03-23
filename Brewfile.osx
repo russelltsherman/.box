@@ -31,9 +31,6 @@ brew "cli53"
 # GNU File, Shell, and Text utilities https://www.gnu.org/software/coreutils
 brew "coreutils"
 
-# Go dependency management tool https://github.com/golang/dep
-brew "dep"
-
 # direnv is an environment switcher for the shell.
 brew "direnv"
 
