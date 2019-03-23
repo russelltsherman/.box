@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+
+set -eou pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+[[ -n ${DEBUG:-} ]] && bot "Enabling debug mode" && set -x
+
+function usage() {
+  cat <<- EOF
+
+  diff files between two locations
+
+  usage: $0 <source> <destination>
+
+EOF
+}
+
+function main() {
+
+  if [ ! -r "$SRC" ]; then
+    echo "Source $SRC not readable - Cannot start the sync process"
+    exit 1;
+  fi
+
+  if [ ! -w "$DST" ]; then
+    echo "Destination $DST not writeable - Cannot start the sync process"
+    exit 1;
+  fi
+
+  echo "Starting rsync"
+
+  # --archive                turn on archive mode (recursive copy + retain attributes)
+  # --dry-run                perform a trial run with no changes made
+  # --one-file-system        don't cross device boundaries (ignore mounted volumes)
+  # --recursive              recurse into directories
+  # --sparse                 handle spare files efficiently
+  # --verbose                increase verbosity
+
+  $RSYNC --archive \
+        --dry-run \
+        --one-file-system \
+        --recursive \
+        --verbose \
+        "$SRC" "$DST"
+
+  echo "End rsync"
+
+  exit 0
+}
+
+DST="${2:-}"
+RSYNC="/usr/local/bin/rsync"
+SRC="${1:-}"
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"; usage; exit 1
+fi
+
+if [ -z "$DST" ]; then
+   echo "You must specify destination path"; usage; exit 1
+fi
+
+if [ -z "$SRC" ]; then
+   echo "You must specify source path"; usage; exit 1
+fi
+
+main "$@"
