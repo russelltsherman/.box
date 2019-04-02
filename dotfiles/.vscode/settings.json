@@ -59,6 +59,13 @@
     "python.pythonPath": "${workspaceFolder}/.venv/bin/python3",
     "python.terminal.activateEnvironment": true,
     "python.workspaceSymbols.enabled": true,
+    "shellcheck.enable": true,
+    "shellcheck.run": "onType",
+    "shellcheck.executablePath": "shellcheck",
+    "shellcheck.exclude": [],
+    "shellcheck.customArgs": ["-x"],
+    "shellcheck.ignorePatterns": {},
+    "shellcheck.useWSL": false,
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
     "terminal.integrated.env.osx": {
