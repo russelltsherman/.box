@@ -14,8 +14,7 @@ set nocompatible
 syntax enable         " enable syntax highlighting
 syntax on             " turn on syntax highlighting
 " colorscheme solarized
-" colorscheme SolarizedDark
-colorscheme molokai
+colorscheme SolarizedDark
 
 filetype plugin on    " If filetype detection was not switched on yet, it will be.
                       " This actually loads the file "ftplugin.vim" in 'runtimepath'.
@@ -26,6 +25,16 @@ filetype indent on    " If filetype detection was not switched on yet, it will b
                       " The result is that when a file is edited its indent file is
                       " loaded (if there is one for the detected filetype).
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" lightline config
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if !has('gui_running')
+  set t_Co=256
+endif
+set laststatus=2
+" let g:lightline = { 'colorscheme': 'wombat' }
+set noshowmode
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim UI
