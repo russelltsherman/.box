@@ -1,12 +1,39 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+call vundle#begin()             " required
+" alternatively, pass a path where Vundle should install plugins
+" call vundle#begin('~/some/path/here')
 
-" respect editorconfig files (editorconfig.org)
+Plugin 'VundleVim/Vundle.vim'   " required
+" Vundle, the plug-in manager for Vim
+
 Plugin 'editorconfig/editorconfig-vim'
+" respect editorconfig files (editorconfig.org)
+
+Plugin 'fatih/vim-go'
+" Go development plugin for Vim
+
+Plugin 'fatih/molokai'
+" Molokai color scheme for Vim
+
+Plugin 'AndrewRadev/splitjoin.vim'
+" A vim plugin that simplifies the transition between multiline and single-line code
+
+Plugin 'SirVer/ultisnips'
+" The ultimate snippet solution for Vim.
+
+Plugin 'ctrlpvim/ctrlp.vim'
+" Fuzzy file, buffer, mru, tag, etc finder.
+
+call vundle#end()               " required
+" All of your Plugins must be added before the following line
+
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line

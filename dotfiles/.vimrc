@@ -1,4 +1,11 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Basic Setup
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " turn off compatibility mode and enter the new millennium
@@ -6,8 +13,9 @@ set nocompatible
 
 syntax enable         " enable syntax highlighting
 syntax on             " turn on syntax highlighting
-colorscheme SolarizedDark
 " colorscheme solarized
+" colorscheme SolarizedDark
+colorscheme molokai
 
 filetype plugin on    " If filetype detection was not switched on yet, it will be.
                       " This actually loads the file "ftplugin.vim" in 'runtimepath'.
@@ -22,14 +30,8 @@ filetype indent on    " If filetype detection was not switched on yet, it will b
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set ruler     " Always show current positions along the bottom
-" set number    " turn on line numbers
-
-" if filereadable(expand("~/.vimrc.bundles"))
-"  source ~/.vimrc.bundles
-" endif
-
-
+set ruler     " Always show current positions along the bottom
+set number    " turn on line numbers
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FINDING FILES:
