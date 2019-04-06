@@ -36,6 +36,8 @@ set laststatus=2
 " let g:lightline = { 'colorscheme': 'wombat' }
 set noshowmode
 
+autocmd vimenter * NERDTree
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
