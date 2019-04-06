@@ -1,4 +1,4 @@
-
+antibody bundle robbyrussell/oh-my-zsh
 antibody bundle russelltsherman/zsh-256color
 antibody bundle russelltsherman/zsh-async
 antibody bundle russelltsherman/zsh-bd

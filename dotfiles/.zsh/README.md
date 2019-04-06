@@ -17,5 +17,7 @@ Zsh looks for user startup files in the user's home directory by default.
 To look in another directory, set the parameter ZDOTDIR to where you'd like zsh to look.
 
 ## Logging Out
+
 When a user logs out,
+
 - First /etc/zlogout is read, followed by ZDOTDIR/.zlogout.

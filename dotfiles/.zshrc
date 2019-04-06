@@ -4,6 +4,7 @@
 # ##############################################################################
 # Import the zsh specific environment config
 # ##############################################################################
+source ~/.zsh/oh-my-zsh.zsh
 source ~/.zsh/antibody.zsh
 source ~/.zsh/bindkeys.zsh
 source ~/.zsh/colors.zsh
