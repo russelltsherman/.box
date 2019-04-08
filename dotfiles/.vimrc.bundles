@@ -29,6 +29,9 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'scrooloose/nerdtree'
 " The NERDTree is a file system explorer for the Vim editor
 
+Plugin 'morhetz/gruvbox'
+" Retro groove color scheme for Vim
+
 call vundle#end()               " required
 " All of your Plugins must be added before the following line
 
@@ -40,3 +43,6 @@ call vundle#end()               " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+" check out https://github.com/spf13/spf13-vim
+" check out https://vimawesome.com/ for more vim plugins

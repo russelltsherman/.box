@@ -14,7 +14,8 @@ set nocompatible
 syntax enable         " enable syntax highlighting
 syntax on             " turn on syntax highlighting
 " colorscheme solarized
-colorscheme SolarizedDark
+" colorscheme SolarizedDark " Change color scheme.
+colorscheme gruvbox
 
 filetype plugin on    " If filetype detection was not switched on yet, it will be.
                       " This actually loads the file "ftplugin.vim" in 'runtimepath'.
@@ -25,6 +26,9 @@ filetype indent on    " If filetype detection was not switched on yet, it will b
                       " The result is that when a file is edited its indent file is
                       " loaded (if there is one for the detected filetype).
 
+set ai                " auto indent
+set si                " smart indent
+set history=1000      " keep 1000 items in history
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lightline config
@@ -32,17 +36,41 @@ filetype indent on    " If filetype detection was not switched on yet, it will b
 if !has('gui_running')
   set t_Co=256
 endif
-set laststatus=2
 " let g:lightline = { 'colorscheme': 'wombat' }
 set noshowmode
 
-autocmd vimenter * NERDTree
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" gruvbox config
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set background=dark    " Setting dark mode
+" set background=light   " Setting light mode
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" search
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set hlsearch      " Enable search highlighting.
+set ignorecase    " Ignore case when searching.
+set incsearch     " Incremental search that shows partial matches.
+set smartcase     " Automatically switch search to case-sensitive when search query contains an uppercase letter.
+
+" autocmd vimenter * NERDTree
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set ruler     " Always show current positions along the bottom
-set number    " turn on line numbers
+set cursorline        " Highlight the line currently under cursor.
+" set foldmethod=indent " Fold based on indention levels.
+" set foldnestmax=3     " Only fold up to three nested levels.
+set laststatus=2      " Always display the status bar.
+set mouse=a           " Enable mouse for scrolling and resizing.
+set number            " turn on line numbers
+" set noerrorbells      " Disable beep on errors.
+" set relativenumber    " Show line number on the current line and relative numbers on all other lines.
+set ruler             " Always show current positions along the bottom
+" set tabpagemax=50     " Maximum number of tab pages that can be opened from the command line.
+set title             " Set the window’s title, reflecting the file currently being edited.
+" set visualbell        " Flash the screen instead of beeping on errors.
+" set wildmenu          " Display command line’s tab complete options as a menu.
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FINDING FILES:

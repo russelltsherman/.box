@@ -219,7 +219,7 @@ brew "zsh"
 brew "zsh-completions"
 
 #########################
-# CLI Applications
+# GUI Applications
 #########################
 
 # https://github.com/99designs/aws-vault
@@ -244,12 +244,14 @@ cask "docker"
 cask "dropbox"
 
 tap "homebrew/cask-fonts"
+tap "caskroom/fonts"
 cask "font-consolas-for-powerline"
 cask "font-fira-code"
 cask "font-inconsolata"
 cask "font-inconsolata-for-powerline"
 cask "font-roboto-mono"
 cask "font-roboto-mono-for-powerline"
+cask "font-hack-nerd-font"
 
 # https://www.gimp.org/
 cask "gimp"
