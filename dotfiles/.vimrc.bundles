@@ -32,6 +32,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'morhetz/gruvbox'
 " Retro groove color scheme for Vim
 
+Plugin 'airblade/vim-gitgutter'
+" A Vim plugin which shows a git diff in the gutter
+
 call vundle#end()               " required
 " All of your Plugins must be added before the following line
 
