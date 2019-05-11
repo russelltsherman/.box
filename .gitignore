@@ -2,6 +2,9 @@
 # ignore the .antigen directory
 .antigen
 
+# ignore build harness
+*build-harness
+
 # ignore the .gitconfig file
 .gitconfig
 
