@@ -222,25 +222,28 @@ brew "zsh-completions"
 # GUI Applications
 #########################
 
+# Arduino IDE https://www.arduino.cc
+cask "arduino"
+
+# https://btcarmory.com
+cask "armory"
+
 # https://github.com/99designs/aws-vault
 cask "aws-vault"
 
-# https://btcarmory.com/
-cask "armory"
-
-# https://bitwarden.com/
+# https://bitwarden.com
 cask "bitwarden"
 
 # Dash gives your Mac instant offline access to 200+ API documentation sets. https://kapeli.com/dash
 cask "dash"
 
-# https://www.sourcegear.com/diffmerge/
+# https://www.sourcegear.com/diffmerge
 cask "diffmerge"
 
 # https://www.docker.com/community-edition
 cask "docker"
 
-# https://www.dropbox.com/
+# https://www.dropbox.com
 cask "dropbox"
 
 tap "homebrew/cask-fonts"
@@ -253,71 +256,71 @@ cask "font-roboto-mono"
 cask "font-roboto-mono-for-powerline"
 cask "font-hack-nerd-font"
 
-# https://www.gimp.org/
+# https://www.gimp.org
 cask "gimp"
 
 # Google Chrome web Browser https://www.google.com/chrome/
 cask "google-chrome"
 
+# https://gpgtools.org
+cask "gpg-suite"
+
 # http://growl.info/downloads
 cask "growlnotify"
-
-# https://gpgtools.org/
-cask "gpg-suite"
 
 # itsycal is a nice menu bar clock replacement that features a calendar with events from iCal https://www.mowglii.com/itsycal/
 cask "itsycal"
 
-# https://www.iterm2.com/
+# https://www.iterm2.com
 cask "iterm2"
 
-# https://keybase.io/
+# https://keybase.io
 cask "keybase"
 
-# http://kicad-pcb.org/
+# http://kicad-pcb.org
 cask "kicad"
 
 # https://www.amazon.com/gp/digital/fiona/kcp-landing-page
 cask "kindle"
 
-# a markdown editor https://macdown.uranusjr.com/
+# a markdown editor https://macdown.uranusjr.com
 cask "macdown"
 
-# https://signal.org/
+# https://signal.org
 cask "signal"
 
-# slack team chat https://slack.com/
+# slack team chat https://slack.com
 cask "slack"
 
-# osx window management/tiling https://www.spectacleapp.com/
+# osx window management/tiling https://www.spectacleapp.com
 cask "spectacle"
 
-# multiformat decompression utility https://theunarchiver.com/
+# multiformat decompression utility https://theunarchiver.com
 cask "the-unarchiver"
 
-# https://www.git-tower.com/
+# https://www.git-tower.com
 # cask "tower"
 
-# bittorrent client https://transmissionbt.com/
+# bittorrent client https://transmissionbt.com
 cask "transmission"
 
-# VPN client https://www.tunnelblick.net/
+# VPN client https://www.tunnelblick.net
 cask "tunnelblick"
 
-# https://www.vagrantup.com/
+# https://www.vagrantup.com
 cask "vagrant"
 
 # virtualbox to handle virtual machines
 cask "virtualbox"
 cask "virtualbox-extension-pack"
 
-# https://code.visualstudio.com/
+# https://code.visualstudio.com
 cask "visual-studio-code"
 
-# https://www.videolan.org/vlc/
+# https://www.videolan.org/vlc
 cask "vlc"
 
-# https://www.xquartz.org/
+# https://www.xquartz.org
 cask "xquartz"
 
 #########################
