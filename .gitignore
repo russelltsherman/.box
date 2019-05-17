@@ -8,7 +8,7 @@
 # ignore the .gitconfig file
 .gitconfig
 
-.gh_api_token
+.github_token
 
 # ignore the share dir
 share/*

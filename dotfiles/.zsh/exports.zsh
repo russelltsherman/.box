@@ -18,7 +18,7 @@ export PAGER='most'
 # CTAGS Sorting in VIM/Emacs is better behaved with this in place
 export LC_COLLATE='C'
 
-export GH_API_TOKEN=$(cat ~/.gh_api_token)
+export GITHUB_TOKEN=$(cat ~/.github_token)
 
 export HOMEBREW_CASK_OPTS='--appdir=/Applications'
 # GitHub token with no scope, used to get around API limits
