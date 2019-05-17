@@ -8,13 +8,16 @@ fi
 
 # add core utils to path https://www.gnu.org/software/coreutils
 if [ -d "$(brew --prefix coreutils)" ]; then
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
+  newpath="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
+  export PATH=$newpath
 fi
 
 # add findutils to path https://www.gnu.org/software/findutils
 if [ -d "$(brew --prefix findutils)" ]; then
-  export PATH="$(brew --prefix findutils)/libexec/gnubin:${PATH}"
-  export MANPATH="$(brew --prefix findutils)/libexec/gnuman:${MANPATH}"
+  newpath="$(brew --prefix findutils)/libexec/gnubin:${PATH}"
+  export PATH=$newpath
+  newmanpath="$(brew --prefix findutils)/libexec/gnuman:${MANPATH}"
+  export MANPATH=$newmanpath
 fi
 
 # iTerm2 may be integrated with the unix shell so that it can keep track of your command history,
