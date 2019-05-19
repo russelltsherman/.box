@@ -92,9 +92,6 @@ brew "htop"
 # Add GitHub support to git on the command-line https://hub.github.com/
 brew "hub"
 
-# Configurable static site generator https://gohugo.io/
-brew "hugo"
-
 # Tools and libraries to manipulate images in many formats https://www.imagemagick.org/
 brew "imagemagick"
 
@@ -140,12 +137,6 @@ brew "nmap"
 # SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension https://openvpn.net/index.php/download/community-downloads.html
 brew "openvpn"
 
-# Tool for creating identical machine images for multiple platforms https://packer.io
-brew "packer"
-
-# Protocol buffers (Google's data interchange format) https://github.com/protocolbuffers/protobuf/
-brew "protobuf"
-
 # Show ps output as a tree http://www.thp.uni-duisburg.de/pstree/
 brew "pstree"
 
@@ -169,18 +160,6 @@ brew "screen"
 
 # Static analysis and lint tool, for (ba)sh scripts https://www.shellcheck.net/
 brew "shellcheck"
-
-# Tool to build, change, and version infrastructure https://www.terraform.io/
-brew "terraform"
-
-# Tool to generate documentation from Terraform modules https://github.com/segmentio/terraform-docs
-brew "terraform-docs"
-
-# Terraform State → Ansible Dynamic Inventory https://github.com/adammck/terraform-inventory
-brew "terraform-inventory"
-
-# Ansible provisioner for Terraform https://github.com/jonmorehouse/terraform-provisioner-ansible
-brew "terraform-provisioner-ansible"
 
 # Text interface for Git repositories http://jonas.nitro.dk/tig/
 brew "tig"
