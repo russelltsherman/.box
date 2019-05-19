@@ -286,6 +286,9 @@ cask "kindle"
 # a markdown editor https://macdown.uranusjr.com
 cask "macdown"
 
+# https://osxfuse.github.io/
+cask "osxfuse"
+
 # https://signal.org
 cask "signal"
 
