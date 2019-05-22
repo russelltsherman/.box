@@ -74,6 +74,7 @@ if [ -d "$HOME/src" ]; then
   export GOPATH
   export PATH
   export GOROOT
+  export GO111MODULE=on
 fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
