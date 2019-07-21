@@ -45,8 +45,6 @@ function main() {
   # $RSYNC --acls \
   #       --archive \
   #       --delete \
-  #       --delete-excluded \
-  #       --exclude-from=$EXCLUDE \
   #       --hard-links \
   #       --one-file-system \
   #       --sparse \
@@ -56,6 +54,8 @@ function main() {
 
   $RSYNC --acls \
         --archive \
+        --delete-excluded \
+        --exclude-from="$EXCLUDE" \
         --hard-links \
         --one-file-system \
         --sparse \

@@ -16,3 +16,6 @@
 - /Previous Systems.localized
 - /Volumes/*
 - */.Trash
+- **/node_modules
+- **/.direnv
+- **/.serverless
