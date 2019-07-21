@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+
+set -eou pipefail
+
+[[ -n ${DEBUG:-} ]] && bot "Enabling debug mode" && set -x
+
+function usage() {
+  cat <<- EOF
+
+  update redbar
+
+  usage: $0
+
+EOF
+}
+
+function main() {
+  # sync local changes to redbar
+  sudo mirror ~/src /Volumes/REDBAR01
+  sudo mirror ~/"VirtualBox VMs" /Volumes/REDBAR01
+
+  # # sync redbar changes to local
+  # sudo mirror /Volumes/REDBAR01/src ~/
+  exit 0
+}
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"; usage; exit 1
+fi
+
+main "$@"
