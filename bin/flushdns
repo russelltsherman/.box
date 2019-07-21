@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+#
+
+usage() {
+  echo "$0"
+}
+
+main() {
+  sudo killall -HUP mDNSResponder; sleep 2;
+}
+
+main "$@"
