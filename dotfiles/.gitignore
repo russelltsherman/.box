@@ -19,9 +19,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# ignore .direnv
-.direnv
-.envrc
-
 # ignore developer notes
 *TODO*
