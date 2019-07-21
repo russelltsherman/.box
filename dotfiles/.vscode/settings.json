@@ -117,5 +117,6 @@
         "suppressShowKeyBindingsNotice": true
     },
     "git.showInlineOpenFileAction": false,
-    "javascript.updateImportsOnFileMove.enabled": "always"
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "go.useLanguageServer": true
 }
