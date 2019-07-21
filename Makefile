@@ -47,7 +47,8 @@ vscode:
 	code --install-extension msjsdiag.debugger-for-chrome
 	code --install-extension PeterJausovec.vscode-docker
 	code --install-extension PKief.material-icon-theme
-	code --install-extension platformio.platformio-ide
+	code --install-extension bradymholt.pgformatter
+	code --install-extension jptarquino.postgresql
 	code --install-extension redhat.vscode-yaml
 	code --install-extension timonwong.shellcheck
 	code --install-extension tomoki1207.pdf
@@ -56,6 +57,7 @@ vscode:
 	code --install-extension wholroyd.jinja
 	code --install-extension xaver.clang-format
 	code --install-extension zxh404.vscode-proto3
+	code --install-extension esbenp.prettier-vscode
 
 
 	mkdir -p ~/Library/Application\ Support/Code/User/
