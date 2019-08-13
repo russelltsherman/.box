@@ -38,6 +38,7 @@ vscode:
 	code --install-extension EditorConfig.EditorConfig
 	code --install-extension eamodio.gitlens
 	code --install-extension formulahendry.auto-close-tag
+	code --install-extension haaaad.ansible
 	code --install-extension HookyQR.beautify
 	code --install-extension idleberg.applescript
 	code --install-extension marcostazi.vs-code-vagrantfile
