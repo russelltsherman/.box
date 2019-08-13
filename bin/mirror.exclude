@@ -17,5 +17,6 @@
 - /Volumes/*
 - */.Trash
 - **/node_modules
-- **/.direnv
-- **/.serverless
+- **/.direnv/*
+- **/.serverless/*
+- **/mode_modules/*
