@@ -1,25 +1,72 @@
+
+# community-driven framework for managing your zsh configuration
 antibody bundle robbyrussell/oh-my-zsh
+
+# This ZSH plugin enhances the terminal environment with 256 colors
 antibody bundle russelltsherman/zsh-256color
+
+# Because your terminal should be able to perform tasks asynchronously without external tools!
 antibody bundle russelltsherman/zsh-async
+
+# Jump back to a specific directory, without doing `cd ../../..`
 antibody bundle russelltsherman/zsh-bd
+
+# a collection of aliases for docker commands
 antibody bundle russelltsherman/zsh-docker-aliases
+
+# personal git scripts
 antibody bundle russelltsherman/zsh-git # kind:path
+
+# more personal github scripts
 antibody bundle russelltsherman/zsh-github # kind:path
+
+# A shell plugin to easily add remotes to git repositories.
 antibody bundle russelltsherman/zsh-git-add-remote # kind:path
+
+# fetching and merging git forks
 antibody bundle russelltsherman/zsh-git-fetch-merge # kind:path
+
+# A zsh plugin to sync git repositories and clean them up.
 antibody bundle russelltsherman/zsh-git-sync # kind:path
+
+# The "Java Version Manager"
 antibody bundle russelltsherman/zsh-jvm
+
+# zsh mkdir && cd plugin.
 antibody bundle russelltsherman/zsh-mkc
+
+# Open pull requests from the command line.
 antibody bundle russelltsherman/zsh-open-pr # kind:path
+
+# Easily see what's happening on your computer's ports
 antibody bundle russelltsherman/zsh-ports # kind:path
+
+# A modified version of oh-my-zsh's plugin colored-man-pages, optimized for solarized dark theme in terminal
 antibody bundle russelltsherman/zsh-solarized-man
+
+# A Zsh prompt for Astronauts
 antibody bundle russelltsherman/zsh-spaceship-prompt
+
+# Automatic time tracking for commands in ZSH using wakatime.
 antibody bundle russelltsherman/zsh-wakatime
+
+# Tracks your most used directories, based on 'frecency'.
 antibody bundle russelltsherman/zsh-z
+
+# zsh anything.el-like widget.
 antibody bundle zsh-users/zaw
+
+# Fish-like autosuggestions for zsh
 antibody bundle zsh-users/zsh-autosuggestions
+
+# Additional completion definitions for Zsh.
 antibody bundle zsh-users/zsh-completions
+
+# ZSH port of Fish history search (up arrow)
 antibody bundle zsh-users/zsh-history-substring-search
+
+# Fish shell like syntax highlighting for Zsh.
 antibody bundle zsh-users/zsh-syntax-highlighting
 
+# Retro groove color scheme for Vim
 antibody bundle morhetz/gruvbox
