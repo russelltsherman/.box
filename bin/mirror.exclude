@@ -20,3 +20,5 @@
 - **/.direnv/*
 - **/.serverless/*
 - **/mode_modules/*
+- **/.tox
+- **/.volumes
