@@ -130,5 +130,8 @@
   "terraform.languageServer": {
     "enabled": true,
     "args": []
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }
