@@ -35,6 +35,10 @@ Plugin 'morhetz/gruvbox'
 Plugin 'airblade/vim-gitgutter'
 " A Vim plugin which shows a git diff in the gutter
 
+Plugin 'christoomey/vim-tmux-navigator'
+" A Vim plugin which allows you to navigate seamlessly between vim and tmux
+" splits using a consistent set of hotkeys.
+
 call vundle#end()               " required
 " All of your Plugins must be added before the following line
 
